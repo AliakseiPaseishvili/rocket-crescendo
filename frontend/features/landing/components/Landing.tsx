@@ -1,13 +1,13 @@
 'use client';
 
-import { Button } from '@/frontend/components/ui/button';
 import { useTranslation } from 'react-i18next';
+import { LanguageSelector } from '@/frontend/features/translation/components';
 
 export const Landing = () => {
   const { t } = useTranslation('common');
 
   return <div>
     {t('hello')}
-    <Button>Save</Button>
+    <LanguageSelector />
   </div>;
 };

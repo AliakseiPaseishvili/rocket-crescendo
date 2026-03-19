@@ -16,8 +16,8 @@ i18next
       escapeValue: false, // React escapes by default
     },
     detection: {
-      order: ['localStorage', 'navigator'],
-      caches: ['localStorage'],
+      order: ['cookie', 'navigator'],
+      caches: ['cookie'],
     },
   });
 
