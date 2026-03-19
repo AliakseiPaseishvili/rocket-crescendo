@@ -5,3 +5,6 @@ export const languageLabels: Record<(typeof supportedLngs)[number], string> = {
   fr: 'Français',
   ru: 'Русский',
 };
+
+export const fallbackLng = 'en';
+export const i18nCookieName = 'i18next';

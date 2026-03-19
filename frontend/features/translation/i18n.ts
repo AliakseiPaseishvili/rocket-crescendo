@@ -1,30 +1,40 @@
 'use client';
-import i18next from 'i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
-import { initReactI18next } from 'react-i18next';
-import { resources } from './locales';
-import { supportedLngs } from './constants';
+import i18next from "i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
+import { initReactI18next } from "react-i18next";
+import { resources } from "./locales";
+import { supportedLngs } from "./constants";
+import resourcesToBackend from "i18next-resources-to-backend";
+
+const runsOnServerSide = typeof window === "undefined";
 
 i18next
-  .use(LanguageDetector)
   .use(initReactI18next)
+  .use(LanguageDetector)
+  .use(
+    resourcesToBackend(
+      (language: string, namespace: string) =>
+        import(`./locales/${language}/${namespace}.json`),
+    ),
+  )
   .init({
     resources,
-    fallbackLng: 'en',
+    fallbackLng: "en",
     supportedLngs,
     interpolation: {
       escapeValue: false, // React escapes by default
     },
     detection: {
-      order: ['cookie', 'navigator'],
-      caches: ['cookie'],
+      order: ['path', 'htmlTag', 'cookie', 'navigator'],
+      caches: ["cookie"],
     },
+    preload: runsOnServerSide ? supportedLngs : [],
   });
 
 // Augment i18next types for type-safe useTranslation
-declare module 'i18next' {
+declare module "i18next" {
   interface CustomTypeOptions {
-    resources: (typeof resources)['en'];
+    resources: (typeof resources)["en"];
   }
 }
 
