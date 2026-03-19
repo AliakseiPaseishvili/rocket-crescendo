@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { supportedLngs } from "@/frontend/features/translation";
 import { I18nProvider } from "@/frontend/features/translation/components";
+import { initI18next } from "@/frontend/features/translation/i18n-server";
 import { dir } from "i18next";
 
 const geistSans = Geist({
@@ -19,10 +20,18 @@ export async function generateStaticParams() {
   return supportedLngs.map((lng) => ({ lng }));
 }
 
-export const metadata: Metadata = {
-  title: "Cyber Shop: Rocket Crescendo",
-  description: "Buy Rocket Crescendo books and merch",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lng: string }>;
+}): Promise<Metadata> {
+  const { lng } = await params;
+  const { t } = await initI18next(lng, "common");
+  return {
+    title: t("metadata.title"),
+    description: t("metadata.description"),
+  };
+}
 
 const RootLayout = async ({
   children,
