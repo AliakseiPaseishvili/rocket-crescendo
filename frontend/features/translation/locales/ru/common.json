@@ -1,7 +1,3 @@
 {
-  "hello": "Привет",
-  "metadata": {
-    "title": "Cyber Shop: Rocket Crescendo",
-    "description": "Покупайте книги и мерч Rocket Crescendo"
-  }
+  "hello": "Привет"
 }

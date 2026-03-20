@@ -4,6 +4,7 @@ import "../globals.css";
 import { supportedLngs } from "@/frontend/features/translation";
 import { I18nProvider } from "@/frontend/features/translation/components";
 import { initI18next } from "@/frontend/features/translation/i18n-server";
+import { Header } from "@/frontend/features/header";
 import { dir } from "i18next";
 
 const geistSans = Geist({
@@ -26,10 +27,10 @@ export async function generateMetadata({
   params: Promise<{ lng: string }>;
 }): Promise<Metadata> {
   const { lng } = await params;
-  const { t } = await initI18next(lng, "common");
+  const { t } = await initI18next(lng, "metadata");
   return {
-    title: t("metadata.title"),
-    description: t("metadata.description"),
+    title: t("title"),
+    description: t("description"),
   };
 }
 
@@ -46,7 +47,10 @@ const RootLayout = async ({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <I18nProvider lng={lng}>{children}</I18nProvider>
+        <I18nProvider lng={lng}>
+          <Header />
+          {children}
+        </I18nProvider>
       </body>
     </html>
   );

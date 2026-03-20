@@ -1,13 +1,13 @@
-'use client';
-
-import { useTranslation } from 'react-i18next';
-import { LanguageSelector } from '@/frontend/features/translation/components';
+import { LandingSection } from './LandingSection';
 
 export const Landing = () => {
-  const { t } = useTranslation('common');
-
-  return <div>
-    {t('hello')}
-    <LanguageSelector />
-  </div>;
+  return (
+    <>
+      <LandingSection id="hero" titleKey="hero" />
+      <LandingSection id="shop" titleKey="shop" />
+      <LandingSection id="game" titleKey="game" />
+      <LandingSection id="about" titleKey="aboutUs" />
+      <LandingSection id="support" titleKey="support" />
+    </>
+  );
 };
