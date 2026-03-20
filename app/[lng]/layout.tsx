@@ -5,6 +5,7 @@ import { supportedLngs } from "@/frontend/features/translation";
 import { I18nProvider } from "@/frontend/features/translation/components";
 import { initI18next } from "@/frontend/features/translation/i18n-server";
 import { Header } from "@/frontend/features/header";
+import { Footer } from "@/frontend/features/footer";
 import { dir } from "i18next";
 
 const geistSans = Geist({
@@ -50,6 +51,7 @@ const RootLayout = async ({
         <I18nProvider lng={lng}>
           <Header />
           {children}
+          <Footer />
         </I18nProvider>
       </body>
     </html>
