@@ -8,14 +8,7 @@ import {
   navigationMenuTriggerStyle,
 } from '@/frontend/components/ui/navigation-menu';
 import { useTranslation } from 'react-i18next';
-
-const NAV_ITEMS = [
-  { key: 'hero', href: '#hero' },
-  { key: 'shop', href: '#shop' },
-  { key: 'game', href: '#game' },
-  { key: 'aboutUs', href: '#about' },
-  { key: 'support', href: '#support' },
-] as const;
+import { NAV_ITEMS } from '../constants';
 
 export const NavMenu = () => {
   const { t } = useTranslation('nav');

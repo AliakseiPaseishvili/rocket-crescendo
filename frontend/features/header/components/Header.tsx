@@ -2,6 +2,7 @@
 
 import { NavMenu } from '@/frontend/features/nav';
 import { LanguageSelector } from '@/frontend/features/translation/components';
+import { BurgerMenu } from './BurgerMenu';
 
 export const Header = () => {
   return (
@@ -10,10 +11,19 @@ export const Header = () => {
         <a href="#hero" className="flex items-center gap-2 font-bold text-sm shrink-0">
           🚀 CyberShop ROCKET CRESCENDO
         </a>
-        <div className="flex flex-1 items-center">
+
+        {/* Desktop nav */}
+        <div className="hidden md:flex flex-1 items-center">
           <NavMenu />
         </div>
-        <LanguageSelector />
+        <div className="hidden md:flex">
+          <LanguageSelector />
+        </div>
+
+        {/* Burger — mobile/tablet only */}
+        <div className="ml-auto md:hidden">
+          <BurgerMenu />
+        </div>
       </div>
     </header>
   );
