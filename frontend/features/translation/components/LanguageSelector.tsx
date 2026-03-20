@@ -25,7 +25,6 @@ export const LanguageSelector = () => {
 
   const handleChange = useCallback(
     (lng: string) => {
-      console.log(lng)
       i18n.changeLanguage(lng);
       const segments = pathname.split("/");
       segments[1] = lng;
