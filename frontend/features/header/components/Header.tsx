@@ -2,6 +2,7 @@
 
 import { NavMenu } from '@/frontend/features/nav';
 import { LanguageSelector } from '@/frontend/features/translation/components';
+import { CartButton } from '@/frontend/features/cart';
 import { BurgerMenu } from './BurgerMenu';
 
 export const Header = () => {
@@ -20,8 +21,13 @@ export const Header = () => {
           <LanguageSelector />
         </div>
 
+        {/* Cart — always visible */}
+        <div className="ml-auto md:ml-0 flex items-center">
+          <CartButton />
+        </div>
+
         {/* Burger — mobile/tablet only */}
-        <div className="ml-auto md:hidden">
+        <div className="md:hidden">
           <BurgerMenu />
         </div>
       </div>
