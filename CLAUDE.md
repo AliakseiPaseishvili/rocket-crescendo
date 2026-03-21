@@ -9,32 +9,49 @@ A Next.js 16 e-commerce/landing site for "Cyber Shop: Rocket Crescendo" — book
 - **Styling**: Tailwind CSS v4
 - **UI components**: shadcn/ui (via `frontend/components/ui/`)
 - **i18n**: i18next + react-i18next, with SSR support
+- **Database**: PostgreSQL via Prisma (generated client at `backend/app/generated/prisma/`)
+- **Data fetching**: TanStack Query (React Query)
 
 ## Project structure
 
 ```
 app/
-  page.tsx              # Root redirect (returns null, middleware handles routing)
+  page.tsx                          # Root redirect (middleware handles routing)
   [lng]/
-    layout.tsx          # Per-language root layout (fonts, I18nProvider)
-    page.tsx            # Landing page entry
+    layout.tsx                      # Per-language root layout
+    page.tsx                        # Landing page entry
+    admin/products/create/page.tsx  # Admin: create product page
+  api/products/                     # REST API routes (GET, POST, GET/:id, PUT/:id, DELETE/:id)
   globals.css
 
 frontend/
-  components/ui/        # shadcn/ui components (button, dropdown-menu, …)
-  features/
-    landing/            # Landing feature (Landing component)
-    translation/        # i18n feature
-      constants.ts      # supportedLngs, languageLabels, fallbackLng
-      i18n.ts           # Client-side i18next init
-      i18n-server.ts    # Server-side i18next init
-      locales/          # JSON translation files (en, fr, ru)
-      components/       # I18nProvider, LanguageSelector
+  components/ui/        # shadcn/ui components
+  features/             # Feature-based structure (see Features below)
   lib/utils.ts          # cn() helper (clsx + tailwind-merge)
   utils/is-server-side.ts
 
+backend/
+  prisma/               # Prisma schema + client singleton (PostgreSQL)
+  app/generated/prisma/ # Generated Prisma client
+  repositories/         # DB access layer
+  services/             # Business logic layer
+
 proxy.ts                # Next.js middleware: redirects bare paths to /{lng}/…
 ```
+
+### Frontend Features
+
+Each feature lives in `frontend/features/<feature>/` and follows this structure:
+
+```
+feature/
+  components/     # React components
+  hooks/          # Custom hooks (not all features have this)
+  constants.ts    # Feature-level constants (not all features have this)
+  index.ts        # Barrel export
+```
+
+Features: `api`, `cart`, `footer`, `header`, `landing`, `nav`, `products`, `react-query`, `translation`
 
 ## Path aliases
 
@@ -46,7 +63,8 @@ proxy.ts                # Next.js middleware: redirects bare paths to /{lng}/…
 - All routes are prefixed: `/en/…`, `/fr/…`, `/ru/…`
 - Middleware in `proxy.ts` detects language from cookie → Accept-Language header → fallback `en` and redirects
 - To add a language: add to `supportedLngs` in `constants.ts`, add locale JSON under `locales/<lng>/`
-- Translation keys live in `common.json` per locale; access via `useTranslation('common')` (client) or `initI18next(lng, 'common')` (server)
+- Translation namespaces per locale: `common`, `cart`, `footer`, `metadata`, `nav`, `product`
+- Access via `useTranslation('common')` (client) or `initI18next(lng, 'common')` (server); pass multiple namespaces as an array
 
 ## Commands
 
@@ -62,3 +80,5 @@ npm run lint     # ESLint
 - New shadcn components go in `frontend/components/ui/`
 - Client components use `'use client'` directive; server components are default (no directive)
 - i18n metadata is generated server-side in layout via `generateMetadata`
+- Backend follows repository → service pattern; API routes delegate to `ProductService`
+- Prisma schema is in `backend/prisma/schema.prisma`; run `npx prisma generate` after schema changes

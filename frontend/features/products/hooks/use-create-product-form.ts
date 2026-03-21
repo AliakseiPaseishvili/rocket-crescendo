@@ -16,6 +16,7 @@ export function useCreateProductForm() {
 
   return {
     register: form.register,
+    control: form.control,
     errors: form.formState.errors,
     onSubmit,
     isPending,
