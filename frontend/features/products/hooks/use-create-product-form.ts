@@ -8,16 +8,17 @@ export function useCreateProductForm() {
     defaultValues: { name: '', description: '', favorite: false },
   });
 
+  const { handleSubmit, register, control, reset, formState: { errors } } = form;
   const { mutate, isPending, isSuccess, error } = useCreateProduct();
 
-  const onSubmit = form.handleSubmit((data) => {
-    mutate(data, { onSuccess: () => form.reset() });
+  const onSubmit = handleSubmit((data) => {
+    mutate(data, { onSuccess: () => reset() });
   });
 
   return {
-    register: form.register,
-    control: form.control,
-    errors: form.formState.errors,
+    register,
+    control,
+    errors,
     onSubmit,
     isPending,
     isSuccess,
