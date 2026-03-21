@@ -6,6 +6,7 @@ import { I18nProvider } from "@/frontend/features/translation/components";
 import { initI18next } from "@/frontend/features/translation/i18n-server";
 import { Header } from "@/frontend/features/header";
 import { Footer } from "@/frontend/features/footer";
+import { ReactQueryProvider } from "@/frontend/features/react-query";
 import { dir } from "i18next";
 
 const geistSans = Geist({
@@ -48,11 +49,13 @@ const RootLayout = async ({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <I18nProvider lng={lng}>
-          <Header />
-          {children}
-          <Footer />
-        </I18nProvider>
+        <ReactQueryProvider>
+          <I18nProvider lng={lng}>
+            <Header />
+            {children}
+            <Footer />
+          </I18nProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );

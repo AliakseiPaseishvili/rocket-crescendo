@@ -1,3 +1,8 @@
 {
-  "hello": "Bonjour"
+  "hello": "Bonjour",
+  "name": "Nom",
+  "description": "Description",
+  "creating": "Création…",
+  "nameRequired": "Le nom est requis",
+  "descriptionRequired": "La description est requise"
 }

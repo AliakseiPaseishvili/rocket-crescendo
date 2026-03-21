@@ -1,0 +1,7 @@
+{
+  "createProduct": "Create Product",
+  "namePlaceholder": "Product name",
+  "descriptionPlaceholder": "Product description",
+  "favorite": "Favorite",
+  "createSuccess": "Product created successfully!"
+}

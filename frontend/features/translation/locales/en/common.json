@@ -1,3 +1,8 @@
 {
-  "hello": "Hello"
+  "hello": "Hello",
+  "name": "Name",
+  "description": "Description",
+  "creating": "Creating…",
+  "nameRequired": "Name is required",
+  "descriptionRequired": "Description is required"
 }
