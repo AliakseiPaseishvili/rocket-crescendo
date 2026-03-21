@@ -1,4 +1,4 @@
-import prisma from "@/backend/prisma/prisma";
+import prisma from "../prisma/prisma";
 import type {
   ProductCreateInput,
   ProductUpdateInput,
