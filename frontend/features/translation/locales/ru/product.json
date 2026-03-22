@@ -3,5 +3,8 @@
   "namePlaceholder": "Название продукта",
   "descriptionPlaceholder": "Описание продукта",
   "favorite": "Избранное",
-  "createSuccess": "Продукт успешно создан!"
+  "createSuccess": "Продукт успешно создан!",
+  "loadingProducts": "Загрузка продуктов…",
+  "errorLoadingProducts": "Не удалось загрузить продукты.",
+  "noProducts": "Продукты не найдены."
 }

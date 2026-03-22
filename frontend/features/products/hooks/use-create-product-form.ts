@@ -1,10 +1,10 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { useCreateProduct, type CreateProductInput } from './use-create-product';
+import { useCreateProduct, type ProductCreateInput } from './use-create-product';
 
 export function useCreateProductForm() {
-  const form = useForm<CreateProductInput>({
+  const form = useForm<ProductCreateInput>({
     defaultValues: { name: '', description: '', favorite: false },
   });
 

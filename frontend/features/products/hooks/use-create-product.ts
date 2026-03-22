@@ -1,9 +1,10 @@
 'use client';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { productsApi, type CreateProductInput } from '@/frontend/features/api';
+import { productsApi } from '@/frontend/features/api';
+import type { ProductCreateInput } from '@/backend/types';
 
-export type { CreateProductInput };
+export type { ProductCreateInput };
 
 export function useCreateProduct() {
   const queryClient = useQueryClient();

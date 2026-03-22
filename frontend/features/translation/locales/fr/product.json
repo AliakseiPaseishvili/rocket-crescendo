@@ -3,5 +3,8 @@
   "namePlaceholder": "Nom du produit",
   "descriptionPlaceholder": "Description du produit",
   "favorite": "Favori",
-  "createSuccess": "Produit créé avec succès !"
+  "createSuccess": "Produit créé avec succès !",
+  "loadingProducts": "Chargement des produits…",
+  "errorLoadingProducts": "Échec du chargement des produits.",
+  "noProducts": "Aucun produit trouvé."
 }

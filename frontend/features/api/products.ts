@@ -1,11 +1,18 @@
-export type CreateProductInput = {
-  name: string;
-  description: string;
-  favorite: boolean;
-};
+import type { ProductModel, ProductCreateInput } from '@/backend/types';
 
 export const productsApi = {
-  create: async (data: CreateProductInput): Promise<unknown> => {
+  getAll: async (): Promise<ProductModel[]> => {
+    const response = await fetch('/api/products');
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to fetch products');
+    }
+
+    return response.json();
+  },
+
+  create: async (data: ProductCreateInput): Promise<unknown> => {
     const response = await fetch('/api/products', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
