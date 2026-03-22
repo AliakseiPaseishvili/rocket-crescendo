@@ -6,11 +6,11 @@ import { productsApi } from '@/frontend/features/api';
 
 import { PRODUCTS_QUERY_KEY } from '../constants';
 
-export function useCreateProduct() {
+export function useUpdateProduct() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: productsApi.create,
+    mutationFn: productsApi.update,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [PRODUCTS_QUERY_KEY] });
     },
