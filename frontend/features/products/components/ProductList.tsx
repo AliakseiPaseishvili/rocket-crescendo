@@ -1,7 +1,8 @@
 'use client';
 
 import { useTranslation } from 'react-i18next';
-import { useProducts } from '../hooks/use-products';
+
+import { useProducts } from '../hooks';
 
 export const ProductList = () => {
   const { t } = useTranslation('product');

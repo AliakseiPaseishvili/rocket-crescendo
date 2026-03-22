@@ -1,5 +1,6 @@
 import { createInstance, Namespace } from "i18next";
 import resourcesToBackend from "i18next-resources-to-backend";
+
 import { fallbackLng, supportedLngs } from "./constants";
 
 export const initI18next = async (

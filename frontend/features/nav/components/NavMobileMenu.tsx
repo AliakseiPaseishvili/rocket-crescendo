@@ -1,6 +1,7 @@
 'use client';
 
 import { useTranslation } from 'react-i18next';
+
 import { NAV_ITEMS } from '../constants';
 
 interface NavMobileMenuProps {

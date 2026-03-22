@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import { ProductService } from "@/backend/services/ProductService";
 
 const service = new ProductService();
@@ -8,7 +9,8 @@ export async function GET() {
     const products = await service.getAll();
     return NextResponse.json(products);
   } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch products" }, { status: 500 });
+    const message = error instanceof Error ? error.message : "Failed to fetch products";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 

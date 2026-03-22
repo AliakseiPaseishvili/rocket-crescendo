@@ -1,10 +1,11 @@
 'use client';
 import i18next from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
-import { initReactI18next } from "react-i18next";
-import { resources } from "./locales";
-import { supportedLngs } from "./constants";
 import resourcesToBackend from "i18next-resources-to-backend";
+import { initReactI18next } from "react-i18next";
+
+import { supportedLngs } from "./constants";
+import { resources } from "./locales";
 
 const runsOnServerSide = typeof window === "undefined";
 

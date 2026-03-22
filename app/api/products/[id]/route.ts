@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import { ProductService } from "@/backend/services/ProductService";
 
 const service = new ProductService();

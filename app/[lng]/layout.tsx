@@ -1,13 +1,14 @@
+import { dir } from "i18next";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+
 import "../globals.css";
+import { Footer } from "@/frontend/features/footer";
+import { Header } from "@/frontend/features/header";
+import { ReactQueryProvider } from "@/frontend/features/react-query";
 import { supportedLngs } from "@/frontend/features/translation";
 import { I18nProvider } from "@/frontend/features/translation/components";
 import { initI18next } from "@/frontend/features/translation/i18n-server";
-import { Header } from "@/frontend/features/header";
-import { Footer } from "@/frontend/features/footer";
-import { ReactQueryProvider } from "@/frontend/features/react-query";
-import { dir } from "i18next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

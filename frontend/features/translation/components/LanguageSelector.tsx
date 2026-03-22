@@ -1,5 +1,10 @@
 "use client";
 
+import { ChevronDownIcon } from "lucide-react";
+import { useRouter, usePathname } from "next/navigation";
+import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,12 +12,11 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/frontend/components/ui/dropdown-menu";
-import { ChevronDownIcon } from "lucide-react";
-import { useRouter, usePathname } from "next/navigation";
-import { useTranslation } from "react-i18next";
+
+
 import { languageLabels, supportedLngs } from "../constants";
 import i18n from "../i18n";
-import { useCallback } from "react";
+
 
 export const LanguageSelector = () => {
   const {

@@ -1,9 +1,9 @@
-import { ProductRepository } from "@/backend/repositories/ProductRepository";
 import type {
   ProductCreateInput,
   ProductUpdateInput,
   ProductModel,
 } from "@/backend/app/generated/prisma/models/Product";
+import { ProductRepository } from "@/backend/repositories/ProductRepository";
 
 export class ProductService {
   private readonly repository: ProductRepository;

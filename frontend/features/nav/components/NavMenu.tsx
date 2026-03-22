@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslation } from 'react-i18next';
+
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -7,7 +9,7 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from '@/frontend/components/ui/navigation-menu';
-import { useTranslation } from 'react-i18next';
+
 import { NAV_ITEMS } from '../constants';
 
 export const NavMenu = () => {

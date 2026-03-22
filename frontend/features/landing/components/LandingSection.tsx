@@ -1,8 +1,8 @@
 'use client';
 
-import { useTranslation } from 'react-i18next';
 import { ParseKeys } from 'i18next';
 import { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface LandingSectionProps {
   id: string;

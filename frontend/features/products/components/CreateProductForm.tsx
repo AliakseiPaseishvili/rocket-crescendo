@@ -2,12 +2,14 @@
 
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+
 import { Button } from '@/frontend/components/ui/button';
 import { Checkbox } from '@/frontend/components/ui/checkbox';
 import { Input } from '@/frontend/components/ui/input';
 import { Label } from '@/frontend/components/ui/label';
 import { Textarea } from '@/frontend/components/ui/textarea';
-import { useCreateProductForm } from '../hooks/use-create-product-form';
+
+import { useCreateProductForm } from '../hooks';
 
 export const CreateProductForm = () => {
   const { t } = useTranslation(['product', 'common']);

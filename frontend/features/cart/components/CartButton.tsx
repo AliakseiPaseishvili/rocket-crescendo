@@ -2,6 +2,7 @@
 
 import { ShoppingCart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+
 import { Button } from '@/frontend/components/ui/button';
 import {
   Drawer,

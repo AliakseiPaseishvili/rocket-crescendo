@@ -1,8 +1,9 @@
 'use client';
 
+import { CartButton } from '@/frontend/features/cart';
 import { NavMenu } from '@/frontend/features/nav';
 import { LanguageSelector } from '@/frontend/features/translation/components';
-import { CartButton } from '@/frontend/features/cart';
+
 import { BurgerMenu } from './BurgerMenu';
 
 export const Header = () => {

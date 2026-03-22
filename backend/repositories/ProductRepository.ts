@@ -1,9 +1,10 @@
-import prisma from "../prisma/prisma";
 import type {
   ProductCreateInput,
   ProductUpdateInput,
   ProductModel,
 } from "@/backend/app/generated/prisma/models/Product";
+
+import prisma from "../prisma/prisma";
 
 export class ProductRepository {
   async findAll(): Promise<ProductModel[]> {

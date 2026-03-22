@@ -1,6 +1,7 @@
+import acceptLanguage from 'accept-language'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import acceptLanguage from 'accept-language'
+
 import { fallbackLng, supportedLngs, i18nCookieName } from './frontend/features/translation'
 
 

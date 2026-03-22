@@ -1,7 +1,10 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { useCreateProduct, type ProductCreateInput } from './use-create-product';
+
+import type { ProductCreateInput } from '@/backend/types';
+
+import { useCreateProduct } from './use-create-product';
 
 export function useCreateProductForm() {
   const form = useForm<ProductCreateInput>({
