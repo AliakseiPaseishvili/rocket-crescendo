@@ -27,6 +27,15 @@ export const productsApi = {
     return response.json();
   },
 
+  delete: async (id: number): Promise<void> => {
+    const response = await fetch(`/api/products/${id}`, { method: 'DELETE' });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to delete product');
+    }
+  },
+
   update: async ({ id, ...data }: Partial<ProductModel> & { id: number }): Promise<ProductModel> => {
     const response = await fetch(`/api/products/${id}`, {
       method: 'PATCH',
