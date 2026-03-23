@@ -1,22 +1,30 @@
 "use client";
 
 import { Star, Trash2 } from "lucide-react";
+import { useParams } from "next/navigation";
 import { useCallback } from "react";
 
-import type { ProductModel } from "@/backend/types";
+import type { ProductWithTranslations } from "@/backend/types";
 import { Button } from "@/frontend/components/ui/button";
+import { fallbackLng } from "@/frontend/features/translation";
 
 import { useDeleteProduct, useUpdateProduct } from "../hooks";
 
 interface ProductProps {
-  product: ProductModel;
+  product: ProductWithTranslations;
 }
 
 export const Product = ({ product }: ProductProps) => {
+  const { lng } = useParams<{ lng: string }>();
   const { mutate: updateProduct, isPending: isUpdating } = useUpdateProduct();
   const { mutate: deleteProduct, isPending: isDeleting } = useDeleteProduct();
 
   const isPending = isUpdating || isDeleting;
+
+  const translation =
+    product.translations.find((t) => t.language === lng) ??
+    product.translations.find((t) => t.language === fallbackLng) ??
+    product.translations[0];
 
   const handleFavoriteToggle = useCallback(() => {
     updateProduct({ id: product.id, favorite: !product.favorite });
@@ -56,9 +64,9 @@ export const Product = ({ product }: ProductProps) => {
         </Button>
       </div>
 
-      <span className="font-semibold text-foreground pr-8">{product.name}</span>
+      <span className="font-semibold text-foreground pr-8">{translation?.name}</span>
       <span className="text-sm text-muted-foreground">
-        {product.description}
+        {translation?.description}
       </span>
     </li>
   );

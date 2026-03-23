@@ -1,7 +1,7 @@
-import type { ProductCreateInput, ProductModel } from '@/backend/types';
+import type { ProductCreateInput, ProductUpdateInput, ProductWithTranslations } from '@/backend/types';
 
 export const productsApi = {
-  getAll: async (): Promise<ProductModel[]> => {
+  getAll: async (): Promise<ProductWithTranslations[]> => {
     const response = await fetch('/api/products');
 
     if (!response.ok) {
@@ -36,7 +36,7 @@ export const productsApi = {
     }
   },
 
-  update: async ({ id, ...data }: Partial<ProductModel> & { id: number }): Promise<ProductModel> => {
+  update: async ({ id, ...data }: Partial<ProductUpdateInput> & { id: number }): Promise<ProductWithTranslations> => {
     const response = await fetch(`/api/products/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
