@@ -24,9 +24,10 @@ export class ProductService {
 
   async create(data: ProductCreateInput): Promise<ProductWithTranslations> {
     if (!data.translations?.length) throw new Error("At least one translation is required");
-    for (const t of data.translations) {
-      if (!t.name?.trim()) throw new Error(`Name is required for language: ${t.language}`);
-      if (!t.description?.trim()) throw new Error(`Description is required for language: ${t.language}`);
+    for (const translation of data.translations) {
+      const { name, description, language } = translation;
+      if (!name?.trim()) throw new Error(`Name is required for language: ${language}`);
+      if (!description?.trim()) throw new Error(`Description is required for language: ${language}`);
     }
     return this.repository.create(data);
   }

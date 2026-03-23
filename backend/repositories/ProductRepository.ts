@@ -30,7 +30,7 @@ export class ProductRepository {
       where: { id },
       data: {
         ...(data.favorite !== undefined && { favorite: data.favorite }),
-        ...(data.translations && {
+        ...(data.translations?.length  && {
           translations: { deleteMany: {}, create: data.translations },
         }),
       },
