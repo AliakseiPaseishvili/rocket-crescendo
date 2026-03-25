@@ -40,7 +40,7 @@ export const Product = ({ product }: ProductProps) => {
         <Button
           variant="ghost"
           size="icon"
-          className="h-7 w-7"
+          className="size-7"
           disabled={isPending}
           onClick={handleFavoriteToggle}
         >
@@ -56,7 +56,7 @@ export const Product = ({ product }: ProductProps) => {
         <Button
           variant="ghost"
           size="icon"
-          className="h-7 w-7"
+          className="size-7"
           disabled={isPending}
           onClick={handleDelete}
         >
