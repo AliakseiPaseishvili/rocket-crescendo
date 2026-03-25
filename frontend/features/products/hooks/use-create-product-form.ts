@@ -1,53 +1,60 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useMemo } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import * as yup from 'yup';
 
-import type { ProductCreateInput } from '@/backend/types';
-import { supportedLngs } from '@/frontend/features/translation';
+import { SUPPORTED_LANGUAGE, supportedLngs } from '@/frontend/features/translation';
 
 import { useCreateProduct } from './use-create-product';
-
-type LngKey = (typeof supportedLngs)[number];
-
-export type ProductFormValues = {
-  favorite: boolean;
-} & {
-  [K in LngKey as `${K}_name`]: string;
-} & {
-  [K in LngKey as `${K}_description`]: string;
-};
+import { ProductFormValues } from '../types';
 
 export function useCreateProductForm() {
-  const defaultValues = {
-    favorite: false,
-    ...Object.fromEntries(
-      supportedLngs.flatMap((lng) => [
-        [`${lng}_name`, ''],
-        [`${lng}_description`, ''],
-      ])
-    ),
-  } as ProductFormValues;
+  const { t } = useTranslation('common');
 
-  const form = useForm<ProductFormValues>({ defaultValues });
+  const schema = useMemo(
+    () =>
+      yup.object({
+        favorite: yup.boolean().required(),
+        translations: yup.array(
+          yup.object({
+            language: yup.mixed<SUPPORTED_LANGUAGE>().oneOf(supportedLngs).required(),
+            name: yup.string().required(t('nameRequired')).min(2, t('nameMinLength')),
+            description: yup.string().required(t('descriptionRequired')).min(10, t('descriptionMinLength')),
+          })
+        ).required(),
+      }),
+    [t]
+  );
+
+  const defaultValues: ProductFormValues = {
+    favorite: false,
+    translations: supportedLngs.map((lng) => ({
+      language: lng,
+      name: '',
+      description: '',
+    })),
+  };
+
+  const form = useForm<ProductFormValues>({
+    defaultValues,
+    resolver: yupResolver(schema),
+  });
 
   const { handleSubmit, register, control, reset, formState: { errors } } = form;
+  const { fields } = useFieldArray({ control, name: 'translations' });
   const { mutate, isPending, isSuccess, error } = useCreateProduct();
 
   const onSubmit = handleSubmit((data) => {
-    const payload: ProductCreateInput = {
-      favorite: data.favorite,
-      translations: supportedLngs.map((lng) => ({
-        language: lng,
-        name: data[`${lng}_name` as keyof ProductFormValues] as string,
-        description: data[`${lng}_description` as keyof ProductFormValues] as string,
-      })),
-    };
-    mutate(payload, { onSuccess: () => reset() });
+    mutate(data, { onSuccess: () => reset() });
   });
 
   return {
     register,
     control,
+    fields,
     errors,
     onSubmit,
     isPending,

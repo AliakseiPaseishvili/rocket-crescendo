@@ -4,5 +4,7 @@
   "description": "Description",
   "creating": "Création…",
   "nameRequired": "Le nom est requis",
-  "descriptionRequired": "La description est requise"
+  "nameMinLength": "Le nom doit comporter au moins 2 caractères",
+  "descriptionRequired": "La description est requise",
+  "descriptionMinLength": "La description doit comporter au moins 10 caractères"
 }

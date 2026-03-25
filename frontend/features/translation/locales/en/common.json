@@ -4,5 +4,7 @@
   "description": "Description",
   "creating": "Creating…",
   "nameRequired": "Name is required",
-  "descriptionRequired": "Description is required"
+  "nameMinLength": "Name must be at least 2 characters",
+  "descriptionRequired": "Description is required",
+  "descriptionMinLength": "Description must be at least 10 characters"
 }

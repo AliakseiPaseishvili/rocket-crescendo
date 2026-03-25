@@ -4,5 +4,7 @@
   "description": "Описание",
   "creating": "Создание…",
   "nameRequired": "Название обязательно",
-  "descriptionRequired": "Описание обязательно"
+  "nameMinLength": "Название должно содержать не менее 2 символов",
+  "descriptionRequired": "Описание обязательно",
+  "descriptionMinLength": "Описание должно содержать не менее 10 символов"
 }
