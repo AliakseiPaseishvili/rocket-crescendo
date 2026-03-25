@@ -7,6 +7,11 @@ const eslintConfig = defineConfig([
   ...nextTs,
   {
     rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { vars: "all", args: "after-used", ignoreRestSiblings: true },
+      ],
+      "import/no-cycle": "error",
       "import/order": [
         "error",
         {
