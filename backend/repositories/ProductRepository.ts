@@ -11,8 +11,18 @@ export class ProductRepository {
     return prisma.product.findMany({ include: { translations: true } });
   }
 
+  async findFavorites(): Promise<ProductWithTranslations[]> {
+    return prisma.product.findMany({
+      where: { favorite: true },
+      include: { translations: true },
+    });
+  }
+
   async findById(id: number): Promise<ProductWithTranslations | null> {
-    return prisma.product.findUnique({ where: { id }, include: { translations: true } });
+    return prisma.product.findUnique({
+      where: { id },
+      include: { translations: true },
+    });
   }
 
   async create(data: ProductCreateInput): Promise<ProductWithTranslations> {
@@ -25,12 +35,15 @@ export class ProductRepository {
     });
   }
 
-  async update(id: number, data: ProductUpdateInput): Promise<ProductWithTranslations> {
+  async update(
+    id: number,
+    data: ProductUpdateInput,
+  ): Promise<ProductWithTranslations> {
     return prisma.product.update({
       where: { id },
       data: {
         ...(data.favorite !== undefined && { favorite: data.favorite }),
-        ...(data.translations?.length  && {
+        ...(data.translations?.length && {
           translations: { deleteMany: {}, create: data.translations },
         }),
       },
@@ -39,6 +52,9 @@ export class ProductRepository {
   }
 
   async delete(id: number): Promise<ProductWithTranslations> {
-    return prisma.product.delete({ where: { id }, include: { translations: true } });
+    return prisma.product.delete({
+      where: { id },
+      include: { translations: true },
+    });
   }
 }

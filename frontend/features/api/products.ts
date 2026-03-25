@@ -12,6 +12,17 @@ export const productsApi = {
     return response.json();
   },
 
+  getFavorites: async (): Promise<ProductWithTranslations[]> => {
+    const response = await fetch('/api/products/favorites');
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to fetch favorite products');
+    }
+
+    return response.json();
+  },
+
   create: async (data: ProductCreateInput): Promise<unknown> => {
     const response = await fetch('/api/products', {
       method: 'POST',

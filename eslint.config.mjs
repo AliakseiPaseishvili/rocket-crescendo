@@ -12,6 +12,7 @@ const eslintConfig = defineConfig([
         { vars: "all", args: "after-used", ignoreRestSiblings: true },
       ],
       "import/no-cycle": "error",
+      "no-console": "error",
       "import/order": [
         "error",
         {

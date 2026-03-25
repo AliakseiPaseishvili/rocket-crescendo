@@ -16,6 +16,10 @@ export class ProductService {
     return this.repository.findAll();
   }
 
+  async getFavorites(): Promise<ProductWithTranslations[]> {
+    return this.repository.findFavorites();
+  }
+
   async getById(id: number): Promise<ProductWithTranslations> {
     const product = await this.repository.findById(id);
     if (!product) throw new Error(`Product with id ${id} not found`);
