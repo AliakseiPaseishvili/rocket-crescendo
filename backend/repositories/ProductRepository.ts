@@ -1,5 +1,6 @@
 import type {
   ProductCreateInput,
+  ProductFilter,
   ProductUpdateInput,
   ProductWithTranslations,
 } from "@/backend/types";
@@ -7,13 +8,17 @@ import type {
 import prisma from "../prisma/prisma";
 
 export class ProductRepository {
-  async findAll(): Promise<ProductWithTranslations[]> {
-    return prisma.product.findMany({ include: { translations: true } });
-  }
+  async findAll(filter?: ProductFilter): Promise<ProductWithTranslations[]> {
+    const where: ProductFilter = {};
 
-  async findFavorites(): Promise<ProductWithTranslations[]> {
+    if (filter) {
+      if (typeof filter.favorite === "boolean") {
+        where.favorite = filter.favorite;
+      }
+    }
+
     return prisma.product.findMany({
-      where: { favorite: true },
+      where,
       include: { translations: true },
     });
   }

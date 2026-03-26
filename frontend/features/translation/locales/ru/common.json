@@ -6,5 +6,6 @@
   "nameRequired": "Название обязательно",
   "nameMinLength": "Название должно содержать не менее 2 символов",
   "descriptionRequired": "Описание обязательно",
-  "descriptionMinLength": "Описание должно содержать не менее 10 символов"
+  "descriptionMinLength": "Описание должно содержать не менее 10 символов",
+  "comingSoon": "Скоро"
 }

@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { Product } from '@/frontend/features/products/components/Product';
-import { useFavoriteProducts } from '@/frontend/features/products/hooks';
+import { Product } from "@/frontend/features/products/components/Product";
+import { useProducts } from "@/frontend/features/products/hooks";
 
-import { LandingSection } from './LandingSection';
+import { LandingSection } from "./LandingSection";
 
 export const HeroSection = () => {
-  const { data: favorites } = useFavoriteProducts();
+  const { data: favorites } = useProducts({ favorite: true });
 
   const featured = favorites?.[0];
 

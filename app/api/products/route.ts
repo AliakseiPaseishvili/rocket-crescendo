@@ -1,12 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { ProductService } from "@/backend/services/ProductService";
+import type { ProductFilter } from "@/backend/types";
 
 const service = new ProductService();
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const products = await service.getAll();
+    const { searchParams } = new URL(request.url);
+    const favoriteParam = searchParams.get("favorite");
+    const filter: ProductFilter = {};
+    if (favoriteParam !== null) {
+      filter.favorite = favoriteParam === "true";
+    }
+    const products = await service.getAll(Object.keys(filter).length ? filter : undefined);
     return NextResponse.json(products);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Failed to fetch products";

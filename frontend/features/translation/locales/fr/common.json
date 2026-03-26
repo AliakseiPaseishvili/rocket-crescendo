@@ -6,5 +6,6 @@
   "nameRequired": "Le nom est requis",
   "nameMinLength": "Le nom doit comporter au moins 2 caractères",
   "descriptionRequired": "La description est requise",
-  "descriptionMinLength": "La description doit comporter au moins 10 caractères"
+  "descriptionMinLength": "La description doit comporter au moins 10 caractères",
+  "comingSoon": "Bientôt disponible"
 }

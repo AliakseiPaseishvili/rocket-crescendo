@@ -6,5 +6,6 @@
   "nameRequired": "Name is required",
   "nameMinLength": "Name must be at least 2 characters",
   "descriptionRequired": "Description is required",
-  "descriptionMinLength": "Description must be at least 10 characters"
+  "descriptionMinLength": "Description must be at least 10 characters",
+  "comingSoon": "Coming soon"
 }

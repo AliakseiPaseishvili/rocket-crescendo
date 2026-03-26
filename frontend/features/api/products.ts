@@ -1,23 +1,16 @@
-import type { ProductCreateInput, ProductUpdateInput, ProductWithTranslations } from '@/backend/types';
+import type { ProductCreateInput, ProductFilter, ProductUpdateInput, ProductWithTranslations } from '@/backend/types';
 
 export const productsApi = {
-  getAll: async (): Promise<ProductWithTranslations[]> => {
-    const response = await fetch('/api/products');
+  getAll: async (filter?: ProductFilter): Promise<ProductWithTranslations[]> => {
+    const url = new URL('/api/products', window.location.origin);
+    if (filter?.favorite !== undefined) {
+      url.searchParams.set('favorite', String(filter.favorite));
+    }
+    const response = await fetch(url.toString());
 
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error.error || 'Failed to fetch products');
-    }
-
-    return response.json();
-  },
-
-  getFavorites: async (): Promise<ProductWithTranslations[]> => {
-    const response = await fetch('/api/products/favorites');
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to fetch favorite products');
     }
 
     return response.json();

@@ -1,6 +1,7 @@
 import { ProductRepository } from "@/backend/repositories/ProductRepository";
 import type {
   ProductCreateInput,
+  ProductFilter,
   ProductUpdateInput,
   ProductWithTranslations,
 } from "@/backend/types";
@@ -12,12 +13,8 @@ export class ProductService {
     this.repository = new ProductRepository();
   }
 
-  async getAll(): Promise<ProductWithTranslations[]> {
-    return this.repository.findAll();
-  }
-
-  async getFavorites(): Promise<ProductWithTranslations[]> {
-    return this.repository.findFavorites();
+  async getAll(filter?: ProductFilter): Promise<ProductWithTranslations[]> {
+    return this.repository.findAll(filter);
   }
 
   async getById(id: number): Promise<ProductWithTranslations> {

@@ -25,3 +25,7 @@ export type ProductCreateInput = Omit<
 export type ProductUpdateInput = ProductUpdateInputBase & {
   translations: Omit<ProductTranslationCreateInput, "product">[];
 };
+
+export type ProductFilter = {
+  favorite?: boolean;
+};

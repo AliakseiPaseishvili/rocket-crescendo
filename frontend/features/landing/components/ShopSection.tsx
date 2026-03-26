@@ -1,4 +1,6 @@
-'use client';
+"use client";
+
+import { useTranslation } from "react-i18next";
 
 import {
   Carousel,
@@ -6,23 +8,22 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/frontend/components/ui/carousel';
-import { Product } from '@/frontend/features/products/components';
-import { useProducts } from '@/frontend/features/products/hooks';
+} from "@/frontend/components/ui/carousel";
+import { Product } from "@/frontend/features/products/components";
+import { useProducts } from "@/frontend/features/products/hooks";
 
-import { LandingSection } from './LandingSection';
+import { LandingSection } from "./LandingSection";
 
 export const ShopSection = () => {
-  const { data: products } = useProducts();
-
-  const nonFavorites = products?.filter((p) => !p.favorite) ?? [];
+  const { t } = useTranslation("common");
+  const { data: products } = useProducts({ favorite: false });
 
   return (
     <LandingSection id="shop" titleKey="shop">
-      {nonFavorites.length > 0 && (
+      {products && products.length > 0 ? (
         <Carousel className="mt-8 w-full max-w-xl">
           <CarouselContent>
-            {nonFavorites.map((product) => (
+            {products.map((product) => (
               <CarouselItem key={product.id}>
                 <Product product={product} isHiddenActions />
               </CarouselItem>
@@ -31,6 +32,10 @@ export const ShopSection = () => {
           <CarouselPrevious />
           <CarouselNext />
         </Carousel>
+      ) : (
+        products !== undefined && (
+          <p className="mt-8 text-muted-foreground">{t("comingSoon")}</p>
+        )
       )}
     </LandingSection>
   );
