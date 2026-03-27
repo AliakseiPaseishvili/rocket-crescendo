@@ -3,10 +3,10 @@ import {
   ProductTranslationCreateInput,
   ProductCreateInput as ProductCreateInputBase,
   ProductUpdateInput as ProductUpdateInputBase,
-} from "./app/generated/prisma/models";
+} from "../../app/generated/prisma/models";
 
-export type { ProductModel } from "./app/generated/prisma/models/Product";
-export type { ProductTranslationModel } from "./app/generated/prisma/models/ProductTranslation";
+export type { ProductModel } from "../../app/generated/prisma/models/Product";
+export type { ProductTranslationModel } from "../../app/generated/prisma/models/ProductTranslation";
 
 export type ProductWithTranslations = {
   id: number;

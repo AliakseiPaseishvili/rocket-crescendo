@@ -1,10 +1,10 @@
-import { ProductRepository } from "@/backend/repositories/ProductRepository";
+import { ProductRepository } from "./Product.repository";
 import type {
   ProductCreateInput,
   ProductFilter,
   ProductUpdateInput,
   ProductWithTranslations,
-} from "@/backend/types";
+} from "./types";
 
 export class ProductService {
   private readonly repository: ProductRepository;

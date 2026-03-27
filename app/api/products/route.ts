@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { ProductService } from "@/backend/services/ProductService";
-import type { ProductFilter } from "@/backend/types";
+import { ProductService } from "@/backend/features/product";
+import type { ProductFilter } from "@/backend/features/product";
 
 const service = new ProductService();
 

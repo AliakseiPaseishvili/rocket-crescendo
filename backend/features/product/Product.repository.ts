@@ -3,9 +3,8 @@ import type {
   ProductFilter,
   ProductUpdateInput,
   ProductWithTranslations,
-} from "@/backend/types";
-
-import prisma from "../prisma/prisma";
+} from "./types";
+import prisma from "../../prisma/prisma";
 
 export class ProductRepository {
   async findAll(filter?: ProductFilter): Promise<ProductWithTranslations[]> {

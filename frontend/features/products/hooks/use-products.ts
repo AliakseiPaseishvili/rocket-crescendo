@@ -2,10 +2,11 @@
 
 import { useQuery } from '@tanstack/react-query';
 
-import { ProductFilter } from '@/backend/types';
+import { ProductFilter } from '@/backend/features/product';
 import { productsApi } from '@/frontend/features/api';
 
 import { PRODUCTS_QUERY_KEY } from '../constants';
+
 
 
 export function useProducts(filter?: ProductFilter) {

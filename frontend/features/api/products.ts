@@ -1,4 +1,4 @@
-import type { ProductCreateInput, ProductFilter, ProductUpdateInput, ProductWithTranslations } from '@/backend/types';
+import type { ProductCreateInput, ProductFilter, ProductUpdateInput, ProductWithTranslations } from '@/backend/features/product';
 
 export const productsApi = {
   getAll: async (filter?: ProductFilter): Promise<ProductWithTranslations[]> => {

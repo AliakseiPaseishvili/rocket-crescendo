@@ -4,11 +4,12 @@ import { Star, Trash2 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { FC, useCallback } from "react";
 
-import type { ProductWithTranslations } from "@/backend/types";
+import type { ProductWithTranslations } from "@/backend/features/product";
 import { Button } from "@/frontend/components/ui/button";
 import { fallbackLng } from "@/frontend/features/translation";
 
 import { useDeleteProduct, useUpdateProduct } from "../hooks";
+
 
 interface ProductProps {
   product: ProductWithTranslations;
