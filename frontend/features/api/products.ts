@@ -1,57 +1,42 @@
-import type { ProductCreateInput, ProductFilter, ProductUpdateInput, ProductWithTranslations } from '@/backend/features/product';
+import type {
+  ProductCreateInput,
+  ProductFilter,
+  ProductUpdateInput,
+  ProductWithTranslations,
+} from "@/backend/features/product";
 
-export const productsApi = {
-  getAll: async (filter?: ProductFilter): Promise<ProductWithTranslations[]> => {
-    const url = new URL('/api/products', window.location.origin);
-    if (filter?.favorite !== undefined) {
-      url.searchParams.set('favorite', String(filter.favorite));
-    }
-    const response = await fetch(url.toString());
+import { HttpMethod, RequestApiType, RequestMap } from "./types";
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to fetch products');
-    }
+const PRODUCT_API_ROUTES = {
+  PRODUCTS: "/api/products",
+  PRODUCT: "/api/products/:id",
+} as const;
 
-    return response.json();
-  },
+export type ProductApiTypes = {
+  getAll: RequestApiType<
+    undefined,
+    undefined,
+    ProductFilter | undefined,
+    ProductWithTranslations[]
+  >;
+  create: RequestApiType<
+    ProductCreateInput,
+    undefined,
+    undefined,
+    ProductWithTranslations
+  >;
+  delete: RequestApiType<undefined, { id: number }, undefined, void>;
+  update: RequestApiType<
+    ProductUpdateInput,
+    { id: number },
+    undefined,
+    ProductWithTranslations
+  >;
+};
 
-  create: async (data: ProductCreateInput): Promise<unknown> => {
-    const response = await fetch('/api/products', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to create product');
-    }
-
-    return response.json();
-  },
-
-  delete: async (id: number): Promise<void> => {
-    const response = await fetch(`/api/products/${id}`, { method: 'DELETE' });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to delete product');
-    }
-  },
-
-  update: async ({ id, ...data }: Partial<ProductUpdateInput> & { id: number }): Promise<ProductWithTranslations> => {
-    const response = await fetch(`/api/products/${id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to update product');
-    }
-
-    return response.json();
-  },
+export const PRODUCT_REQUEST_MAP: RequestMap<ProductApiTypes> = {
+  getAll: { url: PRODUCT_API_ROUTES.PRODUCTS, method: HttpMethod.GET },
+  create: { url: PRODUCT_API_ROUTES.PRODUCTS, method: HttpMethod.POST },
+  delete: { url: PRODUCT_API_ROUTES.PRODUCT, method: HttpMethod.DELETE },
+  update: { url: PRODUCT_API_ROUTES.PRODUCT, method: HttpMethod.PATCH },
 };

@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/frontend/components/ui/button';
 import { ROUTES } from '@/frontend/constants';
-import { fillUrl } from '@/frontend/utils/fill-url';
+import { formUrlParams } from '@/frontend/utils/form-url';
 
 export const CreateProductLink = () => {
   const { t } = useTranslation('product');
@@ -15,7 +15,7 @@ export const CreateProductLink = () => {
 
   return (
     <Button asChild>
-      <Link href={fillUrl({ url: ROUTES.ADMIN_PRODUCTS_CREATE, params: { lng } })}>
+      <Link href={formUrlParams({ url: ROUTES.ADMIN_PRODUCTS_CREATE, params: { lng } })}>
         <Plus size={4} />
         {t('createProduct')}
       </Link>

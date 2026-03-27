@@ -10,7 +10,6 @@ import { fallbackLng } from "@/frontend/features/translation";
 
 import { useDeleteProduct, useUpdateProduct } from "../hooks";
 
-
 interface ProductProps {
   product: ProductWithTranslations;
   isHiddenActions?: boolean;
@@ -29,11 +28,14 @@ export const Product: FC<ProductProps> = ({ product, isHiddenActions }) => {
     product.translations[0];
 
   const handleFavoriteToggle = useCallback(() => {
-    updateProduct({ id: product.id, favorite: !product.favorite });
-  }, [product.favorite, product.id, updateProduct]);
+    updateProduct({
+      params: { id: product.id },
+      body: { favorite: !product.favorite },
+    });
+  }, [product, updateProduct]);
 
   const handleDelete = useCallback(() => {
-    deleteProduct(product.id);
+    deleteProduct({ params: { id: product.id } });
   }, [deleteProduct, product.id]);
 
   return (
@@ -68,7 +70,9 @@ export const Product: FC<ProductProps> = ({ product, isHiddenActions }) => {
         </div>
       )}
 
-      <span className="font-semibold text-foreground pr-8">{translation?.name}</span>
+      <span className="font-semibold text-foreground pr-8">
+        {translation?.name}
+      </span>
       <span className="text-sm text-muted-foreground">
         {translation?.description}
       </span>

@@ -35,6 +35,7 @@ export class ProductService {
 
   async update(id: number, data: ProductUpdateInput): Promise<ProductWithTranslations> {
     await this.getById(id);
+
     return this.repository.update(id, data);
   }
 

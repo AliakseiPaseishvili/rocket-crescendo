@@ -47,8 +47,8 @@ export function useCreateProductForm() {
   const { fields } = useFieldArray({ control, name: 'translations' });
   const { mutate, isPending, isSuccess, error } = useCreateProduct();
 
-  const onSubmit = handleSubmit((data) => {
-    mutate(data, { onSuccess: () => reset() });
+  const onSubmit = handleSubmit((body ) => {
+    mutate({ body }, { onSuccess: () => reset() });
   });
 
   return {
