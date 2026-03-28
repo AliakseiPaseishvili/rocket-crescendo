@@ -57,6 +57,8 @@
   },
   "product": {
     "createProduct": "Создать продукт",
+    "categoryRequired": "Категория обязательна",
+    "selectCategory": "Выберите категорию",
     "namePlaceholder": "Название продукта",
     "descriptionPlaceholder": "Описание продукта",
     "favorite": "Избранное",

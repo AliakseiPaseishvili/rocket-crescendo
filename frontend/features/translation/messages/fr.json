@@ -57,6 +57,8 @@
   },
   "product": {
     "createProduct": "Créer un produit",
+    "categoryRequired": "La catégorie est requise",
+    "selectCategory": "Sélectionner une catégorie",
     "namePlaceholder": "Nom du produit",
     "descriptionPlaceholder": "Description du produit",
     "favorite": "Favori",

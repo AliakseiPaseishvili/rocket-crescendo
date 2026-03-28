@@ -1,8 +1,9 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import { Controller } from 'react-hook-form';
 
-import { FormInputField } from '@/frontend/components/FormInputField';
+import { ColorPicker } from '@/frontend/components/ColorPicker';
 import { TranslationTabTrigger } from '@/frontend/components/TranslationTabTrigger';
 import { Button } from '@/frontend/components/ui/button';
 import { Tabs, TabsList } from '@/frontend/components/ui/tabs';
@@ -15,6 +16,7 @@ export const CreateCategoryForm = () => {
   const tCommon = useTranslations('common');
   const {
     register,
+    control,
     fields,
     errors,
     onSubmit,
@@ -27,12 +29,17 @@ export const CreateCategoryForm = () => {
     <form onSubmit={onSubmit} className="flex flex-col gap-4 w-full max-w-md">
       <h2 className="text-2xl font-bold">{tCategory('createCategory')}</h2>
 
-      <FormInputField
-        id="color"
-        label={tCommon('color')}
-        placeholder={tCategory('colorPlaceholder')}
-        errorMessage={errors.color?.message}
-        registration={register('color')}
+      <Controller
+        name="color"
+        control={control}
+        render={({ field }) => (
+          <ColorPicker
+            label={tCommon('color')}
+            value={field.value}
+            onChange={field.onChange}
+            errorMessage={errors.color?.message}
+          />
+        )}
       />
 
       <Tabs defaultValue={fields[0]?.language}>

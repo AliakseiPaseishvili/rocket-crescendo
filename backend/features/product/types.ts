@@ -11,14 +11,16 @@ export type { ProductTranslationModel } from "../../app/generated/prisma/models/
 export type ProductWithTranslations = {
   id: number;
   favorite: boolean;
+  categoryId: number;
   translations: ProductTranslationModel[];
 };
 
 export type ProductCreateInput = Omit<
   ProductCreateInputBase,
-  "translations"
+  "translations" | "category"
 > & {
   favorite?: boolean;
+  categoryId: number;
   translations: Omit<ProductTranslationCreateInput, "product">[];
 };
 

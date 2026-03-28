@@ -33,6 +33,7 @@ export class ProductRepository {
     return prisma.product.create({
       data: {
         favorite: data.favorite ?? false,
+        categoryId: data.categoryId,
         translations: { create: data.translations },
       },
       include: { translations: true },

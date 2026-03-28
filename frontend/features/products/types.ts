@@ -8,5 +8,6 @@ export type TranslationField = {
 
 export type ProductFormValues = {
   favorite: boolean;
+  categoryId: number;
   translations: TranslationField[];
 };

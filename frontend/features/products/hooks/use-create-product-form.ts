@@ -13,11 +13,13 @@ import { ProductFormValues } from '../types';
 
 export function useCreateProductForm() {
   const t = useTranslations('common');
+  const tProduct = useTranslations('product');
 
   const schema = useMemo(
     () =>
       yup.object({
         favorite: yup.boolean().required(),
+        categoryId: yup.number().required(tProduct('categoryRequired')).min(1, tProduct('categoryRequired')),
         translations: yup.array(
           yup.object({
             language: yup.mixed<SUPPORTED_LANGUAGE>().oneOf(supportedLngs).required(),
@@ -26,11 +28,12 @@ export function useCreateProductForm() {
           })
         ).required(),
       }),
-    [t]
+    [t, tProduct]
   );
 
   const defaultValues: ProductFormValues = {
     favorite: false,
+    categoryId: 0,
     translations: supportedLngs.map((lng) => ({
       language: lng,
       name: '',
@@ -47,7 +50,7 @@ export function useCreateProductForm() {
   const { fields } = useFieldArray({ control, name: 'translations' });
   const { mutate, isPending, isSuccess, error } = useCreateProduct();
 
-  const onSubmit = handleSubmit((body ) => {
+  const onSubmit = handleSubmit((body) => {
     mutate({ body }, { onSuccess: () => reset() });
   });
 

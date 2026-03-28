@@ -24,6 +24,7 @@ export class ProductService {
   }
 
   async create(data: ProductCreateInput): Promise<ProductWithTranslations> {
+    if (!data.categoryId) throw new Error("categoryId is required");
     if (!data.translations?.length) throw new Error("At least one translation is required");
     for (const translation of data.translations) {
       const { name, description, language } = translation;

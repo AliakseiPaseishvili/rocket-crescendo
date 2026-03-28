@@ -8,6 +8,7 @@ import { Button } from "@/frontend/components/ui/button";
 import { Checkbox } from "@/frontend/components/ui/checkbox";
 import { Label } from "@/frontend/components/ui/label";
 import { Tabs, TabsList } from "@/frontend/components/ui/tabs";
+import { CategorySelector } from "@/frontend/features/categories/components";
 
 import { useCreateProductForm } from "../hooks";
 import { TranslationTabContent } from "./TranslationTabContent";
@@ -51,6 +52,18 @@ export const CreateProductForm = () => {
           />
         ))}
       </Tabs>
+
+      <Controller
+        name="categoryId"
+        control={control}
+        render={({ field }) => (
+          <CategorySelector
+            value={field.value}
+            onChange={field.onChange}
+            error={errors.categoryId?.message}
+          />
+        )}
+      />
 
       <div className="flex items-center gap-2">
         <Controller
