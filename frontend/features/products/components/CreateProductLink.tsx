@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 
 import { Button } from '@/frontend/components/ui/button';
 import { ROUTES } from '@/frontend/constants';
-import { Link } from '@/i18n/navigation';
+import { Link } from '@/frontend/features/translation/i18n/navigation';
 
 export const CreateProductLink = () => {
   const t = useTranslations('product');

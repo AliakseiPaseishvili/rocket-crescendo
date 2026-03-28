@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { ROUTES } from '@/frontend/constants';
 import { api } from '@/frontend/features/api';
-import { useRouter } from '@/i18n/navigation';
+import { useRouter } from '@/frontend/features/translation/i18n/navigation';
 
 import { PRODUCTS_QUERY_KEY } from '../constants';
 

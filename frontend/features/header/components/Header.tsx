@@ -4,7 +4,7 @@ import { ROUTES } from '@/frontend/constants';
 import { CartButton } from '@/frontend/features/cart';
 import { NavMenu } from '@/frontend/features/nav';
 import { LanguageSelector } from '@/frontend/features/translation/components';
-import { Link } from '@/i18n/navigation';
+import { Link } from '@/frontend/features/translation/i18n/navigation';
 
 import { BurgerMenu } from './BurgerMenu';
 
