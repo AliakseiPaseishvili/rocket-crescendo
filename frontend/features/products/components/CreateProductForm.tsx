@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Controller } from "react-hook-form";
 
+import { TranslationTabTrigger } from "@/frontend/components/TranslationTabTrigger";
 import { Button } from "@/frontend/components/ui/button";
 import { Checkbox } from "@/frontend/components/ui/checkbox";
 import { Label } from "@/frontend/components/ui/label";
@@ -10,7 +11,6 @@ import { Tabs, TabsList } from "@/frontend/components/ui/tabs";
 
 import { useCreateProductForm } from "../hooks";
 import { TranslationTabContent } from "./TranslationTabContent";
-import { TranslationTabTrigger } from "./TranslationTabTrigger";
 
 export const CreateProductForm = () => {
   const tProduct = useTranslations("product");
@@ -35,9 +35,8 @@ export const CreateProductForm = () => {
           {fields.map((field, index) => (
             <TranslationTabTrigger
               language={field.language}
-              index={index}
               key={field.id}
-              errors={errors}
+              hasError={!!(errors.translations?.[index]?.name || errors.translations?.[index]?.description)}
             />
           ))}
         </TabsList>

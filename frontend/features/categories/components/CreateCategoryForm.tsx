@@ -3,12 +3,12 @@
 import { useTranslations } from 'next-intl';
 
 import { FormInputField } from '@/frontend/components/FormInputField';
+import { TranslationTabTrigger } from '@/frontend/components/TranslationTabTrigger';
 import { Button } from '@/frontend/components/ui/button';
 import { Tabs, TabsList } from '@/frontend/components/ui/tabs';
 
 import { useCreateCategoryForm } from '../hooks';
 import { CategoryTranslationTabContent } from './CategoryTranslationTabContent';
-import { CategoryTranslationTabTrigger } from './CategoryTranslationTabTrigger';
 
 export const CreateCategoryForm = () => {
   const tCategory = useTranslations('category');
@@ -38,11 +38,10 @@ export const CreateCategoryForm = () => {
       <Tabs defaultValue={fields[0]?.language}>
         <TabsList className="w-full">
           {fields.map((field, index) => (
-            <CategoryTranslationTabTrigger
+            <TranslationTabTrigger
               language={field.language}
-              index={index}
               key={field.id}
-              errors={errors}
+              hasError={!!errors.translations?.[index]?.name}
             />
           ))}
         </TabsList>
