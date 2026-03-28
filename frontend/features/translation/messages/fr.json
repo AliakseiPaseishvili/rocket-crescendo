@@ -8,6 +8,7 @@
     "nameMinLength": "Le nom doit comporter au moins 2 caractères",
     "descriptionRequired": "La description est requise",
     "descriptionMinLength": "La description doit comporter au moins 10 caractères",
+    "color": "Couleur",
     "comingSoon": "Bientôt disponible"
   },
   "nav": {
@@ -44,7 +45,15 @@
     "categoriesDescription": "Gérez les catégories de produits"
   },
   "category": {
-    "categories": "Catégories"
+    "categories": "Catégories",
+    "createCategory": "Créer une catégorie",
+    "namePlaceholder": "Nom de la catégorie",
+    "colorPlaceholder": "#e2e8f0",
+    "colorRequired": "La couleur est requise",
+    "createSuccess": "Catégorie créée avec succès !",
+    "loadingCategories": "Chargement des catégories…",
+    "errorLoadingCategories": "Échec du chargement des catégories.",
+    "noCategories": "Aucune catégorie trouvée."
   },
   "product": {
     "createProduct": "Créer un produit",

@@ -3,6 +3,7 @@
     "hello": "Hello",
     "name": "Name",
     "description": "Description",
+    "color": "Color",
     "creating": "Creating…",
     "nameRequired": "Name is required",
     "nameMinLength": "Name must be at least 2 characters",
@@ -44,7 +45,15 @@
     "categoriesDescription": "Manage categories for products"
   },
   "category": {
-    "categories": "Categories"
+    "categories": "Categories",
+    "createCategory": "Create Category",
+    "namePlaceholder": "Category name",
+    "colorPlaceholder": "#e2e8f0",
+    "colorRequired": "Color is required",
+    "createSuccess": "Category created successfully!",
+    "loadingCategories": "Loading categories…",
+    "errorLoadingCategories": "Failed to load categories.",
+    "noCategories": "No categories found."
   },
   "product": {
     "createProduct": "Create Product",
