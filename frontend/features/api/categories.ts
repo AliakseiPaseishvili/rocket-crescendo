@@ -10,6 +10,7 @@ import { HttpMethod, RequestApiType, RequestMap } from './types';
 const CATEGORY_API_ROUTES = {
   CATEGORIES: '/api/category',
   CATEGORY: '/api/category/:id',
+  CATEGORIES_BY_IDS: '/api/category/by-ids',
 } as const;
 
 export type CategoryApiTypes = {
@@ -17,6 +18,12 @@ export type CategoryApiTypes = {
     undefined,
     undefined,
     CategoryFilter | undefined,
+    CategoryWithTranslations[]
+  >;
+  getCategoriesByIds: RequestApiType<
+    { ids: number[] },
+    undefined,
+    undefined,
     CategoryWithTranslations[]
   >;
   createCategory: RequestApiType<
@@ -36,6 +43,7 @@ export type CategoryApiTypes = {
 
 export const CATEGORY_REQUEST_MAP: RequestMap<CategoryApiTypes> = {
   getCategories: { url: CATEGORY_API_ROUTES.CATEGORIES, method: HttpMethod.GET },
+  getCategoriesByIds: { url: CATEGORY_API_ROUTES.CATEGORIES_BY_IDS, method: HttpMethod.POST },
   createCategory: { url: CATEGORY_API_ROUTES.CATEGORIES, method: HttpMethod.POST },
   deleteCategory: { url: CATEGORY_API_ROUTES.CATEGORY, method: HttpMethod.DELETE },
   updateCategory: { url: CATEGORY_API_ROUTES.CATEGORY, method: HttpMethod.PATCH },

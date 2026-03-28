@@ -4,18 +4,21 @@ import { Star, Trash2 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { FC, useCallback } from "react";
 
+import type { CategoryWithTranslations } from "@/backend/features/category";
 import type { ProductWithTranslations } from "@/backend/features/product";
 import { Button } from "@/frontend/components/ui/button";
+import { CategoryBadge } from "@/frontend/features/categories/components/CategoryBadge";
 import { fallbackLng } from "@/frontend/features/translation";
 
 import { useDeleteProduct, useUpdateProduct } from "../hooks";
 
 interface ProductProps {
   product: ProductWithTranslations;
+  category?: CategoryWithTranslations;
   isHiddenActions?: boolean;
 }
 
-export const Product: FC<ProductProps> = ({ product, isHiddenActions }) => {
+export const Product: FC<ProductProps> = ({ product, category, isHiddenActions }) => {
   const { lng } = useParams<{ lng: string }>();
   const { mutate: updateProduct, isPending: isUpdating } = useUpdateProduct();
   const { mutate: deleteProduct, isPending: isDeleting } = useDeleteProduct();
@@ -76,6 +79,7 @@ export const Product: FC<ProductProps> = ({ product, isHiddenActions }) => {
       <span className="text-sm text-muted-foreground">
         {translation?.description}
       </span>
+      {category && <CategoryBadge category={category} />}
     </li>
   );
 };

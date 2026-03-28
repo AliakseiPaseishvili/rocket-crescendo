@@ -25,6 +25,13 @@ export class CategoryRepository {
     });
   }
 
+  async findByIds(ids: number[]): Promise<CategoryWithTranslations[]> {
+    return prisma.category.findMany({
+      where: { id: { in: ids } },
+      include: { translations: true },
+    });
+  }
+
   async create(data: CategoryCreateInput): Promise<CategoryWithTranslations> {
     return prisma.category.create({
       data: {

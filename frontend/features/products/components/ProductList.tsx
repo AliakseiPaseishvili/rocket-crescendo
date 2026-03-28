@@ -2,6 +2,8 @@
 
 import { useTranslations } from 'next-intl';
 
+import { useCategoriesByIds } from '@/frontend/features/categories/hooks';
+
 import { useProducts } from '../hooks';
 import { CreateProductLink } from './CreateProductLink';
 import { Product } from './Product';
@@ -9,6 +11,9 @@ import { Product } from './Product';
 export const ProductList = () => {
   const t = useTranslations('product');
   const { data: products, isPending, isError } = useProducts();
+
+  const categoryIds = products?.map((p) => p.categoryId) ?? [];
+  const { data: categories } = useCategoriesByIds(categoryIds);
 
   return (
     <div className="flex flex-col gap-6">
@@ -26,7 +31,11 @@ export const ProductList = () => {
       {!!products?.length && (
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {products.map((product) => (
-            <Product key={product.id} product={product} />
+            <Product
+              key={product.id}
+              product={product}
+              category={categories?.find((c) => c.id === product.categoryId)}
+            />
           ))}
         </ul>
       )}

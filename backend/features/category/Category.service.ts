@@ -23,6 +23,10 @@ export class CategoryService {
     return category;
   }
 
+  async getByIds(ids: number[]): Promise<CategoryWithTranslations[]> {
+    return this.repository.findByIds(ids);
+  }
+
   async create(data: CategoryCreateInput): Promise<CategoryWithTranslations> {
     if (!data.color?.trim()) throw new Error('Color is required');
     if (!data.translations?.length) throw new Error('At least one translation is required');

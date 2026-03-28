@@ -1,1 +1,1 @@
-export { CategoriesList, CreateCategoryForm } from './components';
+export { CategoriesList, CategoryBadge, CreateCategoryForm } from './components';
