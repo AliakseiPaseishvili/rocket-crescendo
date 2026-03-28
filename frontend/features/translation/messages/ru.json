@@ -15,7 +15,8 @@
     "shop": "Магазин",
     "game": "Игра",
     "aboutUs": "О нас",
-    "support": "Поддержка"
+    "support": "Поддержка",
+    "admin": "Админ"
   },
   "footer": {
     "copyright": "© {year} Wigmage Ltd. Все права защищены.",
@@ -37,6 +38,13 @@
   "metadata": {
     "title": "Cyber Shop: Rocket Crescendo",
     "description": "Покупайте книги и мерч Rocket Crescendo"
+  },
+  "admin": {
+    "productsDescription": "Управляйте вашими продуктами",
+    "categoriesDescription": "Управляйте категориями продуктов"
+  },
+  "category": {
+    "categories": "Категории"
   },
   "product": {
     "createProduct": "Создать продукт",

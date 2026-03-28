@@ -4,8 +4,6 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 
 import "../globals.css";
-import { Footer } from "@/frontend/features/footer";
-import { Header } from "@/frontend/features/header";
 import { ReactQueryProvider } from "@/frontend/features/react-query";
 import { supportedLngs } from "@/frontend/features/translation";
 
@@ -53,9 +51,7 @@ const RootLayout = async ({
       >
         <NextIntlClientProvider messages={messages}>
           <ReactQueryProvider>
-            <Header />
             {children}
-            <Footer />
           </ReactQueryProvider>
         </NextIntlClientProvider>
       </body>

@@ -15,7 +15,8 @@
     "shop": "Shop",
     "game": "Jeu",
     "aboutUs": "À propos",
-    "support": "Support"
+    "support": "Support",
+    "admin": "Admin"
   },
   "footer": {
     "copyright": "© {year} Wigmage Ltd. Tous droits réservés.",
@@ -37,6 +38,13 @@
   "metadata": {
     "title": "Cyber Shop: Rocket Crescendo",
     "description": "Achetez des livres et des produits dérivés Rocket Crescendo"
+  },
+  "admin": {
+    "productsDescription": "Gérez vos produits",
+    "categoriesDescription": "Gérez les catégories de produits"
+  },
+  "category": {
+    "categories": "Catégories"
   },
   "product": {
     "createProduct": "Créer un produit",
