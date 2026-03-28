@@ -1,3 +1,3 @@
-export { supportedLngs, fallbackLng, i18nCookieName, languageLabels } from './constants';
+export { supportedLngs, fallbackLng, languageLabels } from './constants';
 export { SUPPORTED_LANGUAGE } from './types';
  

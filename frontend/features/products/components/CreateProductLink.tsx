@@ -3,14 +3,14 @@
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/frontend/components/ui/button';
 import { ROUTES } from '@/frontend/constants';
 import { formUrlParams } from '@/frontend/utils/form-url';
 
 export const CreateProductLink = () => {
-  const { t } = useTranslation('product');
+  const t = useTranslations('product');
   const { lng } = useParams<{ lng: string }>();
 
   return (

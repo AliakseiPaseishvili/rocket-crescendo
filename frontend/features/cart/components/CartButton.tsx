@@ -1,7 +1,7 @@
 'use client';
 
 import { ShoppingCart } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/frontend/components/ui/button';
 import {
@@ -13,7 +13,7 @@ import {
 } from '@/frontend/components/ui/drawer';
 
 export const CartButton = () => {
-  const { t } = useTranslation('cart');
+  const t = useTranslations('cart');
 
   return (
     <Drawer direction="right">

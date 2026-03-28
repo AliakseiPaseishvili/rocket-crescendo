@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import { NAV_ITEMS } from '../constants';
 
@@ -9,7 +9,7 @@ interface NavMobileMenuProps {
 }
 
 export const NavMobileMenu = ({ onSelect }: NavMobileMenuProps) => {
-  const { t } = useTranslation('nav');
+  const t = useTranslations('nav');
 
   return (
     <nav className="flex flex-col gap-1">

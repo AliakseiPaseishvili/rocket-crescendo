@@ -1,7 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Controller } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 
 import { Button } from "@/frontend/components/ui/button";
 import { Checkbox } from "@/frontend/components/ui/checkbox";
@@ -13,7 +13,8 @@ import { TranslationTabContent } from "./TranslationTabContent";
 import { TranslationTabTrigger } from "./TranslationTabTrigger";
 
 export const CreateProductForm = () => {
-  const { t } = useTranslation(["product", "common"]);
+  const tProduct = useTranslations("product");
+  const tCommon = useTranslations("common");
   const {
     register,
     control,
@@ -27,7 +28,7 @@ export const CreateProductForm = () => {
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4 w-full max-w-md">
-      <h2 className="text-2xl font-bold">{t("product:createProduct")}</h2>
+      <h2 className="text-2xl font-bold">{tProduct("createProduct")}</h2>
 
       <Tabs defaultValue={fields[0]?.language}>
         <TabsList className="w-full">
@@ -65,17 +66,17 @@ export const CreateProductForm = () => {
           )}
         />
         <Label htmlFor="favorite" className="cursor-pointer">
-          {t("product:favorite")}
+          {tProduct("favorite")}
         </Label>
       </div>
 
       {error && <p className="text-sm text-destructive">{error.message}</p>}
       {isSuccess && (
-        <p className="text-sm text-green-600">{t("product:createSuccess")}</p>
+        <p className="text-sm text-green-600">{tProduct("createSuccess")}</p>
       )}
 
       <Button type="submit" disabled={isPending}>
-        {isPending ? t("common:creating") : t("product:createProduct")}
+        {isPending ? tCommon("creating") : tProduct("createProduct")}
       </Button>
     </form>
   );

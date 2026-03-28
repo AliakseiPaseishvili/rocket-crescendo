@@ -9,4 +9,3 @@ export const languageLabels: Record<SUPPORTED_LANGUAGE, string> = {
 };
 
 export const fallbackLng = 'en';
-export const i18nCookieName = 'i18next';

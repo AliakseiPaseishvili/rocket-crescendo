@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import {
   NavigationMenu,
@@ -13,7 +13,7 @@ import {
 import { NAV_ITEMS } from '../constants';
 
 export const NavMenu = () => {
-  const { t } = useTranslation('nav');
+  const t = useTranslations('nav');
 
   return (
     <NavigationMenu>

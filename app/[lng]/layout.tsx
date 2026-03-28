@@ -1,14 +1,13 @@
-import { dir } from "i18next";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, getTranslations } from "next-intl/server";
 
 import "../globals.css";
 import { Footer } from "@/frontend/features/footer";
 import { Header } from "@/frontend/features/header";
 import { ReactQueryProvider } from "@/frontend/features/react-query";
 import { supportedLngs } from "@/frontend/features/translation";
-import { I18nProvider } from "@/frontend/features/translation/components";
-import { initI18next } from "@/frontend/features/translation/i18n-server";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +29,7 @@ export async function generateMetadata({
   params: Promise<{ lng: string }>;
 }): Promise<Metadata> {
   const { lng } = await params;
-  const { t } = await initI18next(lng, "metadata");
+  const t = await getTranslations({ locale: lng, namespace: "metadata" });
   return {
     title: t("title"),
     description: t("description"),
@@ -45,18 +44,20 @@ const RootLayout = async ({
   params: Promise<{ lng: string }>;
 }>) => {
   const { lng } = await params;
+  const messages = await getMessages({ locale: lng });
+
   return (
-    <html lang={lng} dir={dir(lng)}>
+    <html lang={lng}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ReactQueryProvider>
-          <I18nProvider lng={lng}>
+        <NextIntlClientProvider messages={messages}>
+          <ReactQueryProvider>
             <Header />
             {children}
             <Footer />
-          </I18nProvider>
-        </ReactQueryProvider>
+          </ReactQueryProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

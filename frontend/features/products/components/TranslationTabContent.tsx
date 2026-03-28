@@ -1,7 +1,7 @@
 'use client';
+import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 
 import { FormInputField } from '@/frontend/components/FormInputField';
 import { FormTextAreaField } from '@/frontend/components/FormTextAreaField';
@@ -18,23 +18,24 @@ type TranslationTabContentProps = {
 };
 
 export const TranslationTabContent: FC<TranslationTabContentProps> = ({ lng, index, errors, register }) => {
-  const { t } = useTranslation(['product', 'common']);
+  const tProduct = useTranslations('product');
+  const tCommon = useTranslations('common');
   const translationErrors = errors.translations?.[index];
 
   return (
     <TabsContent value={lng} className="flex flex-col gap-3 mt-3">
       <FormInputField
         id={`translations.${index}.name`}
-        label={t('common:name')}
-        placeholder={t('product:namePlaceholder')}
+        label={tCommon('name')}
+        placeholder={tProduct('namePlaceholder')}
         errorMessage={translationErrors?.name?.message}
         registration={register(`translations.${index}.name`)}
       />
       <FormTextAreaField
         rows={3}
         id={`translations.${index}.description`}
-        label={t('common:description')}
-        placeholder={t('product:descriptionPlaceholder')}
+        label={tCommon('description')}
+        placeholder={tProduct('descriptionPlaceholder')}
         errorMessage={translationErrors?.description?.message}
         registration={register(`translations.${index}.description`)}
       />

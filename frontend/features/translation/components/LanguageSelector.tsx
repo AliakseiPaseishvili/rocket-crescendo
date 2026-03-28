@@ -2,8 +2,8 @@
 
 import { ChevronDownIcon } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
+import { useLocale } from "next-intl";
 import { useCallback } from "react";
-import { useTranslation } from "react-i18next";
 
 import {
   DropdownMenu,
@@ -13,23 +13,17 @@ import {
   DropdownMenuTrigger,
 } from "@/frontend/components/ui/dropdown-menu";
 
-
 import { languageLabels, supportedLngs } from "../constants";
-import i18n from "../i18n";
-
 
 export const LanguageSelector = () => {
-  const {
-    i18n: { language },
-  } = useTranslation();
+  const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
 
-  const currentLng = language as (typeof supportedLngs)[number];
+  const currentLng = locale as (typeof supportedLngs)[number];
 
   const handleChange = useCallback(
     (lng: string) => {
-      i18n.changeLanguage(lng);
       const segments = pathname.split("/");
       segments[1] = lng;
       router.push(segments.join("/"));

@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 import {
   Carousel,
@@ -15,7 +15,7 @@ import { useProducts } from "@/frontend/features/products/hooks";
 import { LandingSection } from "./LandingSection";
 
 export const ShopSection = () => {
-  const { t } = useTranslation("common");
+  const t = useTranslations("common");
   const { data: products } = useProducts({ favorite: false });
 
   return (

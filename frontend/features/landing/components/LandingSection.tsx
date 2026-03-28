@@ -1,17 +1,16 @@
 'use client';
 
-import { ParseKeys } from 'i18next';
+import { Messages, useTranslations } from 'next-intl';
 import { ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
 
 interface LandingSectionProps {
   id: string;
-  titleKey: ParseKeys<'nav'>;
+  titleKey: keyof Messages['nav'];
   children?: ReactNode;
 }
 
 export const LandingSection = ({ id, titleKey, children }: LandingSectionProps) => {
-  const { t } = useTranslation('nav');
+  const t = useTranslations('nav');
 
   return (
     <section id={id} className="flex w-full min-h-screen flex-col items-center justify-center border-b">

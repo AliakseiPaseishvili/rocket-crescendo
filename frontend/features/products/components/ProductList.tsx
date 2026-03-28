@@ -1,13 +1,13 @@
 'use client';
 
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import { useProducts } from '../hooks';
 import { CreateProductLink } from './CreateProductLink';
 import { Product } from './Product';
 
 export const ProductList = () => {
-  const { t } = useTranslation('product');
+  const t = useTranslations('product');
   const { data: products, isPending, isError } = useProducts();
 
   return (

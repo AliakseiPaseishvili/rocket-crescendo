@@ -1,0 +1,52 @@
+{
+  "common": {
+    "hello": "Hello",
+    "name": "Name",
+    "description": "Description",
+    "creating": "Creating…",
+    "nameRequired": "Name is required",
+    "nameMinLength": "Name must be at least 2 characters",
+    "descriptionRequired": "Description is required",
+    "descriptionMinLength": "Description must be at least 10 characters",
+    "comingSoon": "Coming soon"
+  },
+  "nav": {
+    "hero": "Hero",
+    "shop": "Shop",
+    "game": "Game",
+    "aboutUs": "About Us",
+    "support": "Support"
+  },
+  "footer": {
+    "copyright": "© {year} Wigmage Ltd. All rights reserved.",
+    "company": "Wigmage Ltd",
+    "companyDescription": "Wigmage Ltd is a UK-registered company specializing in digital products, books, and merchandise. We are committed to delivering quality experiences for our customers worldwide.",
+    "consent": "By using this website, you agree to our use of cookies and accept our Terms of Service.",
+    "privacyPolicy": "Privacy Policy",
+    "privacyPolicyContent": "We respect your privacy. Personal data collected on this site is used solely to process orders and improve your experience. We do not sell or share your data with third parties. You may request deletion of your data at any time by contacting us.",
+    "termsOfService": "Terms of Service",
+    "contact": "Contact",
+    "links": "Links",
+    "aboutCompany": "About Wigmage"
+  },
+  "cart": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty",
+    "openLabel": "Open cart"
+  },
+  "metadata": {
+    "title": "Cyber Shop: Rocket Crescendo",
+    "description": "Buy Rocket Crescendo books and merch"
+  },
+  "product": {
+    "createProduct": "Create Product",
+    "namePlaceholder": "Product name",
+    "descriptionPlaceholder": "Product description",
+    "favorite": "Favorite",
+    "createSuccess": "Product created successfully!",
+    "loadingProducts": "Loading products…",
+    "errorLoadingProducts": "Failed to load products.",
+    "noProducts": "No products found.",
+    "products": "Products"
+  }
+}

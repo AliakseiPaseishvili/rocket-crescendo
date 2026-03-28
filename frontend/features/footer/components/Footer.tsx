@@ -1,11 +1,11 @@
 'use client';
 
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import { CONTACT_EMAIL } from '../constants';
 
 export const Footer = () => {
-  const { t } = useTranslation('footer');
+  const t = useTranslations('footer');
   const year = new Date().getFullYear();
 
   return (

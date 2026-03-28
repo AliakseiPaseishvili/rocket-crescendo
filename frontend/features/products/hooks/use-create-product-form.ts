@@ -1,9 +1,9 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 
 import { SUPPORTED_LANGUAGE, supportedLngs } from '@/frontend/features/translation';
@@ -12,7 +12,7 @@ import { useCreateProduct } from './use-create-product';
 import { ProductFormValues } from '../types';
 
 export function useCreateProductForm() {
-  const { t } = useTranslation('common');
+  const t = useTranslations('common');
 
   const schema = useMemo(
     () =>

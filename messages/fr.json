@@ -1,0 +1,52 @@
+{
+  "common": {
+    "hello": "Bonjour",
+    "name": "Nom",
+    "description": "Description",
+    "creating": "Création…",
+    "nameRequired": "Le nom est requis",
+    "nameMinLength": "Le nom doit comporter au moins 2 caractères",
+    "descriptionRequired": "La description est requise",
+    "descriptionMinLength": "La description doit comporter au moins 10 caractères",
+    "comingSoon": "Bientôt disponible"
+  },
+  "nav": {
+    "hero": "Accueil",
+    "shop": "Shop",
+    "game": "Jeu",
+    "aboutUs": "À propos",
+    "support": "Support"
+  },
+  "footer": {
+    "copyright": "© {year} Wigmage Ltd. Tous droits réservés.",
+    "company": "Wigmage Ltd",
+    "companyDescription": "Wigmage Ltd est une société enregistrée au Royaume-Uni spécialisée dans les produits numériques, les livres et les articles dérivés. Nous nous engageons à offrir des expériences de qualité à nos clients dans le monde entier.",
+    "consent": "En utilisant ce site, vous acceptez notre utilisation des cookies et nos Conditions d'utilisation.",
+    "privacyPolicy": "Politique de confidentialité",
+    "privacyPolicyContent": "Nous respectons votre vie privée. Les données personnelles collectées sur ce site sont utilisées uniquement pour traiter les commandes et améliorer votre expérience. Nous ne vendons ni ne partageons vos données avec des tiers. Vous pouvez demander la suppression de vos données à tout moment en nous contactant.",
+    "termsOfService": "Conditions d'utilisation",
+    "contact": "Contact",
+    "links": "Liens",
+    "aboutCompany": "À propos de Wigmage"
+  },
+  "cart": {
+    "title": "Votre panier",
+    "empty": "Votre panier est vide",
+    "openLabel": "Ouvrir le panier"
+  },
+  "metadata": {
+    "title": "Cyber Shop: Rocket Crescendo",
+    "description": "Achetez des livres et des produits dérivés Rocket Crescendo"
+  },
+  "product": {
+    "createProduct": "Créer un produit",
+    "namePlaceholder": "Nom du produit",
+    "descriptionPlaceholder": "Description du produit",
+    "favorite": "Favori",
+    "createSuccess": "Produit créé avec succès !",
+    "loadingProducts": "Chargement des produits…",
+    "errorLoadingProducts": "Échec du chargement des produits.",
+    "noProducts": "Aucun produit trouvé.",
+    "products": "Produits"
+  }
+}
