@@ -1,5 +1,5 @@
 export const ROUTES = {
-  ADMIN_PRODUCTS: '/:lng/admin/products',
-  ADMIN_PRODUCTS_CREATE: '/:lng/admin/products/create',
-  BASE: '/:lng',
+  ADMIN_PRODUCTS: '/admin/products',
+  ADMIN_PRODUCTS_CREATE: '/admin/products/create',
+  BASE: '/',
 } as const;
