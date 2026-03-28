@@ -16,6 +16,9 @@ Conventions for `frontend/features/<feature>/`. Full templates: see [references/
 | Constants | `frontend/features/<feature>/constants.ts` |
 | Feature barrel | `frontend/features/<feature>/index.ts` |
 | Components barrel | `frontend/features/<feature>/components/index.ts` |
+| API function (frontend) | `frontend/features/api/<resource>.ts` |
+| API route — collection | `app/api/<resource>/route.ts` |
+| API route — single item | `app/api/<resource>/[id]/route.ts` |
 
 ## Workflow
 
@@ -59,6 +62,18 @@ Conventions for `frontend/features/<feature>/`. Full templates: see [references/
 - Use `as const` for arrays.
 - Type-safe records: `Record<(typeof ARRAY)[number], Value>`.
 - Place in `feature/constants.ts`.
+
+## API route conventions
+
+- Collection route: `app/api/<resource>/route.ts` — exports `GET` (list, optional filter via `searchParams`) and `POST` (create, returns 201).
+- Single-item route: `app/api/<resource>/[id]/route.ts` — exports `GET`, `PATCH` (not PUT), `DELETE` (returns `new NextResponse(null, { status: 204 })` — no body).
+- **Next.js 16 async params**: `type Params = { params: Promise<{ id: string }> }` — always `await params`.
+- Service imported from `@/backend/features/<resource>` (instantiated once per file: `const service = new <Resource>Service()`).
+- Error handling: catch → extract message → return `NextResponse.json({ error: message }, { status })`.
+  - GET list: 500 on error.
+  - POST: 400 on error.
+  - PATCH/DELETE: 404 if message includes `'not found'`, else 400.
+- Frontend API functions live in `frontend/features/api/<resource>.ts` and use `PATCH` to match the route handler.
 
 ## Path aliases
 

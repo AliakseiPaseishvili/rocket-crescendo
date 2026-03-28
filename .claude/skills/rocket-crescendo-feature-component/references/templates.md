@@ -114,24 +114,151 @@ export const LABELS: Record<(typeof ITEMS)[number], string> = {
 
 ## API function (`api/<resource>.ts`)
 
+Full CRUD example — remove methods you don't need.
+
 ```ts
-export type <InputType> = {
+export type <Resource> = {
+  id: number;
   field: string;
-  checked: boolean;
 };
 
+export type <ResourceInput> = Omit<<Resource>, 'id'>;
+
+// Optional filter shape for getAll
+export type <Resource>Filter = {
+  active?: boolean;
+};
+
+async function throwOnError(res: Response): Promise<Response> {
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || 'Request failed');
+  }
+  return res;
+}
+
 export const <resource>Api = {
-  create: async (data: <InputType>): Promise<unknown> => {
+  getAll: async (filter?: <Resource>Filter): Promise<<Resource>[]> => {
+    const params = new URLSearchParams();
+    if (filter?.active !== undefined) params.set('active', String(filter.active));
+    const query = params.size ? `?${params}` : '';
+    const res = await fetch(`/api/<resource>${query}`);
+    return throwOnError(res).then((r) => r.json());
+  },
+
+  getById: async (id: number): Promise<<Resource>> => {
+    const res = await fetch(`/api/<resource>/${id}`);
+    return throwOnError(res).then((r) => r.json());
+  },
+
+  create: async (data: <ResourceInput>): Promise<<Resource>> => {
     const res = await fetch('/api/<resource>', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.error || 'Request failed');
-    }
-    return res.json();
+    return throwOnError(res).then((r) => r.json());
+  },
+
+  // Use PATCH (not PUT) — matches the route handler convention
+  update: async (id: number, data: Partial<<ResourceInput>>): Promise<<Resource>> => {
+    const res = await fetch(`/api/<resource>/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    return throwOnError(res).then((r) => r.json());
+  },
+
+  delete: async (id: number): Promise<void> => {
+    const res = await fetch(`/api/<resource>/${id}`, { method: 'DELETE' });
+    await throwOnError(res); // 204 — no body
   },
 };
+```
+
+---
+
+## API route handlers
+
+### `app/api/<resource>/route.ts` (collection)
+
+```ts
+import { NextRequest, NextResponse } from 'next/server';
+import { <Resource>Service } from '@/backend/features/<resource>';
+
+const service = new <Resource>Service();
+
+export async function GET(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    // Example optional boolean filter:
+    // const activeParam = searchParams.get('active');
+    // const filter = activeParam !== null ? { active: activeParam === 'true' } : undefined;
+    const items = await service.getAll(/* filter */);
+    return NextResponse.json(items);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Failed to fetch';
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const item = await service.create(body);
+    return NextResponse.json(item, { status: 201 });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Failed to create';
+    return NextResponse.json({ error: message }, { status: 400 });
+  }
+}
+```
+
+### `app/api/<resource>/[id]/route.ts` (single item)
+
+```ts
+import { NextRequest, NextResponse } from 'next/server';
+import { <Resource>Service } from '@/backend/features/<resource>';
+
+const service = new <Resource>Service();
+
+// Next.js 16: params is a Promise
+type Params = { params: Promise<{ id: string }> };
+
+export async function GET(_: NextRequest, { params }: Params) {
+  try {
+    const { id } = await params;
+    const item = await service.getById(Number(id));
+    return NextResponse.json(item);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Not found';
+    return NextResponse.json({ error: message }, { status: 404 });
+  }
+}
+
+export async function PATCH(request: NextRequest, { params }: Params) {
+  try {
+    const { id } = await params;
+    const body = await request.json();
+    const item = await service.update(Number(id), body);
+    return NextResponse.json(item);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Failed to update';
+    const status = message.includes('not found') ? 404 : 400;
+    return NextResponse.json({ error: message }, { status });
+  }
+}
+
+export async function DELETE(_: NextRequest, { params }: Params) {
+  try {
+    const { id } = await params;
+    await service.delete(Number(id));
+    return new NextResponse(null, { status: 204 }); // no body
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Failed to delete';
+    const status = message.includes('not found') ? 404 : 400;
+    return NextResponse.json({ error: message }, { status });
+  }
+}
 ```
