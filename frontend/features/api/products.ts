@@ -13,20 +13,20 @@ const PRODUCT_API_ROUTES = {
 } as const;
 
 export type ProductApiTypes = {
-  getAll: RequestApiType<
+  getProducts: RequestApiType<
     undefined,
     undefined,
     ProductFilter | undefined,
     ProductWithTranslations[]
   >;
-  create: RequestApiType<
+  createProduct: RequestApiType<
     ProductCreateInput,
     undefined,
     undefined,
     ProductWithTranslations
   >;
-  delete: RequestApiType<undefined, { id: number }, undefined, void>;
-  update: RequestApiType<
+  deleteProduct: RequestApiType<undefined, { id: number }, undefined, void>;
+  updateProduct: RequestApiType<
     ProductUpdateInput,
     { id: number },
     undefined,
@@ -35,8 +35,8 @@ export type ProductApiTypes = {
 };
 
 export const PRODUCT_REQUEST_MAP: RequestMap<ProductApiTypes> = {
-  getAll: { url: PRODUCT_API_ROUTES.PRODUCTS, method: HttpMethod.GET },
-  create: { url: PRODUCT_API_ROUTES.PRODUCTS, method: HttpMethod.POST },
-  delete: { url: PRODUCT_API_ROUTES.PRODUCT, method: HttpMethod.DELETE },
-  update: { url: PRODUCT_API_ROUTES.PRODUCT, method: HttpMethod.PATCH },
+  getProducts: { url: PRODUCT_API_ROUTES.PRODUCTS, method: HttpMethod.GET },
+  createProduct: { url: PRODUCT_API_ROUTES.PRODUCTS, method: HttpMethod.POST },
+  deleteProduct: { url: PRODUCT_API_ROUTES.PRODUCT, method: HttpMethod.DELETE },
+  updateProduct: { url: PRODUCT_API_ROUTES.PRODUCT, method: HttpMethod.PATCH },
 };

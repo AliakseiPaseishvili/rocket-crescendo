@@ -10,7 +10,7 @@ export function useUpdateProduct() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: api.update,
+    mutationFn: api.updateProduct,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [PRODUCTS_QUERY_KEY] });
     },

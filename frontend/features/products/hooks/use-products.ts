@@ -12,6 +12,6 @@ import { PRODUCTS_QUERY_KEY } from '../constants';
 export function useProducts(query?: ProductFilter) {
   return useQuery({
     queryKey: [PRODUCTS_QUERY_KEY, query],
-    queryFn: () => api.getAll({ query }),
+    queryFn: () => api.getProducts({ query }),
   });
 }

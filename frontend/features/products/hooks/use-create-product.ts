@@ -15,7 +15,7 @@ export function useCreateProduct() {
   const { lng } = useParams<{ lng: string }>();
 
   return useMutation({
-    mutationFn: api.create,
+    mutationFn: api.createProduct,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [PRODUCTS_QUERY_KEY] });
       router.push(formUrlParams({ url: ROUTES.ADMIN_PRODUCTS, params: { lng } }));
