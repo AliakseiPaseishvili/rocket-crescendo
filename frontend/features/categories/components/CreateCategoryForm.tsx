@@ -4,9 +4,9 @@ import { useTranslations } from 'next-intl';
 import { Controller } from 'react-hook-form';
 
 import { ColorPicker } from '@/frontend/components/ColorPicker';
-import { TranslationTabTrigger } from '@/frontend/components/TranslationTabTrigger';
 import { Button } from '@/frontend/components/ui/button';
 import { Tabs, TabsList } from '@/frontend/components/ui/tabs';
+import { TranslationTabTrigger } from '@/frontend/features/translation/components';
 
 import { useCreateCategoryForm } from '../hooks';
 import { CategoryTranslationTabContent } from './CategoryTranslationTabContent';

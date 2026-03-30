@@ -3,12 +3,12 @@
 import { useTranslations } from "next-intl";
 import { Controller } from "react-hook-form";
 
-import { TranslationTabTrigger } from "@/frontend/components/TranslationTabTrigger";
 import { Button } from "@/frontend/components/ui/button";
 import { Checkbox } from "@/frontend/components/ui/checkbox";
 import { Label } from "@/frontend/components/ui/label";
 import { Tabs, TabsList } from "@/frontend/components/ui/tabs";
 import { CategorySelector } from "@/frontend/features/categories/components";
+import { TranslationTabTrigger } from "@/frontend/features/translation/components";
 
 import { useCreateProductForm } from "../hooks";
 import { TranslationTabContent } from "./TranslationTabContent";
