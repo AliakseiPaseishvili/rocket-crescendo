@@ -53,7 +53,8 @@
     "createSuccess": "Категория успешно создана!",
     "loadingCategories": "Загрузка категорий…",
     "errorLoadingCategories": "Не удалось загрузить категории.",
-    "noCategories": "Категории не найдены."
+    "noCategories": "Категории не найдены.",
+    "unknownCategory": "Категория {id}"
   },
   "product": {
     "createProduct": "Создать продукт",

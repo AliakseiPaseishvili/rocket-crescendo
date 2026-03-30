@@ -53,7 +53,8 @@
     "createSuccess": "Category created successfully!",
     "loadingCategories": "Loading categories…",
     "errorLoadingCategories": "Failed to load categories.",
-    "noCategories": "No categories found."
+    "noCategories": "No categories found.",
+    "unknownCategory": "Category {id}"
   },
   "product": {
     "createProduct": "Create Product",

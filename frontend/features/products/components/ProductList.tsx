@@ -13,7 +13,7 @@ export const ProductList = () => {
   const { data: products, isPending, isError } = useProducts();
 
   const categoryIds = products?.map((p) => p.categoryId) ?? [];
-  const { data: categories } = useCategoriesByIds(categoryIds);
+  useCategoriesByIds(categoryIds);
 
   return (
     <div className="flex flex-col gap-6">
@@ -34,7 +34,6 @@ export const ProductList = () => {
             <Product
               key={product.id}
               product={product}
-              category={categories?.find((c) => c.id === product.categoryId)}
             />
           ))}
         </ul>

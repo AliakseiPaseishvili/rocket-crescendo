@@ -1,17 +1,31 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMemo } from 'react';
 
 import { api } from '@/frontend/features/api';
 
-import { CATEGORIES_QUERY_KEY } from '../constants';
+import { CATEGORIES_BY_IDS, CATEGORY_DETAILS } from '../constants';
 
 export function useCategoriesByIds(ids: number[]) {
-  const uniqueIds = [...new Set(ids)].sort((a, b) => a - b);
+  const queryClient = useQueryClient();
+
+  const uniqueIds = useMemo(
+    () => [...new Set(ids)].filter((id) => !queryClient.getQueryData([CATEGORY_DETAILS, id])),
+    [ids, queryClient],
+  );
 
   return useQuery({
-    queryKey: [CATEGORIES_QUERY_KEY, 'by-ids', uniqueIds],
-    queryFn: () => api.getCategoriesByIds({ body: { ids: uniqueIds } }),
+    queryKey: [CATEGORIES_BY_IDS, uniqueIds],
+    queryFn: async () => {
+      const categories = await api.getCategoriesByIds({ body: { ids: uniqueIds } });
+
+      categories.forEach((category) => {
+        queryClient.setQueryData([CATEGORY_DETAILS, category.id], category);
+      });
+
+      return categories;
+    },
     enabled: uniqueIds.length > 0,
   });
 }

@@ -1,12 +1,11 @@
 'use client';
 
 import { Trash2 } from 'lucide-react';
-import { useParams } from 'next/navigation';
 import { FC, useCallback } from 'react';
 
 import type { CategoryWithTranslations } from '@/backend/features/category';
 import { Button } from '@/frontend/components/ui/button';
-import { fallbackLng } from '@/frontend/features/translation';
+import { usePickTranslation } from '@/frontend/features/translation';
 
 import { useDeleteCategory } from '../hooks';
 
@@ -15,13 +14,8 @@ interface CategoryProps {
 }
 
 export const Category: FC<CategoryProps> = ({ category }) => {
-  const { lng } = useParams<{ lng: string }>();
   const { mutate: deleteCategory, isPending } = useDeleteCategory();
-
-  const translation =
-    category.translations.find((t) => t.language === lng) ??
-    category.translations.find((t) => t.language === fallbackLng) ??
-    category.translations[0];
+  const translation = usePickTranslation(category.translations);
 
   const handleDelete = useCallback(() => {
     deleteCategory({ params: { id: category.id } });
