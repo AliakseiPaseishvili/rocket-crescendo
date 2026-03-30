@@ -13,10 +13,13 @@ import { Product } from "@/frontend/features/products/components";
 import { useProducts } from "@/frontend/features/products/hooks";
 
 import { LandingSection } from "./LandingSection";
+import { useCategoriesByIds } from "../../categories/hooks";
 
 export const ShopSection = () => {
   const t = useTranslations("common");
   const { data: products } = useProducts({ favorite: false });
+    const categoryIds = products?.map((p) => p.categoryId) ?? [];
+    useCategoriesByIds(categoryIds);
 
   return (
     <LandingSection id="shop" titleKey="shop">
@@ -25,7 +28,7 @@ export const ShopSection = () => {
           <CarouselContent>
             {products.map((product) => (
               <CarouselItem key={product.id}>
-                <Product product={product} isHiddenActions />
+                <Product product={product} isHiddenActions className="p-4" />
               </CarouselItem>
             ))}
           </CarouselContent>

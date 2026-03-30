@@ -2,6 +2,7 @@
 
 import { Star, Trash2 } from "lucide-react";
 import { FC, useCallback } from "react";
+import { twMerge } from "tailwind-merge";
 
 import type { CategoryWithTranslations } from "@/backend/features/category";
 import type { ProductWithTranslations } from "@/backend/features/product";
@@ -17,11 +18,11 @@ import { useDeleteProduct, useUpdateProduct } from "../hooks";
 
 interface ProductProps {
   product: ProductWithTranslations;
-
+  className?: string;
   isHiddenActions?: boolean;
 }
 
-export const Product: FC<ProductProps> = ({ product, isHiddenActions }) => {
+export const Product: FC<ProductProps> = ({ product, isHiddenActions, className }) => {
   const { mutate: updateProduct, isPending: isUpdating } = useUpdateProduct();
   const { mutate: deleteProduct, isPending: isDeleting } = useDeleteProduct();
   const { data: category } = useCacheQuery<CategoryWithTranslations>({
@@ -44,7 +45,7 @@ export const Product: FC<ProductProps> = ({ product, isHiddenActions }) => {
   }, [deleteProduct, product.id]);
 
   return (
-    <li>
+    <li className={twMerge("relative flex flex-col", className)}>
       <Card>
         <CardHeader>
           <CardTitle>{translation?.name}</CardTitle>

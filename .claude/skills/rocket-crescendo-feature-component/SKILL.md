@@ -33,9 +33,10 @@ Conventions for `frontend/features/<feature>/`. Full templates: see [references/
 - Add `'use client'` at the top, when client logic is applied. Hooks in component is client logic.
 - Named export: `export const <Name> = ...` (PascalCase, no default export).
 - Props: TypeScript `interface <Name>Props` for complex props; inline type for simple/single-use.
-- i18n: `useTranslation('namespace')` or `useTranslation(['ns1', 'ns2'])`. Multi-namespace keys: `t('ns:key')`.
-- Namespaces: `common`, `nav`, `cart`, `footer`, `product`, `metadata`.
+- i18n: `useTranslations('namespace')` from `next-intl` (client). Pass multiple namespaces as an array. Namespaces: `common`, `nav`, `cart`, `footer`, `product`, `category`, `metadata`.
 - Server components: use `initI18next(lng, 'namespace')` from `@/frontend/features/translation`.
+- Translation display: always `usePickTranslation(entity.translations)` from `@/frontend/features/translation` — never access `translations[0]` directly.
+- Prefetched cache reads: `useCacheQuery<T>({ queryKey })` from `@/frontend/features/react-query`.
 
 ## shadcn/ui rules
 

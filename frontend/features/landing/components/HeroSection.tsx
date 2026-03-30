@@ -4,9 +4,12 @@ import { Product } from "@/frontend/features/products/components/Product";
 import { useProducts } from "@/frontend/features/products/hooks";
 
 import { LandingSection } from "./LandingSection";
+import { useCategoriesByIds } from "../../categories/hooks";
 
 export const HeroSection = () => {
   const { data: favorites } = useProducts({ favorite: true });
+      const categoryIds = favorites?.map((p) => p.categoryId) ?? [];
+      useCategoriesByIds(categoryIds);
 
   const featured = favorites?.[0];
 
