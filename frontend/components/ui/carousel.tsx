@@ -4,7 +4,7 @@ import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react"
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
-import { ComponentProps, createContext, use, useCallback, useEffect, useState, KeyboardEvent } from "react"
+import { ComponentProps, createContext, use, useCallback, useEffect, useState, KeyboardEvent, FC } from "react"
 
 import { Button } from "@/frontend/components/ui/button"
 import { cn } from "@/frontend/lib/utils"
@@ -43,7 +43,9 @@ function useCarousel() {
   return context
 }
 
-function Carousel({
+type CarouselRootProps = ComponentProps<"div"> & CarouselProps
+
+const Carousel: FC<CarouselRootProps> = ({
   orientation = "horizontal",
   opts,
   setApi,
@@ -51,7 +53,7 @@ function Carousel({
   className,
   children,
   ...props
-}: ComponentProps<"div"> & CarouselProps) {
+}) => {
   const [carouselRef, api] = useEmblaCarousel(
     {
       ...opts,
@@ -134,7 +136,9 @@ function Carousel({
   )
 }
 
-function CarouselContent({ className, ...props }: ComponentProps<"ul">) {
+type CarouselContentProps = ComponentProps<"ul">
+
+const CarouselContent: FC<CarouselContentProps> = ({ className, ...props }) => {
   const { carouselRef, orientation } = useCarousel()
 
   return (
@@ -155,7 +159,9 @@ function CarouselContent({ className, ...props }: ComponentProps<"ul">) {
   )
 }
 
-function CarouselItem({ className, ...props }: ComponentProps<"div">) {
+type CarouselItemProps = ComponentProps<"div">
+
+const CarouselItem: FC<CarouselItemProps> = ({ className, ...props }) => {
   const { orientation } = useCarousel()
 
   return (
@@ -173,12 +179,14 @@ function CarouselItem({ className, ...props }: ComponentProps<"div">) {
   )
 }
 
-function CarouselPrevious({
+type CarouselPreviousProps = ComponentProps<typeof Button>
+
+const CarouselPrevious: FC<CarouselPreviousProps> = ({
   className,
   variant = "outline",
   size = "icon-sm",
   ...props
-}: ComponentProps<typeof Button>) {
+}) => {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel()
 
   return (
@@ -203,12 +211,14 @@ function CarouselPrevious({
   )
 }
 
-function CarouselNext({
+type CarouselNextProps = ComponentProps<typeof Button>
+
+const CarouselNext: FC<CarouselNextProps> = ({
   className,
   variant = "outline",
   size = "icon-sm",
   ...props
-}: ComponentProps<typeof Button>) {
+}) => {
   const { orientation, scrollNext, canScrollNext } = useCarousel()
 
   return (

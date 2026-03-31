@@ -2,20 +2,22 @@
 
 import { ChevronDownIcon, CheckIcon, ChevronUpIcon } from "lucide-react"
 import { Select as SelectPrimitive } from "radix-ui"
-import * as React from "react"
+import { ComponentProps, FC } from "react"
 
 import { cn } from "@/frontend/lib/utils"
 
-function Select({
-  ...props
-}: React.ComponentProps<typeof SelectPrimitive.Root>) {
+type SelectProps = ComponentProps<typeof SelectPrimitive.Root>
+
+const Select: FC<SelectProps> = ({ ...props }) => {
   return <SelectPrimitive.Root data-slot="select" {...props} />
 }
 
-function SelectGroup({
+type SelectGroupProps = ComponentProps<typeof SelectPrimitive.Group>
+
+const SelectGroup: FC<SelectGroupProps> = ({
   className,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Group>) {
+}) => {
   return (
     <SelectPrimitive.Group
       data-slot="select-group"
@@ -25,20 +27,22 @@ function SelectGroup({
   )
 }
 
-function SelectValue({
-  ...props
-}: React.ComponentProps<typeof SelectPrimitive.Value>) {
+type SelectValueProps = ComponentProps<typeof SelectPrimitive.Value>
+
+const SelectValue: FC<SelectValueProps> = ({ ...props }) => {
   return <SelectPrimitive.Value data-slot="select-value" {...props} />
 }
 
-function SelectTrigger({
+type SelectTriggerProps = ComponentProps<typeof SelectPrimitive.Trigger> & {
+  size?: "sm" | "default"
+}
+
+const SelectTrigger: FC<SelectTriggerProps> = ({
   className,
   size = "default",
   children,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
-  size?: "sm" | "default"
-}) {
+}) => {
   return (
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
@@ -57,13 +61,15 @@ function SelectTrigger({
   )
 }
 
-function SelectContent({
+type SelectContentProps = ComponentProps<typeof SelectPrimitive.Content>
+
+const SelectContent: FC<SelectContentProps> = ({
   className,
   children,
   position = "item-aligned",
   align = "center",
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Content>) {
+}) => {
   return (
     <SelectPrimitive.Portal>
       <SelectPrimitive.Content
@@ -90,10 +96,12 @@ function SelectContent({
   )
 }
 
-function SelectLabel({
+type SelectLabelProps = ComponentProps<typeof SelectPrimitive.Label>
+
+const SelectLabel: FC<SelectLabelProps> = ({
   className,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Label>) {
+}) => {
   return (
     <SelectPrimitive.Label
       data-slot="select-label"
@@ -103,11 +111,13 @@ function SelectLabel({
   )
 }
 
-function SelectItem({
+type SelectItemProps = ComponentProps<typeof SelectPrimitive.Item>
+
+const SelectItem: FC<SelectItemProps> = ({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Item>) {
+}) => {
   return (
     <SelectPrimitive.Item
       data-slot="select-item"
@@ -127,10 +137,12 @@ function SelectItem({
   )
 }
 
-function SelectSeparator({
+type SelectSeparatorProps = ComponentProps<typeof SelectPrimitive.Separator>
+
+const SelectSeparator: FC<SelectSeparatorProps> = ({
   className,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Separator>) {
+}) => {
   return (
     <SelectPrimitive.Separator
       data-slot="select-separator"
@@ -140,10 +152,12 @@ function SelectSeparator({
   )
 }
 
-function SelectScrollUpButton({
+type SelectScrollUpButtonProps = ComponentProps<typeof SelectPrimitive.ScrollUpButton>
+
+const SelectScrollUpButton: FC<SelectScrollUpButtonProps> = ({
   className,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.ScrollUpButton>) {
+}) => {
   return (
     <SelectPrimitive.ScrollUpButton
       data-slot="select-scroll-up-button"
@@ -159,10 +173,12 @@ function SelectScrollUpButton({
   )
 }
 
-function SelectScrollDownButton({
+type SelectScrollDownButtonProps = ComponentProps<typeof SelectPrimitive.ScrollDownButton>
+
+const SelectScrollDownButton: FC<SelectScrollDownButtonProps> = ({
   className,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.ScrollDownButton>) {
+}) => {
   return (
     <SelectPrimitive.ScrollDownButton
       data-slot="select-scroll-down-button"

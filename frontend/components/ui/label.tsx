@@ -1,14 +1,16 @@
 "use client"
 
 import { Label as LabelPrimitive } from "radix-ui"
-import * as React from "react"
+import { ComponentProps, FC } from "react"
 
 import { cn } from "@/frontend/lib/utils"
 
-const Label = ({
+type LabelProps = ComponentProps<typeof LabelPrimitive.Root>
+
+const Label: FC<LabelProps> = ({
   className,
   ...props
-}: React.ComponentProps<typeof LabelPrimitive.Root>) => {
+}) => {
   return (
     <LabelPrimitive.Root
       data-slot="label"

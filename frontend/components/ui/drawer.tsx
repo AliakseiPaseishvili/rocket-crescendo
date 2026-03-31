@@ -1,38 +1,40 @@
 "use client"
 
-import * as React from "react"
+import { ComponentProps, FC } from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
 
 import { cn } from "@/frontend/lib/utils"
 
-const Drawer = ({
-  ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Root>) => {
+type DrawerProps = ComponentProps<typeof DrawerPrimitive.Root>
+
+const Drawer: FC<DrawerProps> = ({ ...props }) => {
   return <DrawerPrimitive.Root data-slot="drawer" {...props} />
 }
 
-const DrawerTrigger = ({
-  ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Trigger>) => {
+type DrawerTriggerProps = ComponentProps<typeof DrawerPrimitive.Trigger>
+
+const DrawerTrigger: FC<DrawerTriggerProps> = ({ ...props }) => {
   return <DrawerPrimitive.Trigger data-slot="drawer-trigger" {...props} />
 }
 
-const DrawerPortal = ({
-  ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Portal>) => {
+type DrawerPortalProps = ComponentProps<typeof DrawerPrimitive.Portal>
+
+const DrawerPortal: FC<DrawerPortalProps> = ({ ...props }) => {
   return <DrawerPrimitive.Portal data-slot="drawer-portal" {...props} />
 }
 
-const DrawerClose = ({
-  ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Close>) => {
+type DrawerCloseProps = ComponentProps<typeof DrawerPrimitive.Close>
+
+const DrawerClose: FC<DrawerCloseProps> = ({ ...props }) => {
   return <DrawerPrimitive.Close data-slot="drawer-close" {...props} />
 }
 
-const DrawerOverlay = ({
+type DrawerOverlayProps = ComponentProps<typeof DrawerPrimitive.Overlay>
+
+const DrawerOverlay: FC<DrawerOverlayProps> = ({
   className,
   ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Overlay>) => {
+}) => {
   return (
     <DrawerPrimitive.Overlay
       data-slot="drawer-overlay"
@@ -45,11 +47,13 @@ const DrawerOverlay = ({
   )
 }
 
-const DrawerContent = ({
+type DrawerContentProps = ComponentProps<typeof DrawerPrimitive.Content>
+
+const DrawerContent: FC<DrawerContentProps> = ({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Content>) => {
+}) => {
   return (
     <DrawerPortal data-slot="drawer-portal">
       <DrawerOverlay />
@@ -61,14 +65,16 @@ const DrawerContent = ({
         )}
         {...props}
       >
-        <div className="mx-auto mt-4 hidden h-1 w-[100px] shrink-0 rounded-full bg-muted group-data-[vaul-drawer-direction=bottom]/drawer-content:block" />
+        <div className="mx-auto mt-4 hidden h-1 w-25 shrink-0 rounded-full bg-muted group-data-[vaul-drawer-direction=bottom]/drawer-content:block" />
         {children}
       </DrawerPrimitive.Content>
     </DrawerPortal>
   )
 }
 
-const DrawerHeader = ({ className, ...props }: React.ComponentProps<"div">) => {
+type DrawerHeaderProps = ComponentProps<"div">
+
+const DrawerHeader: FC<DrawerHeaderProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="drawer-header"
@@ -81,7 +87,9 @@ const DrawerHeader = ({ className, ...props }: React.ComponentProps<"div">) => {
   )
 }
 
-const DrawerFooter = ({ className, ...props }: React.ComponentProps<"div">) => {
+type DrawerFooterProps = ComponentProps<"div">
+
+const DrawerFooter: FC<DrawerFooterProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="drawer-footer"
@@ -91,10 +99,12 @@ const DrawerFooter = ({ className, ...props }: React.ComponentProps<"div">) => {
   )
 }
 
-const DrawerTitle = ({
+type DrawerTitleProps = ComponentProps<typeof DrawerPrimitive.Title>
+
+const DrawerTitle: FC<DrawerTitleProps> = ({
   className,
   ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Title>) => {
+}) => {
   return (
     <DrawerPrimitive.Title
       data-slot="drawer-title"
@@ -107,10 +117,12 @@ const DrawerTitle = ({
   )
 }
 
-const DrawerDescription = ({
+type DrawerDescriptionProps = ComponentProps<typeof DrawerPrimitive.Description>
+
+const DrawerDescription: FC<DrawerDescriptionProps> = ({
   className,
   ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Description>) => {
+}) => {
   return (
     <DrawerPrimitive.Description
       data-slot="drawer-description"

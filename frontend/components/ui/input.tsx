@@ -1,8 +1,10 @@
-import * as React from "react"
+import { ComponentProps, FC } from "react"
 
 import { cn } from "@/frontend/lib/utils"
 
-const Input = ({ className, type, ...props }: React.ComponentProps<"input">) => {
+type InputProps = ComponentProps<"input">
+
+const Input: FC<InputProps> = ({ className, type, ...props }) => {
   return (
     <input
       type={type}

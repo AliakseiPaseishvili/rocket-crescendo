@@ -1,6 +1,10 @@
+import { FC, ComponentProps } from "react"
+
 import { cn } from "@/frontend/lib/utils"
 
-function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
+type SkeletonProps = ComponentProps<"div">
+
+const Skeleton: FC<SkeletonProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="skeleton"

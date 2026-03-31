@@ -1,18 +1,19 @@
 import { cva } from "class-variance-authority"
 import { ChevronDownIcon } from "lucide-react"
 import { NavigationMenu as NavigationMenuPrimitive } from "radix-ui"
-import * as React from "react"
+import { ComponentProps, FC } from "react"
 
 import { cn } from "@/frontend/lib/utils"
 
+type NavigationMenuProps = ComponentProps<typeof NavigationMenuPrimitive.Root> & {
+  viewport?: boolean
+}
 
-const NavigationMenu = ({
+const NavigationMenu: FC<NavigationMenuProps> = ({
   className,
   children,
   viewport = true,
   ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Root> & {
-  viewport?: boolean
 }) => {
   return (
     <NavigationMenuPrimitive.Root
@@ -30,10 +31,12 @@ const NavigationMenu = ({
   )
 }
 
-const NavigationMenuList = ({
+type NavigationMenuListProps = ComponentProps<typeof NavigationMenuPrimitive.List>
+
+const NavigationMenuList: FC<NavigationMenuListProps> = ({
   className,
   ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.List>) => {
+}) => {
   return (
     <NavigationMenuPrimitive.List
       data-slot="navigation-menu-list"
@@ -46,10 +49,12 @@ const NavigationMenuList = ({
   )
 }
 
-const NavigationMenuItem = ({
+type NavigationMenuItemProps = ComponentProps<typeof NavigationMenuPrimitive.Item>
+
+const NavigationMenuItem: FC<NavigationMenuItemProps> = ({
   className,
   ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Item>) => {
+}) => {
   return (
     <NavigationMenuPrimitive.Item
       data-slot="navigation-menu-item"
@@ -63,11 +68,13 @@ const navigationMenuTriggerStyle = cva(
   "group/navigation-menu-trigger inline-flex h-9 w-max items-center justify-center rounded-lg bg-background px-2.5 py-1.5 text-sm font-medium transition-all outline-none hover:bg-muted focus:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-popup-open:bg-muted/50 data-popup-open:hover:bg-muted data-open:bg-muted/50 data-open:hover:bg-muted data-open:focus:bg-muted"
 )
 
-const NavigationMenuTrigger = ({
+type NavigationMenuTriggerProps = ComponentProps<typeof NavigationMenuPrimitive.Trigger>
+
+const NavigationMenuTrigger: FC<NavigationMenuTriggerProps> = ({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Trigger>) => {
+}) => {
   return (
     <NavigationMenuPrimitive.Trigger
       data-slot="navigation-menu-trigger"
@@ -80,10 +87,12 @@ const NavigationMenuTrigger = ({
   )
 }
 
-const NavigationMenuContent = ({
+type NavigationMenuContentProps = ComponentProps<typeof NavigationMenuPrimitive.Content>
+
+const NavigationMenuContent: FC<NavigationMenuContentProps> = ({
   className,
   ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Content>) => {
+}) => {
   return (
     <NavigationMenuPrimitive.Content
       data-slot="navigation-menu-content"
@@ -96,10 +105,12 @@ const NavigationMenuContent = ({
   )
 }
 
-const NavigationMenuViewport = ({
+type NavigationMenuViewportProps = ComponentProps<typeof NavigationMenuPrimitive.Viewport>
+
+const NavigationMenuViewport: FC<NavigationMenuViewportProps> = ({
   className,
   ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Viewport>) => {
+}) => {
   return (
     <div
       className={cn(
@@ -118,10 +129,12 @@ const NavigationMenuViewport = ({
   )
 }
 
-const NavigationMenuLink = ({
+type NavigationMenuLinkProps = ComponentProps<typeof NavigationMenuPrimitive.Link>
+
+const NavigationMenuLink: FC<NavigationMenuLinkProps> = ({
   className,
   ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Link>) => {
+}) => {
   return (
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
@@ -134,10 +147,12 @@ const NavigationMenuLink = ({
   )
 }
 
-const NavigationMenuIndicator = ({
+type NavigationMenuIndicatorProps = ComponentProps<typeof NavigationMenuPrimitive.Indicator>
+
+const NavigationMenuIndicator: FC<NavigationMenuIndicatorProps> = ({
   className,
   ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Indicator>) => {
+}) => {
   return (
     <NavigationMenuPrimitive.Indicator
       data-slot="navigation-menu-indicator"

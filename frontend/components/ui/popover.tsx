@@ -1,28 +1,30 @@
 "use client"
 
 import { Popover as PopoverPrimitive } from "radix-ui"
-import * as React from "react"
+import { ComponentProps, FC } from "react"
 
 import { cn } from "@/frontend/lib/utils"
 
-function Popover({
-  ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Root>) {
+type PopoverProps = ComponentProps<typeof PopoverPrimitive.Root>
+
+const Popover: FC<PopoverProps> = ({ ...props }) => {
   return <PopoverPrimitive.Root data-slot="popover" {...props} />
 }
 
-function PopoverTrigger({
-  ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Trigger>) {
+type PopoverTriggerProps = ComponentProps<typeof PopoverPrimitive.Trigger>
+
+const PopoverTrigger: FC<PopoverTriggerProps> = ({ ...props }) => {
   return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />
 }
 
-function PopoverContent({
+type PopoverContentProps = ComponentProps<typeof PopoverPrimitive.Content>
+
+const PopoverContent: FC<PopoverContentProps> = ({
   className,
   align = "center",
   sideOffset = 4,
   ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Content>) {
+}) => {
   return (
     <PopoverPrimitive.Portal>
       <PopoverPrimitive.Content
@@ -39,13 +41,15 @@ function PopoverContent({
   )
 }
 
-function PopoverAnchor({
-  ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Anchor>) {
+type PopoverAnchorProps = ComponentProps<typeof PopoverPrimitive.Anchor>
+
+const PopoverAnchor: FC<PopoverAnchorProps> = ({ ...props }) => {
   return <PopoverPrimitive.Anchor data-slot="popover-anchor" {...props} />
 }
 
-function PopoverHeader({ className, ...props }: React.ComponentProps<"div">) {
+type PopoverHeaderProps = ComponentProps<"div">
+
+const PopoverHeader: FC<PopoverHeaderProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="popover-header"
@@ -55,7 +59,9 @@ function PopoverHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function PopoverTitle({ className, ...props }: React.ComponentProps<"h2">) {
+type PopoverTitleProps = ComponentProps<"h2">
+
+const PopoverTitle: FC<PopoverTitleProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="popover-title"
@@ -65,10 +71,9 @@ function PopoverTitle({ className, ...props }: React.ComponentProps<"h2">) {
   )
 }
 
-function PopoverDescription({
-  className,
-  ...props
-}: React.ComponentProps<"p">) {
+type PopoverDescriptionProps = ComponentProps<"p">
+
+const PopoverDescription: FC<PopoverDescriptionProps> = ({ className, ...props }) => {
   return (
     <p
       data-slot="popover-description"

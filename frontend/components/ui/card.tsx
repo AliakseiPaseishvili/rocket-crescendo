@@ -1,12 +1,14 @@
-import * as React from "react"
+import { ComponentProps, FC } from "react"
 
 import { cn } from "@/frontend/lib/utils"
 
-function Card({
+type CardProps = ComponentProps<"div"> & { size?: "default" | "sm" }
+
+const Card: FC<CardProps> = ({
   className,
   size = "default",
   ...props
-}: React.ComponentProps<"div"> & { size?: "default" | "sm" }) {
+}) => {
   return (
     <div
       data-slot="card"
@@ -20,7 +22,9 @@ function Card({
   )
 }
 
-function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
+type CardHeaderProps = ComponentProps<"div">
+
+const CardHeader: FC<CardHeaderProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="card-header"
@@ -33,7 +37,9 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
+type CardTitleProps = ComponentProps<"div">
+
+const CardTitle: FC<CardTitleProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="card-title"
@@ -46,7 +52,9 @@ function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
+type CardDescriptionProps = ComponentProps<"div">
+
+const CardDescription: FC<CardDescriptionProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="card-description"
@@ -56,7 +64,9 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CardAction({ className, ...props }: React.ComponentProps<"div">) {
+type CardActionProps = ComponentProps<"div">
+
+const CardAction: FC<CardActionProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="card-action"
@@ -69,7 +79,9 @@ function CardAction({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CardContent({ className, ...props }: React.ComponentProps<"div">) {
+type CardContentProps = ComponentProps<"div">
+
+const CardContent: FC<CardContentProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="card-content"
@@ -79,7 +91,9 @@ function CardContent({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
+type CardFooterProps = ComponentProps<"div">
+
+const CardFooter: FC<CardFooterProps> = ({ className, ...props }) => {
   return (
     <div
       data-slot="card-footer"
