@@ -52,6 +52,8 @@
     "colorPlaceholder": "#e2e8f0",
     "colorRequired": "Цвет обязателен",
     "createSuccess": "Категория успешно создана!",
+    "editCategory": "Редактировать категорию",
+    "editSuccess": "Категория успешно обновлена!",
     "loadingCategories": "Загрузка категорий…",
     "errorLoadingCategories": "Не удалось загрузить категории.",
     "noCategories": "Категории не найдены.",

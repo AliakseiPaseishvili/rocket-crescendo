@@ -52,6 +52,8 @@
     "colorPlaceholder": "#e2e8f0",
     "colorRequired": "Color is required",
     "createSuccess": "Category created successfully!",
+    "editCategory": "Edit Category",
+    "editSuccess": "Category updated successfully!",
     "loadingCategories": "Loading categories…",
     "errorLoadingCategories": "Failed to load categories.",
     "noCategories": "No categories found.",

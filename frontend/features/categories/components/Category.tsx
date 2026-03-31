@@ -8,6 +8,7 @@ import { Button } from '@/frontend/components/ui/button';
 import { usePickTranslation } from '@/frontend/features/translation';
 
 import { useDeleteCategory } from '../hooks';
+import { EditCategoryModal } from './EditCategoryModal';
 
 interface CategoryProps {
   category: CategoryWithTranslations;
@@ -24,6 +25,7 @@ export const Category: FC<CategoryProps> = ({ category }) => {
   return (
     <li className="relative flex flex-col gap-1 rounded-lg border border-border bg-muted p-4">
       <div className="absolute top-2 right-2 flex gap-1">
+        <EditCategoryModal category={category} disabled={isPending} />
         <Button
           variant="ghost"
           size="icon"
