@@ -15,6 +15,7 @@ import { useCacheQuery } from "@/frontend/features/react-query";
 import { usePickTranslation } from "@/frontend/features/translation";
 
 import { useDeleteProduct, useUpdateProduct } from "../hooks";
+import { EditProductModal } from "./EditProductModal";
 
 interface ProductProps {
   product: ProductWithTranslations;
@@ -67,6 +68,7 @@ export const Product: FC<ProductProps> = ({ product, isHiddenActions, className 
                   size={16}
                 />
               </Button>
+              <EditProductModal product={product} disabled={isPending} />
               <Button
                 variant="ghost"
                 size="icon"
