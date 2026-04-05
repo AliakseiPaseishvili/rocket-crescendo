@@ -17,3 +17,8 @@ export type FileUpdateInput = {
 export type FileFilter = {
   fileType?: FileType;
 };
+
+export type FileUploadInput = {
+  file: File;
+  name: string;
+};

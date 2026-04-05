@@ -7,12 +7,8 @@ import type {
   FileFilter,
   FileUpdateInput,
   FileModel,
+  FileUploadInput,
 } from './types';
-
-export type FileUploadInput = {
-  file: File;
-  name: string;
-};
 
 export class FileService {
   private readonly repository: FileRepository;
