@@ -5,10 +5,7 @@ export { S3StorageAdapter } from './S3Storage.Adapter';
 export { FileType } from './types';
 export type {
   FileModel,
-  FileTranslationModel,
-  FileWithTranslations,
   FileCreateInput,
   FileUpdateInput,
-  FileTranslationInput,
   FileFilter,
 } from './types';

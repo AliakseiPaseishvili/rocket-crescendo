@@ -28,24 +28,12 @@ export async function POST(request: NextRequest) {
     const file = formData.get('file') as File | null;
     if (!file) return NextResponse.json({ error: 'file is required' }, { status: 400 });
 
-    const fileType = formData.get('fileType') as string | null;
-    if (!fileType || !(fileType in FileType)) {
-      return NextResponse.json({ error: 'fileType must be IMAGE or VIDEO' }, { status: 400 });
+    const name = formData.get('name') as string | null;
+    if (!name) {
+      return NextResponse.json({ error: 'name is required' }, { status: 400 });
     }
 
-    const translationsRaw = formData.get('translations') as string | null;
-    if (!translationsRaw) {
-      return NextResponse.json({ error: 'translations is required' }, { status: 400 });
-    }
-
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const item = await service.upload({
-      buffer,
-      key: file.name,
-      contentType: file.type,
-      fileType: fileType as FileType,
-      translations: JSON.parse(translationsRaw),
-    });
+    const item = await service.upload({ file, name });
     return NextResponse.json(item, { status: 201 });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to upload file';

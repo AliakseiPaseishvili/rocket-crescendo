@@ -1,53 +1,40 @@
-import type { FileCreateInput, FileFilter, FileUpdateInput, FileWithTranslations } from './types';
+import type { FileCreateInput, FileFilter, FileUpdateInput, FileModel } from './types';
 import prisma from '../../prisma/prisma';
 
 export class FileRepository {
-  async findAll(filter?: FileFilter): Promise<FileWithTranslations[]> {
+  async findAll(filter?: FileFilter): Promise<FileModel[]> {
     const where: FileFilter = {};
     if (filter) {
       if (filter.fileType) where.fileType = filter.fileType;
     }
-    return prisma.file.findMany({
-      where,
-      include: { translations: true },
-    });
+    return prisma.file.findMany({ where });
   }
 
-  async findById(id: number): Promise<FileWithTranslations | null> {
-    return prisma.file.findUnique({
-      where: { id },
-      include: { translations: true },
-    });
+  async findById(id: number): Promise<FileModel | null> {
+    return prisma.file.findUnique({ where: { id } });
   }
 
-  async create(data: FileCreateInput): Promise<FileWithTranslations> {
+  async create(data: FileCreateInput): Promise<FileModel> {
     return prisma.file.create({
       data: {
         fileId: data.fileId,
         fileUrl: data.fileUrl,
         fileType: data.fileType,
-        translations: { create: data.translations },
+        name: data.name,
       },
-      include: { translations: true },
     });
   }
 
-  async update(id: number, data: FileUpdateInput): Promise<FileWithTranslations> {
+  async update(id: number, data: FileUpdateInput): Promise<FileModel> {
     return prisma.file.update({
       where: { id },
       data: {
-        ...(data.translations?.length && {
-          translations: { deleteMany: {}, create: data.translations },
-        }),
+        ...(data.name !== undefined && { name: data.name }),
       },
-      include: { translations: true },
     });
   }
 
-  async delete(id: number): Promise<FileWithTranslations> {
-    return prisma.file.delete({
-      where: { id },
-      include: { translations: true },
-    });
+  async delete(id: number): Promise<FileModel> {
+    return prisma.file.delete({ where: { id } });
   }
 }

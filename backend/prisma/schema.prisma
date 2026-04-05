@@ -44,21 +44,11 @@ enum FileType {
 }
 
 model File {
-  id           Int               @id @default(autoincrement())
-  fileId       String
-  fileUrl      String
-  fileType     FileType
-  translations FileTranslation[]
-}
-
-model FileTranslation {
   id       Int      @id @default(autoincrement())
-  fileId   Int
-  language String
+  fileId   String
+  fileUrl  String
+  fileType FileType
   name     String
-  file     File     @relation(fields: [fileId], references: [id], onDelete: Cascade)
-
-  @@unique([fileId, language])
 }
 
 model CategoryTranslation {
