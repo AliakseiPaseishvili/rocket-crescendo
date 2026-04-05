@@ -1,12 +1,14 @@
 import type { CategoryApiTypes } from './categories';
 import { CATEGORY_REQUEST_MAP } from './categories';
+import type { FileApiTypes } from './files';
+import { FILE_REQUEST_MAP } from './files';
 import type { ProductApiTypes } from './products';
 import { PRODUCT_REQUEST_MAP } from './products';
 import { executeRequest } from './utils';
 
-type ApiTypes = ProductApiTypes & CategoryApiTypes;
+type ApiTypes = ProductApiTypes & CategoryApiTypes & FileApiTypes;
 
-const REQUEST_MAP = { ...PRODUCT_REQUEST_MAP, ...CATEGORY_REQUEST_MAP };
+const REQUEST_MAP = { ...PRODUCT_REQUEST_MAP, ...CATEGORY_REQUEST_MAP, ...FILE_REQUEST_MAP };
 
 export const api = Object.fromEntries(
   Object.entries(REQUEST_MAP).map(([key, { url, method }]) => [

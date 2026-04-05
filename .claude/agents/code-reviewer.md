@@ -1,7 +1,6 @@
 ---
 name: code-reviewer
-description: >
-  Expert code reviewer for the rocket-crescendo project. Reviews git changes
+description: Expert code reviewer for the rocket-crescendo project. Reviews git changes
   (staged, unstaged, or a specified commit range) for bugs, security vulnerabilities,
   code quality, and adherence to project conventions. Use when the user asks to
   "review my code", "do a code review", "check my changes", "review my PR", or

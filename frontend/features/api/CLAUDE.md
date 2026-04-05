@@ -7,9 +7,10 @@ Typed HTTP client for all backend REST endpoints.
 ```
 api/
   types.ts       # Shared types: HttpMethod, RequestMap, RequestProps, RequestApiType
-  utils.ts       # executeRequest() — low-level fetch wrapper
+  utils.ts       # executeRequest() — low-level fetch wrapper (JSON + FormData)
   products.ts    # Product API routes, types, and request map
   categories.ts  # Category API routes, types, and request map
+  files.ts       # File API routes, types, and request map
   index.ts       # Builds and exports the unified `api` object
 ```
 
@@ -25,7 +26,7 @@ Each resource file (e.g. `products.ts`) defines:
 `executeRequest` in `utils.ts`:
 - Resolves `:param` placeholders via `formUrlParams`
 - Appends query strings via `formSearchParams`
-- Serializes the body as JSON
+- Serializes the body as JSON, **or passes `FormData` through as-is** (browser sets the `multipart/form-data` boundary automatically — do not set `Content-Type` manually)
 - Throws on non-OK responses (parses the `error` field from the JSON body)
 - Returns `undefined` for empty responses (204-style)
 

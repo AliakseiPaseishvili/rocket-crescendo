@@ -43,7 +43,8 @@
   },
   "admin": {
     "productsDescription": "Manage your products",
-    "categoriesDescription": "Manage categories for products"
+    "categoriesDescription": "Manage categories for products",
+    "filesDescription": "Manage uploaded images and videos"
   },
   "category": {
     "categories": "Categories",
@@ -58,6 +59,18 @@
     "errorLoadingCategories": "Failed to load categories.",
     "noCategories": "No categories found.",
     "unknownCategory": "Category {id}"
+  },
+  "file": {
+    "files": "Files",
+    "uploadFile": "Upload File",
+    "fileName": "Name",
+    "fileNamePlaceholder": "File name",
+    "file": "File",
+    "upload": "Upload",
+    "uploading": "Uploading…",
+    "loadingFiles": "Loading files…",
+    "errorLoadingFiles": "Failed to load files.",
+    "noFiles": "No files found."
   },
   "product": {
     "createProduct": "Create Product",

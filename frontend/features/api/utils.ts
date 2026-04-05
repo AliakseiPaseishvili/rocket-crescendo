@@ -1,6 +1,7 @@
 import { formUrlParams, formSearchParams } from "@/frontend/utils/form-url";
 
-type Body = Record<string, boolean | string | number | object>;
+type JsonBody = Record<string, boolean | string | number | object>;
+type Body = JsonBody | FormData;
 type Params = Record<string, string | boolean | number | string[]>;
 
 export const executeRequest = async <T>({
@@ -31,10 +32,11 @@ export const executeRequest = async <T>({
     });
   }
 
+  const isFormData = body instanceof FormData;
   const response = await fetch(resolvedUrl, {
     method,
-    headers: body ? { "Content-Type": "application/json" } : undefined,
-    body: body ? JSON.stringify(body) : undefined,
+    headers: body && !isFormData ? { "Content-Type": "application/json" } : undefined,
+    body: body ? (isFormData ? body : JSON.stringify(body)) : undefined,
   });
 
   if (!response.ok) {

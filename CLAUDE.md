@@ -30,10 +30,11 @@ app/
         page.tsx                        # Admin dashboard
         products/create/page.tsx        # Admin: create product
         categories/create/page.tsx      # Admin: create category
+        files/page.tsx                  # Admin: file manager (list + upload)
   api/
     products/                           # REST API: GET, POST, GET/:id, PUT/:id, DELETE/:id
     category/                           # REST API: GET, POST, GET/:id, PUT/:id, DELETE/:id + by-ids/
-    file/                               # REST API: POST (upload), DELETE/:id
+    file/                               # REST API: GET (list), POST (upload), GET/:id, PATCH/:id, DELETE/:id
   globals.css
 
 frontend/
@@ -66,7 +67,7 @@ feature/
   index.ts        # Barrel export
 ```
 
-Features: `admin`, `api`, `cart`, `categories`, `footer`, `header`, `landing`, `nav`, `products`, `react-query`, `translation`
+Features: `admin`, `api`, `cart`, `categories`, `files`, `footer`, `header`, `landing`, `nav`, `products`, `react-query`, `translation`
 
 ### Database models
 
@@ -106,4 +107,6 @@ npm run lint     # ESLint
 - i18n metadata is generated server-side in layout via `generateMetadata`
 - Backend follows repository → service pattern per feature module under `backend/features/`
 - API routes delegate to the relevant service (e.g. `ProductService`, `CategoryService`, `FileService`)
+- `executeRequest` in `frontend/features/api/utils.ts` supports both JSON bodies and `FormData`; pass `FormData` as `body` and it skips `Content-Type` so the browser sets the multipart boundary automatically
+- File images are rendered with Next.js `<Image>`; allowed hostnames come from `R2_PUBLIC_URL` via `remotePatterns` in `next.config.ts`
 - Prisma schema is in `backend/prisma/schema.prisma`; run `npx prisma generate` after schema changes

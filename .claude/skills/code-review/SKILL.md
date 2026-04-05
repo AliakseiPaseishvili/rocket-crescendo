@@ -1,7 +1,6 @@
 ---
 name: code-review
-description: >
-  Performs a thorough code review of changes in the rocket-crescendo git repository.
+description: Performs a thorough code review of changes in the rocket-crescendo git repository.
   Reviews staged/unstaged changes, recent commits, or a specified diff for bugs,
   security vulnerabilities, code quality issues, and adherence to project conventions.
   Outputs a structured report with Critical Issues, Warnings, and Suggestions.

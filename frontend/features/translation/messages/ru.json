@@ -43,7 +43,8 @@
   },
   "admin": {
     "productsDescription": "Управляйте вашими продуктами",
-    "categoriesDescription": "Управляйте категориями продуктов"
+    "categoriesDescription": "Управляйте категориями продуктов",
+    "filesDescription": "Управляйте загруженными изображениями и видео"
   },
   "category": {
     "categories": "Категории",
@@ -58,6 +59,18 @@
     "errorLoadingCategories": "Не удалось загрузить категории.",
     "noCategories": "Категории не найдены.",
     "unknownCategory": "Категория {id}"
+  },
+  "file": {
+    "files": "Файлы",
+    "uploadFile": "Загрузить файл",
+    "fileName": "Название",
+    "fileNamePlaceholder": "Название файла",
+    "file": "Файл",
+    "upload": "Загрузить",
+    "uploading": "Загрузка…",
+    "loadingFiles": "Загрузка файлов…",
+    "errorLoadingFiles": "Не удалось загрузить файлы.",
+    "noFiles": "Файлы не найдены."
   },
   "product": {
     "createProduct": "Создать продукт",

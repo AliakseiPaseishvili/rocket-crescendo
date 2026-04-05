@@ -3,13 +3,12 @@
     "skill-creator@claude-plugins-official": true
   },
   "hooks": {
-    "PostToolUse": [
+    "Stop": [
       {
-        "matcher": "Write|Edit",
         "hooks": [
           {
             "type": "agent",
-            "prompt": "A file was just written or edited. Run the code-reviewer subagent to review the change: inspect the diff with git diff HEAD, read the changed file at the path in $ARGUMENTS for full context, then produce the structured code review (Critical Issues, Warnings, Suggestions, Verdict) as defined by the code-reviewer agent.",
+            "prompt": "Claude just finished a task. Check if any files were modified in this session using git diff HEAD. If there are code changes, run the code-reviewer subagent to review them and produce the structured report (Critical Issues, Warnings, Suggestions, Verdict) as defined by the code-reviewer agent. If there are no code changes, do nothing.",
             "statusMessage": "Running code review...",
             "timeout": 120
           }

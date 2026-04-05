@@ -11,7 +11,7 @@ export type RequestMap<T> = {
 };
 
 export type RequestProps<Data, Params, Query> = {
-  body?: Data;
+  body?: Data extends FormData ? FormData : Data;
   params?: Params;
   query?: Query;
 };
