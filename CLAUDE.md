@@ -4,24 +4,36 @@ A Next.js 16 e-commerce/landing site for "Cyber Shop: Rocket Crescendo" — book
 
 ## Stack
 
-- **Framework**: Next.js 16 (App Router, Turbopack in dev)
+- **Framework**: Next.js 16 (App Router)
 - **Language**: TypeScript (strict)
 - **Styling**: Tailwind CSS v4
 - **UI components**: shadcn/ui (via `frontend/components/ui/`)
-- **i18n**: i18next + react-i18next, with SSR support
-- **Database**: PostgreSQL via Prisma (generated client at `backend/app/generated/prisma/`)
+- **i18n**: next-intl with language-prefixed routes
+- **Database**: PostgreSQL via Prisma 7 (generated client at `backend/app/generated/prisma/`)
 - **Data fetching**: TanStack Query (React Query)
+- **Forms**: react-hook-form + Yup validation
+- **File storage**: AWS S3 (via `@aws-sdk/client-s3`)
 
 ## Project structure
 
 ```
 app/
-  page.tsx                          # Root redirect (middleware handles routing)
+  page.tsx                              # Root redirect (middleware handles routing)
   [lng]/
-    layout.tsx                      # Per-language root layout
-    page.tsx                        # Landing page entry
-    admin/products/create/page.tsx  # Admin: create product page
-  api/products/                     # REST API routes (GET, POST, GET/:id, PUT/:id, DELETE/:id)
+    layout.tsx                          # Per-language root layout
+    (main)/
+      layout.tsx
+      page.tsx                          # Landing page entry
+    (admin)/
+      layout.tsx
+      admin/
+        page.tsx                        # Admin dashboard
+        products/create/page.tsx        # Admin: create product
+        categories/create/page.tsx      # Admin: create category
+  api/
+    products/                           # REST API: GET, POST, GET/:id, PUT/:id, DELETE/:id
+    category/                           # REST API: GET, POST, GET/:id, PUT/:id, DELETE/:id + by-ids/
+    file/                               # REST API: POST (upload), DELETE/:id
   globals.css
 
 frontend/
@@ -31,10 +43,12 @@ frontend/
   utils/is-server-side.ts
 
 backend/
-  prisma/               # Prisma schema + client singleton (PostgreSQL)
+  prisma/               # Prisma schema + migrations
   app/generated/prisma/ # Generated Prisma client
-  repositories/         # DB access layer
-  services/             # Business logic layer
+  features/             # Feature modules (repository + service per feature)
+    category/           # Category.repository.ts, Category.service.ts
+    file/               # File.repository.ts, File.service.ts, S3Storage.Adapter.ts
+    product/            # Product.repository.ts, Product.service.ts
 
 proxy.ts                # Next.js middleware: redirects bare paths to /{lng}/…
 ```
@@ -48,28 +62,38 @@ feature/
   components/     # React components
   hooks/          # Custom hooks (not all features have this)
   constants.ts    # Feature-level constants (not all features have this)
+  types.ts        # Feature-level types (not all features have this)
   index.ts        # Barrel export
 ```
 
-Features: `api`, `cart`, `footer`, `header`, `landing`, `nav`, `products`, `react-query`, `translation`
+Features: `admin`, `api`, `cart`, `categories`, `footer`, `header`, `landing`, `nav`, `products`, `react-query`, `translation`
+
+### Database models
+
+- `Product` — has `categoryId`, `favorite` flag; related to `ProductTranslation[]`
+- `ProductTranslation` — `productId`, `language`, `name`, `description`; unique on `(productId, language)`
+- `Category` — has `color`; related to `Product[]` and `CategoryTranslation[]`
+- `CategoryTranslation` — `categoryId`, `language`, `name`; unique on `(categoryId, language)`
+- `File` — `fileId`, `fileUrl`, `fileType` (enum: `IMAGE | VIDEO`), `name`
 
 ## Path aliases
 
-`@/*` maps to the repo root. Use `@/frontend/…`, `@/app/…` etc.
+`@/*` maps to the repo root. Use `@/frontend/…`, `@/app/…`, `@/backend/…` etc.
 
 ## i18n
 
 - Supported languages: `en`, `fr`, `ru` (defined in `frontend/features/translation/constants.ts`)
 - All routes are prefixed: `/en/…`, `/fr/…`, `/ru/…`
-- Middleware in `proxy.ts` detects language from cookie → Accept-Language header → fallback `en` and redirects
-- To add a language: add to `supportedLngs` in `constants.ts`, add locale JSON under `locales/<lng>/`
-- Translation namespaces per locale: `common`, `cart`, `footer`, `metadata`, `nav`, `product`
-- Access via `useTranslation('common')` (client) or `initI18next(lng, 'common')` (server); pass multiple namespaces as an array
+- Middleware in `proxy.ts` detects language and redirects
+- Translation messages live in `frontend/features/translation/messages/<lng>.json` (one file per language)
+- i18n routing config: `frontend/features/translation/i18n/routing.ts`
+- To add a language: add to `supportedLngs` in `constants.ts`, add `<lng>.json` under `messages/`
+- Access via `useTranslations()` (client) or next-intl server helpers; routing via `frontend/features/translation/i18n/navigation.ts`
 
 ## Commands
 
 ```bash
-npm run dev      # Start dev server (Turbopack)
+npm run dev      # Start dev server
 npm run build    # Production build
 npm run lint     # ESLint
 ```
@@ -80,5 +104,6 @@ npm run lint     # ESLint
 - New shadcn components go in `frontend/components/ui/`
 - Client components use `'use client'` directive; server components are default (no directive)
 - i18n metadata is generated server-side in layout via `generateMetadata`
-- Backend follows repository → service pattern; API routes delegate to `ProductService`
+- Backend follows repository → service pattern per feature module under `backend/features/`
+- API routes delegate to the relevant service (e.g. `ProductService`, `CategoryService`, `FileService`)
 - Prisma schema is in `backend/prisma/schema.prisma`; run `npx prisma generate` after schema changes
