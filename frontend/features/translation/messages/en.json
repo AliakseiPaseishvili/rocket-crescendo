@@ -70,7 +70,9 @@
     "uploading": "Uploading…",
     "loadingFiles": "Loading files…",
     "errorLoadingFiles": "Failed to load files.",
-    "noFiles": "No files found."
+    "noFiles": "No files found.",
+    "nameRequired": "Name is required",
+    "fileRequired": "File is required"
   },
   "product": {
     "createProduct": "Create Product",

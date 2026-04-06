@@ -70,7 +70,9 @@
     "uploading": "Загрузка…",
     "loadingFiles": "Загрузка файлов…",
     "errorLoadingFiles": "Не удалось загрузить файлы.",
-    "noFiles": "Файлы не найдены."
+    "noFiles": "Файлы не найдены.",
+    "nameRequired": "Название обязательно",
+    "fileRequired": "Файл обязателен"
   },
   "product": {
     "createProduct": "Создать продукт",

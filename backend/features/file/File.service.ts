@@ -32,6 +32,9 @@ export class FileService {
   async upload(input: FileUploadInput): Promise<FileModel> {
     if (!input.name?.trim()) throw new Error('Name is required');
 
+    const existing = await this.repository.findByName(input.name.trim());
+    if (existing) throw new Error(`A file named "${input.name.trim()}" already exists`);
+
     const { file, name } = input;
     const contentType = file.type;
     const fileType = contentType.startsWith('image/') ? FileType.IMAGE : FileType.VIDEO;

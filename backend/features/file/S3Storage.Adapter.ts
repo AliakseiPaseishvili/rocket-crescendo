@@ -31,7 +31,7 @@ export class S3StorageAdapter implements FileStorageAdapter {
     );
     return {
       fileId: key,
-      fileUrl: `${this.publicUrl}/${key}`,
+      fileUrl: `${this.publicUrl}/${this.bucket}/${key.split('/').map(encodeURIComponent).join('/')}`,
     };
   }
 

@@ -6,8 +6,8 @@ Handles file uploads and management, backed by Cloudflare R2 (S3-compatible stor
 
 ```
 backend/features/file/
-  File.repository.ts      # DB access via Prisma (CRUD on File model)
-  File.service.ts         # Business logic: upload, update, delete, getAll, getById
+  File.repository.ts      # DB access via Prisma (CRUD on File model) + findByName
+  File.service.ts         # Business logic: upload, update, delete, getAll, getById; enforces unique names
   FileStorage.Adapter.ts  # Interface: FileStorageAdapter + UploadResult type
   S3Storage.Adapter.ts    # Cloudflare R2 implementation of FileStorageAdapter
   types.ts                # Types: FileModel, FileCreateInput, FileUpdateInput, FileFilter, FileUploadInput, FileType enum
@@ -20,6 +20,7 @@ backend/features/file/
 - **S3StorageAdapter** — uploads/deletes from Cloudflare R2 using `@aws-sdk/client-s3`. Keys follow `images/<name>.<ext>` or `videos/<name>.<ext>`.
 - **FileType** — enum from generated Prisma client: `IMAGE` or `VIDEO`, derived from the uploaded file's MIME type.
 - `FileService` defaults to `S3StorageAdapter` but accepts any `FileStorageAdapter` via constructor injection.
+- **Unique names** — `upload()` calls `repository.findByName()` before uploading; throws if a file with the same name already exists. The API route surfaces this as HTTP 400.
 
 ## Environment variables (R2)
 

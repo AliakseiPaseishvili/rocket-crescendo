@@ -70,7 +70,9 @@
     "uploading": "Téléversement…",
     "loadingFiles": "Chargement des fichiers…",
     "errorLoadingFiles": "Échec du chargement des fichiers.",
-    "noFiles": "Aucun fichier trouvé."
+    "noFiles": "Aucun fichier trouvé.",
+    "nameRequired": "Le nom est requis",
+    "fileRequired": "Le fichier est requis"
   },
   "product": {
     "createProduct": "Créer un produit",

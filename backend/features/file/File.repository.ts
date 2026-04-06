@@ -14,6 +14,10 @@ export class FileRepository {
     return prisma.file.findUnique({ where: { id } });
   }
 
+  async findByName(name: string): Promise<FileModel | null> {
+    return prisma.file.findFirst({ where: { name } });
+  }
+
   async create(data: FileCreateInput): Promise<FileModel> {
     return prisma.file.create({
       data: {
