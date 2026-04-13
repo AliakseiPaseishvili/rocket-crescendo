@@ -2,13 +2,14 @@ import type {
   CategoryCreateInput,
   CategoryFilter,
   CategoryUpdateInput,
+  CategoryWhereInput,
   CategoryWithTranslations,
 } from './types';
 import prisma from '../../prisma/prisma';
 
 export class CategoryRepository {
   async findAll(filter?: CategoryFilter): Promise<CategoryWithTranslations[]> {
-    const where: CategoryFilter = {};
+    const where: CategoryWhereInput = {};
     if (filter) {
       if (filter.color) where.color = filter.color;
     }

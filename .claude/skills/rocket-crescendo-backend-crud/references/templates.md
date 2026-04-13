@@ -49,7 +49,7 @@ import {
   <Entity>UpdateInput as <Entity>UpdateInputBase,
 } from '../../app/generated/prisma/models';
 
-export type { <Entity>Model } from '../../app/generated/prisma/models/<Entity>';
+export type { <Entity>Model, <Entity>WhereInput } from '../../app/generated/prisma/models/<Entity>';
 export type { <Entity>TranslationModel } from '../../app/generated/prisma/models/<Entity>Translation';
 
 export type <Entity>WithRelations = {
@@ -80,7 +80,7 @@ import {
   <Entity>UpdateInput as <Entity>UpdateInputBase,
 } from '../../app/generated/prisma/models';
 
-export type { <Entity>Model } from '../../app/generated/prisma/models/<Entity>';
+export type { <Entity>Model, <Entity>WhereInput } from '../../app/generated/prisma/models/<Entity>';
 
 export type <Entity>CreateInput = <Entity>CreateInputBase;
 
@@ -100,13 +100,14 @@ import type {
   <Entity>CreateInput,
   <Entity>Filter,
   <Entity>UpdateInput,
+  <Entity>WhereInput,
   <Entity>WithRelations,
 } from './types';
 import prisma from '../../prisma/prisma';
 
 export class <Entity>Repository {
   async findAll(filter?: <Entity>Filter): Promise<<Entity>WithRelations[]> {
-    const where: <Entity>Filter = {};
+    const where: <Entity>WhereInput = {};
     if (filter) {
       if (typeof filter.active === 'boolean') where.active = filter.active;
     }
@@ -158,13 +159,13 @@ export class <Entity>Repository {
 ## `<Entity>.repository.ts` — simple
 
 ```ts
-import type { <Entity>CreateInput, <Entity>Filter, <Entity>UpdateInput } from './types';
+import type { <Entity>CreateInput, <Entity>Filter, <Entity>UpdateInput, <Entity>WhereInput } from './types';
 import type { <Entity>Model } from '../../app/generated/prisma/models';
 import prisma from '../../prisma/prisma';
 
 export class <Entity>Repository {
   async findAll(filter?: <Entity>Filter): Promise<<Entity>Model[]> {
-    const where: <Entity>Filter = {};
+    const where: <Entity>WhereInput = {};
     if (filter) {
       if (typeof filter.active === 'boolean') where.active = filter.active;
     }

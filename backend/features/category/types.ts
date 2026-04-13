@@ -5,7 +5,7 @@ import {
   CategoryUpdateInput as CategoryUpdateInputBase,
 } from '../../app/generated/prisma/models';
 
-export type { CategoryModel } from '../../app/generated/prisma/models/Category';
+export type { CategoryModel, CategoryWhereInput } from '../../app/generated/prisma/models/Category';
 export type { CategoryTranslationModel } from '../../app/generated/prisma/models/CategoryTranslation';
 
 export type CategoryWithTranslations = {

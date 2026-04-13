@@ -2,13 +2,14 @@ import type {
   ProductCreateInput,
   ProductFilter,
   ProductUpdateInput,
+  ProductWhereInput,
   ProductWithTranslations,
 } from "./types";
 import prisma from "../../prisma/prisma";
 
 export class ProductRepository {
   async findAll(filter?: ProductFilter): Promise<ProductWithTranslations[]> {
-    const where: ProductFilter = {};
+    const where: ProductWhereInput = {};
 
     if (filter) {
       if (typeof filter.favorite === "boolean") {
