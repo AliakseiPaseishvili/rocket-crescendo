@@ -10,9 +10,11 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const fileTypeParam = searchParams.get('fileType');
+    const filterName = searchParams.get('name');
     const filter: FileFilter = {};
     if (fileTypeParam && fileTypeParam in FileType) {
       filter.fileType = fileTypeParam as FileType;
+      filter.name = filterName || undefined;
     }
     const items = await service.getAll(Object.keys(filter).length ? filter : undefined);
     return NextResponse.json(items);

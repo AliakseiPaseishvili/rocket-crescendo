@@ -8,7 +8,7 @@
         "hooks": [
           {
             "type": "agent",
-            "prompt": "Claude just finished a task. Check if any files were modified in this session using git diff HEAD. If there are code changes, run the code-reviewer subagent to review them and produce the structured report (Critical Issues, Warnings, Suggestions, Verdict) as defined by the code-reviewer agent. If there are no code changes, do nothing.",
+            "prompt": "Run `git diff HEAD --name-only` to check for changed files. If the output is empty, do nothing and stop. If the only changed file is `.claude/settings.json`, do nothing and stop. If there are changed source code files, run the code-reviewer subagent to review them and produce the structured report (Critical Issues, Warnings, Suggestions, Verdict) as defined by the code-reviewer agent.",
             "statusMessage": "Running code review...",
             "timeout": 120
           }

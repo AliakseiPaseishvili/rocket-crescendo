@@ -1,11 +1,12 @@
-import type { FileCreateInput, FileFilter, FileUpdateInput, FileModel } from './types';
+import type { FileCreateInput, FileFilter, FileUpdateInput, FileModel, FileWhereInput } from './types';
 import prisma from '../../prisma/prisma';
 
 export class FileRepository {
   async findAll(filter?: FileFilter): Promise<FileModel[]> {
-    const where: FileFilter = {};
+    const where: FileWhereInput = {};
     if (filter) {
       if (filter.fileType) where.fileType = filter.fileType;
+      if (filter.name) where.name = { contains: filter.name, mode: 'insensitive' };
     }
     return prisma.file.findMany({ where });
   }

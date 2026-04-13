@@ -1,6 +1,6 @@
 import { FileType } from '../../app/generated/prisma/enums';
 
-export type { FileModel } from '../../app/generated/prisma/models/File';
+export type { FileModel, FileWhereInput } from '../../app/generated/prisma/models/File';
 export { FileType } from '../../app/generated/prisma/enums';
 
 export type FileCreateInput = {
@@ -16,6 +16,7 @@ export type FileUpdateInput = {
 
 export type FileFilter = {
   fileType?: FileType;
+  name?: string;
 };
 
 export type FileUploadInput = {
