@@ -71,6 +71,10 @@
     "loadingFiles": "Загрузка файлов…",
     "errorLoadingFiles": "Не удалось загрузить файлы.",
     "noFiles": "Файлы не найдены.",
+    "filterByName": "Фильтр по названию",
+    "allTypes": "Все типы",
+    "images": "Изображения",
+    "videos": "Видео",
     "nameRequired": "Название обязательно",
     "fileRequired": "Файл обязателен"
   },

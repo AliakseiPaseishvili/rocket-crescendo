@@ -71,6 +71,10 @@
     "loadingFiles": "Chargement des fichiers…",
     "errorLoadingFiles": "Échec du chargement des fichiers.",
     "noFiles": "Aucun fichier trouvé.",
+    "filterByName": "Filtrer par nom",
+    "allTypes": "Tous les types",
+    "images": "Images",
+    "videos": "Vidéos",
     "nameRequired": "Le nom est requis",
     "fileRequired": "Le fichier est requis"
   },

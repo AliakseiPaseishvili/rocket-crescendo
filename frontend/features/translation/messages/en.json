@@ -71,6 +71,10 @@
     "loadingFiles": "Loading files…",
     "errorLoadingFiles": "Failed to load files.",
     "noFiles": "No files found.",
+    "filterByName": "Filter by name",
+    "allTypes": "All types",
+    "images": "Images",
+    "videos": "Videos",
     "nameRequired": "Name is required",
     "fileRequired": "File is required"
   },
