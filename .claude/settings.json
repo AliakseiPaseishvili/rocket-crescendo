@@ -3,6 +3,20 @@
     "skill-creator@claude-plugins-official": true
   },
   "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // \"\"'); [[ \"$f\" =~ (frontend|backend)/features/[^/]+/ ]] && [[ ! \"$f\" =~ CLAUDE\\.md ]] && exit 2 || exit 0",
+            "asyncRewake": true,
+            "rewakeMessage": "You just modified a file in a feature folder. Use the rocket-crescendo-feature-claude-md skill to write or update the CLAUDE.md for the affected feature.",
+            "statusMessage": "Checking feature docs..."
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "hooks": [
