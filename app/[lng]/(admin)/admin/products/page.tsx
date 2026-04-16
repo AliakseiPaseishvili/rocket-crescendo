@@ -1,5 +1,4 @@
-import { Breadcrumbs } from '@/frontend/components/Breadcrumbs';
-import { BREADCRUMBS_ADMIN_PRODUCTS } from '@/frontend/constants';
+import { Breadcrumbs, BREADCRUMBS_ADMIN_PRODUCTS } from '@/frontend/features/breadcrumbs';
 import { ProductList } from '@/frontend/features/products';
 
 const AdminProductsPage = () => {

@@ -78,6 +78,13 @@
     "nameRequired": "Name is required",
     "fileRequired": "File is required"
   },
+  "breadcrumb": {
+    "admin": "Admin",
+    "products": "Products",
+    "categories": "Categories",
+    "files": "Files",
+    "create": "Create"
+  },
   "product": {
     "createProduct": "Create Product",
     "categoryRequired": "Category is required",

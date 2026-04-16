@@ -1,5 +1,4 @@
-import { Breadcrumbs } from '@/frontend/components/Breadcrumbs';
-import { BREADCRUMBS_ADMIN_FILES } from '@/frontend/constants';
+import { Breadcrumbs, BREADCRUMBS_ADMIN_FILES } from '@/frontend/features/breadcrumbs';
 import { FileList } from '@/frontend/features/files';
 
 const AdminFilesPage = () => {

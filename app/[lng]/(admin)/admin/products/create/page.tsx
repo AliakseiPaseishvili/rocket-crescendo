@@ -1,5 +1,4 @@
-import { Breadcrumbs } from '@/frontend/components/Breadcrumbs';
-import { BREADCRUMBS_ADMIN_PRODUCTS_CREATE } from '@/frontend/constants';
+import { Breadcrumbs, BREADCRUMBS_ADMIN_PRODUCTS_CREATE } from '@/frontend/features/breadcrumbs';
 import { CreateProductForm } from '@/frontend/features/products';
 
 const CreateProductPage = () => {

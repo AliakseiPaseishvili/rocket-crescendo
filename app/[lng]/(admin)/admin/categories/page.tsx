@@ -1,5 +1,4 @@
-import { Breadcrumbs } from '@/frontend/components/Breadcrumbs';
-import { BREADCRUMBS_ADMIN_CATEGORIES } from '@/frontend/constants';
+import { Breadcrumbs, BREADCRUMBS_ADMIN_CATEGORIES } from '@/frontend/features/breadcrumbs';
 import { CategoriesList } from '@/frontend/features/categories';
 
 const AdminCategoriesPage = () => {

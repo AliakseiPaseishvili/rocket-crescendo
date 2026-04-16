@@ -1,5 +1,4 @@
-import { Breadcrumbs } from '@/frontend/components/Breadcrumbs';
-import { BREADCRUMBS_ADMIN_CATEGORIES_CREATE } from '@/frontend/constants';
+import { Breadcrumbs, BREADCRUMBS_ADMIN_CATEGORIES_CREATE } from '@/frontend/features/breadcrumbs';
 import { CreateCategoryForm } from '@/frontend/features/categories';
 
 const CreateCategoryPage = () => {

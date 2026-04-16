@@ -78,6 +78,13 @@
     "nameRequired": "Название обязательно",
     "fileRequired": "Файл обязателен"
   },
+  "breadcrumb": {
+    "admin": "Админ",
+    "products": "Продукты",
+    "categories": "Категории",
+    "files": "Файлы",
+    "create": "Создать"
+  },
   "product": {
     "createProduct": "Создать продукт",
     "categoryRequired": "Категория обязательна",
