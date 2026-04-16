@@ -1,13 +1,15 @@
 'use client';
 
-import { FileVideo, ImageIcon, Trash2 } from 'lucide-react';
+import { ImageIcon, Trash2, FileVideo } from 'lucide-react';
 import Image from 'next/image';
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useState } from 'react';
 
 import type { FileModel } from '@/backend/features/file';
 import { Badge } from '@/frontend/components/ui/badge';
 import { Button } from '@/frontend/components/ui/button';
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/frontend/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/frontend/components/ui/dialog';
+import { VideoPlayer } from '@/frontend/features/video-player';
 
 import { useDeleteFile } from '../hooks';
 
@@ -17,6 +19,7 @@ interface FileCardProps {
 
 export const FileCard: FC<FileCardProps> = ({ file }) => {
   const { mutate: deleteFile, isPending } = useDeleteFile();
+  const [videoOpen, setVideoOpen] = useState(false);
 
   const handleDelete = useCallback(() => {
     deleteFile({ params: { id: file.id } });
@@ -50,9 +53,24 @@ export const FileCard: FC<FileCardProps> = ({ file }) => {
               />
             </div>
           ) : (
-            <div className="flex h-40 items-center justify-center rounded-md bg-muted">
-              <FileVideo className="text-muted-foreground" size={40} />
-            </div>
+            <>
+              <button
+                type="button"
+                className="flex h-40 w-full cursor-pointer items-center justify-center rounded-md bg-muted transition-colors hover:bg-muted/70"
+                onClick={() => setVideoOpen(true)}
+              >
+                <FileVideo className="text-muted-foreground" size={40} />
+              </button>
+
+              <Dialog open={videoOpen} onOpenChange={setVideoOpen}>
+                <DialogContent className="max-w-3xl">
+                  <DialogHeader>
+                    <DialogTitle className="truncate">{file.name}</DialogTitle>
+                  </DialogHeader>
+                  <VideoPlayer src={file.fileUrl} controls autoplay={false} fluid />
+                </DialogContent>
+              </Dialog>
+            </>
           )}
           <div className="flex items-center gap-2">
             {file.fileType === 'IMAGE' ? (
