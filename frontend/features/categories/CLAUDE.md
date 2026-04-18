@@ -54,7 +54,7 @@ categories/
 - **`CategoryFormFields`** is the shared form UI used by both `CreateCategoryForm` and `EditCategoryModal`. It accepts all form state as props so the two wrappers can supply their own hooks.
 - **Translation tabs** — one tab per supported language, driven by `useFieldArray`. `CategoryTranslationTabContent` renders a single language tab panel; `TranslationTabTrigger` (from the `translation` feature) renders the tab trigger and shows an error indicator.
 - **Color picker** — `color` field uses the `ColorPicker` component (at `@/frontend/components/ColorPicker`) via `Controller`.
-- **Edit flow** — `EditCategoryModal` opens a `Dialog` and passes an `onSuccess` callback to `useEditCategoryForm` to close the dialog after a successful mutation.
+- **Edit flow** — `EditCategoryModal` uses the shared `Modal` component (`@/frontend/components/Modal`) with controlled state (`useState`). It passes an `onSuccess` callback to `useEditCategoryForm` which calls `setOpen(false)` after a successful mutation. The trigger is a ghost icon `Button` (size-7, Pencil icon); the content is constrained to `max-w-lg`.
 - **Delete flow** — `Category` calls `useDeleteCategory` directly; the button is disabled while the mutation is pending.
 
 ## Adding a new category field

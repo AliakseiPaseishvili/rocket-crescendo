@@ -49,7 +49,7 @@ products/
 - **Translation tabs** — one tab per supported language, driven by `useFieldArray`. `TranslationTabContent` renders a single language tab panel with name and description inputs; `TranslationTabTrigger` (from the `translation` feature) renders the tab trigger and shows an error indicator.
 - **Favorite toggle** — `favorite` field is a boolean checkbox/switch rendered in `ProductFormFields` and displayed as a star icon in the `Product` card.
 - **Category selector** — `categoryId` field uses `CategorySelector` (from the `categories` feature) via `Controller`.
-- **Edit flow** — `EditProductModal` opens a `Dialog` and passes an `onSuccess` callback to `useEditProductForm` to close the dialog after a successful mutation.
+- **Edit flow** — `EditProductModal` uses the shared `Modal` component (`@/frontend/components/Modal`) with controlled state (`useState`). It passes an `onSuccess` callback to `useEditProductForm` which calls `setOpen(false)` after a successful mutation. The trigger is a ghost icon `Button` (size-7, Pencil icon); the content is constrained to `max-w-lg`.
 - **Delete flow** — `Product` calls `useDeleteProduct` directly; the button is disabled while the mutation is pending.
 
 ## Adding a new product field

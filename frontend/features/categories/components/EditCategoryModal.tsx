@@ -5,14 +5,8 @@ import { useTranslations } from 'next-intl';
 import { FC, useCallback, useState } from 'react';
 
 import type { CategoryWithTranslations } from '@/backend/features/category';
+import { Modal } from '@/frontend/components/Modal';
 import { Button } from '@/frontend/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/frontend/components/ui/dialog';
 
 import { CategoryFormFields } from './CategoryFormFields';
 import { useEditCategoryForm } from '../hooks/';
@@ -33,30 +27,30 @@ export const EditCategoryModal: FC<EditCategoryModalProps> = ({ category, disabl
     useEditCategoryForm(category, handleSuccess);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
+    <Modal
+      open={open}
+      onOpenChange={setOpen}
+      title={tCategory('editCategory')}
+      contentClassName="max-w-lg"
+      trigger={
         <Button variant="ghost" size="icon" className="size-7" disabled={disabled}>
           <Pencil className="text-muted-foreground" size={16} />
         </Button>
-      </DialogTrigger>
-      <DialogContent className="max-w-lg">
-        <DialogHeader>
-          <DialogTitle>{tCategory('editCategory')}</DialogTitle>
-        </DialogHeader>
-        <CategoryFormFields
-          register={register}
-          control={control}
-          fields={fields}
-          errors={errors}
-          onSubmit={onSubmit}
-          isPending={isPending}
-          isSuccess={isSuccess}
-          error={error}
-          submitLabel={tCategory('editCategory')}
-          pendingLabel={tCommon('saving')}
-          successMessage={tCategory('editSuccess')}
-        />
-      </DialogContent>
-    </Dialog>
+      }
+    >
+      <CategoryFormFields
+        register={register}
+        control={control}
+        fields={fields}
+        errors={errors}
+        onSubmit={onSubmit}
+        isPending={isPending}
+        isSuccess={isSuccess}
+        error={error}
+        submitLabel={tCategory('editCategory')}
+        pendingLabel={tCommon('saving')}
+        successMessage={tCategory('editSuccess')}
+      />
+    </Modal>
   );
 };
