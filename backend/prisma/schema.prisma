@@ -18,6 +18,7 @@ model Product {
   categoryId   Int
   category     Category             @relation(fields: [categoryId], references: [id])
   translations ProductTranslation[]
+  productFiles ProductFile[]
 }
 
 model ProductTranslation {
@@ -44,11 +45,29 @@ enum FileType {
 }
 
 model File {
-  id       Int      @id @default(autoincrement())
-  fileId   String
-  fileUrl  String
-  fileType FileType
-  name     String
+  id           Int           @id @default(autoincrement())
+  fileId       String
+  fileUrl      String
+  fileType     FileType
+  name         String
+  productFiles ProductFile[]
+}
+
+enum ProductFileRole {
+  MAIN_IMAGE
+  VIDEO
+  ADDITIONAL_IMAGE
+}
+
+model ProductFile {
+  id        Int             @id @default(autoincrement())
+  productId Int
+  fileId    Int
+  role      ProductFileRole
+  product   Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  file      File            @relation(fields: [fileId], references: [id])
+
+  @@unique([productId, fileId])
 }
 
 model CategoryTranslation {

@@ -7,6 +7,11 @@ import type {
 } from "./types";
 import prisma from "../../prisma/prisma";
 
+const PRODUCT_INCLUDE = {
+  translations: true,
+  productFiles: { include: { file: true } },
+} as const;
+
 export class ProductRepository {
   async findAll(filter?: ProductFilter): Promise<ProductWithTranslations[]> {
     const where: ProductWhereInput = {};
@@ -19,14 +24,14 @@ export class ProductRepository {
 
     return prisma.product.findMany({
       where,
-      include: { translations: true },
+      include: PRODUCT_INCLUDE,
     });
   }
 
   async findById(id: number): Promise<ProductWithTranslations | null> {
     return prisma.product.findUnique({
       where: { id },
-      include: { translations: true },
+      include: PRODUCT_INCLUDE,
     });
   }
 
@@ -36,8 +41,13 @@ export class ProductRepository {
         favorite: data.favorite ?? false,
         categoryId: data.categoryId,
         translations: { create: data.translations },
+        ...(data.files?.length && {
+          productFiles: {
+            create: data.files.map((f) => ({ fileId: f.fileId, role: f.role })),
+          },
+        }),
       },
-      include: { translations: true },
+      include: PRODUCT_INCLUDE,
     });
   }
 
@@ -52,15 +62,23 @@ export class ProductRepository {
         ...(data.translations?.length && {
           translations: { deleteMany: {}, create: data.translations },
         }),
+        ...(data.files !== undefined && {
+          productFiles: {
+            deleteMany: {},
+            ...(data.files.length > 0 && {
+              create: data.files.map((f) => ({ fileId: f.fileId, role: f.role })),
+            }),
+          },
+        }),
       },
-      include: { translations: true },
+      include: PRODUCT_INCLUDE,
     });
   }
 
   async delete(id: number): Promise<ProductWithTranslations> {
     return prisma.product.delete({
       where: { id },
-      include: { translations: true },
+      include: PRODUCT_INCLUDE,
     });
   }
 }
