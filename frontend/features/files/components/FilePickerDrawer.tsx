@@ -1,7 +1,6 @@
 'use client';
 
-import { Check, FileVideo, Search } from 'lucide-react';
-import Image from 'next/image';
+import { Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { FC, useCallback, useState } from 'react';
 
@@ -15,9 +14,9 @@ import {
   DrawerTitle,
 } from '@/frontend/components/ui/drawer';
 import { Input } from '@/frontend/components/ui/input';
-import { cn } from '@/frontend/lib/utils';
 
 import { useFiles } from '../hooks';
+import { FilePickerItem } from './FilePickerItem';
 
 interface FilePickerDrawerProps {
   open: boolean;
@@ -106,47 +105,15 @@ export const FilePickerDrawer: FC<FilePickerDrawerProps> = ({
             <p className="py-8 text-center text-sm text-muted-foreground">{t('noFilesFound')}</p>
           ) : (
             <ul className="grid grid-cols-2 gap-3">
-              {files.map((file) => {
-                const isAlreadySelected = alreadySelectedIds.includes(file.id);
-                const isSelected = selected.some((f) => f.id === file.id);
-                return (
-                  <li key={file.id}>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => toggleFile(file)}
-                      disabled={isAlreadySelected}
-                      className={cn(
-                        'relative h-auto w-full overflow-hidden rounded-lg border p-0 transition-all flex flex-col',
-                        isSelected && 'border-primary ring-2 ring-primary',
-                        isAlreadySelected && 'cursor-not-allowed opacity-40',
-                        !isSelected && !isAlreadySelected && 'cursor-pointer hover:border-primary/50'
-                      )}
-                    >
-                      {file.fileType === 'IMAGE' ? (
-                        <div className="relative w-full h-24 bg-muted">
-                          <Image
-                            src={file.fileUrl}
-                            alt={file.name}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                      ) : (
-                        <div className="flex w-full h-24 items-center justify-center bg-muted">
-                          <FileVideo className="text-muted-foreground" size={32} />
-                        </div>
-                      )}
-                      <p className="truncate px-2 py-1 text-left text-xs max-w-[calc(100%-16px)]">{file.name}</p>
-                      {isSelected && (
-                        <div className="absolute right-1.5 top-1.5 flex size-5 items-center justify-center rounded-full bg-primary">
-                          <Check size={12} className="text-primary-foreground" />
-                        </div>
-                      )}
-                    </Button>
-                  </li>
-                );
-              })}
+              {files.map((file) => (
+                <FilePickerItem
+                  key={file.id}
+                  file={file}
+                  isSelected={selected.some((f) => f.id === file.id)}
+                  isAlreadySelected={alreadySelectedIds.includes(file.id)}
+                  onToggle={toggleFile}
+                />
+              ))}
             </ul>
           )}
           {hasNextPage && (

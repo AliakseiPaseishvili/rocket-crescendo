@@ -13,7 +13,8 @@ files/
     FileVideoPlayer.tsx       # shadcn Button thumbnail (ghost variant, h-40) + fullscreen-on-mobile Dialog containing VideoPlayer
     FileUploadInput.tsx       # Controlled input: hidden file picker triggered by a Paperclip Button + name Input in one row; auto-fills name from filename
     UploadFileDialog.tsx      # Dialog with Plus trigger button wrapping FileUploadInput; delegates form state to useUploadFileForm
-    FilePickerDrawer.tsx      # Controlled right-side drawer for picking files from the library; used by product media selection; shows "Load more" when more pages exist
+    FilePickerDrawer.tsx      # Controlled right-side drawer for picking files from the library; used by product media selection; shows "Load more" when more pages exist; renders items via FilePickerItem
+    FilePickerItem.tsx        # Single selectable file tile inside FilePickerDrawer: image preview or video icon, file name, selected ring + checkmark, disabled/grayed state for already-selected files
     index.ts                  # Barrel export for components
   hooks/
     use-files.ts              # useOffsetPagination: fetch paginated files, accepts optional FileFilter (debounced); returns { items, fetchNextPage, queryProps }
@@ -49,6 +50,8 @@ files/
 - **`FileList` pagination** — maintains `nameFilter` and `fileTypeFilter` state passed as a `FileFilter` to `useFiles` (debounced). Shows a centred "Load more" button when `hasNextPage` is true; button is disabled while `isFetchingNextPage`.
 
 - **`FilePickerDrawer` pagination** — same pattern: "Load more" button appears below the grid inside the scrollable area; uses `t('loadMore')` / `t('loading')` for button text.
+
+- **`FilePickerItem`** — extracted presentational component used by `FilePickerDrawer`. Renders a single selectable `<li>` tile. Props: `file`, `isSelected`, `isAlreadySelected`, `onToggle`. Selection state is derived and passed in by the parent drawer; the item itself is stateless. `isAlreadySelected` disables the button and reduces opacity; `isSelected` shows a primary-colored ring and checkmark badge.
 
 - **`FileCardNameEditor`** — self-contained component extracted from `FileCard`. Props: `name`, `onSave(name: string)`, `isSaving`, `disabled`. Manages `editing`, `value`, and `inputRef` internally. View mode: `CardTitle` + Pencil button. Edit mode: `Input` + Check/X buttons. Enter confirms; Escape cancels. Skips `onSave` if value is empty or unchanged.
 
