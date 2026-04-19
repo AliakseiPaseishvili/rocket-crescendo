@@ -83,7 +83,8 @@
     "loading": "Chargement...",
     "noFilesFound": "Aucun fichier trouvé",
     "select": "Sélectionner",
-    "selectCount": "Sélectionner ({count})"
+    "selectCount": "Sélectionner ({count})",
+    "loadMore": "Charger plus"
   },
   "breadcrumb": {
     "admin": "Admin",

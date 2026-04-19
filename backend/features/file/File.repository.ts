@@ -1,14 +1,21 @@
-import type { FileCreateInput, FileFilter, FileUpdateInput, FileModel, FileWhereInput } from './types';
+import { DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET } from './constants';
+import type { FileCreateInput, FileFilter, FileUpdateInput, FileModel, FileWhereInput, PaginatedFiles } from './types';
 import prisma from '../../prisma/prisma';
 
 export class FileRepository {
-  async findAll(filter?: FileFilter): Promise<FileModel[]> {
+  async findAll(filter?: FileFilter): Promise<PaginatedFiles> {
     const where: FileWhereInput = {};
     if (filter) {
       if (filter.fileType) where.fileType = filter.fileType;
       if (filter.name) where.name = { contains: filter.name, mode: 'insensitive' };
     }
-    return prisma.file.findMany({ where });
+    const offset = filter?.offset ?? DEFAULT_PAGINATION_OFFSET;
+    const limit = filter?.limit ?? DEFAULT_PAGINATION_LIMIT;
+    const [items, total] = await prisma.$transaction([
+      prisma.file.findMany({ where, skip: offset, take: limit, orderBy: { id: 'desc' } }),
+      prisma.file.count({ where }),
+    ]);
+    return { items, total, offset, limit };
   }
 
   async findById(id: number): Promise<FileModel | null> {

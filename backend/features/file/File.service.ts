@@ -8,6 +8,7 @@ import type {
   FileUpdateInput,
   FileModel,
   FileUploadInput,
+  PaginatedFiles,
 } from './types';
 
 export class FileService {
@@ -19,7 +20,7 @@ export class FileService {
     this.storage = storage;
   }
 
-  async getAll(filter?: FileFilter): Promise<FileModel[]> {
+  async getAll(filter?: FileFilter): Promise<PaginatedFiles> {
     return this.repository.findAll(filter);
   }
 

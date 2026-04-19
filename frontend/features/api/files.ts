@@ -1,4 +1,4 @@
-import type { FileFilter, FileModel } from '@/backend/features/file';
+import type { FileFilter, FileModel, PaginatedFiles } from '@/backend/features/file';
 
 import { HttpMethod, RequestApiType, RequestMap } from './types';
 
@@ -8,7 +8,7 @@ const FILE_API_ROUTES = {
 } as const;
 
 export type FileApiTypes = {
-  getFiles: RequestApiType<undefined, undefined, FileFilter | undefined, FileModel[]>;
+  getFiles: RequestApiType<undefined, undefined, FileFilter | undefined, PaginatedFiles>;
   uploadFile: RequestApiType<FormData, undefined, undefined, FileModel>;
   updateFile: RequestApiType<{ name: string }, { id: number }, undefined, FileModel>;
   deleteFile: RequestApiType<undefined, { id: number }, undefined, void>;

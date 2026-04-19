@@ -1,18 +1,17 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-
 import type { FileFilter } from '@/backend/features/file';
 import { api } from '@/frontend/features/api';
 import { useDebounce } from '@/frontend/features/hooks';
+import { useOffsetPagination } from '@/frontend/features/react-query';
 
 import { FILES_QUERY_KEY } from '../constants';
 
-export function useFiles(filter?: FileFilter) {
+export function useFiles(filter?: Omit<FileFilter, 'offset'>) {
   const debouncedFilter = useDebounce(filter);
 
-  return useQuery({
+  return useOffsetPagination({
     queryKey: [FILES_QUERY_KEY, debouncedFilter],
-    queryFn: () => api.getFiles(debouncedFilter ? { query: debouncedFilter } : undefined),
+    queryFn: (offset) => api.getFiles({ query: { ...debouncedFilter, offset } }),
   });
 }

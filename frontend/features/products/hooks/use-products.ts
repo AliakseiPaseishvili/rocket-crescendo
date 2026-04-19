@@ -7,8 +7,6 @@ import { api } from '@/frontend/features/api';
 
 import { PRODUCTS_QUERY_KEY } from '../constants';
 
-
-
 export function useProducts(query?: ProductFilter) {
   return useQuery({
     queryKey: [PRODUCTS_QUERY_KEY, query],

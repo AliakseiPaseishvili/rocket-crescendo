@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import type { FileType } from '@/backend/features/file';
+import { Button } from '@/frontend/components/ui/button';
 import { Input } from '@/frontend/components/ui/input';
 import {
   Select,
@@ -22,7 +23,7 @@ export const FileList = () => {
   const [nameFilter, setNameFilter] = useState('');
   const [fileTypeFilter, setFileTypeFilter] = useState<FileType | 'all'>('all');
 
-  const { data: files, isPending, isError } = useFiles({
+  const { items: files = [], fetchNextPage, queryProps: { isPending, isError, hasNextPage, isFetchingNextPage } } = useFiles({
     ...(nameFilter && { name: nameFilter }),
     ...(fileTypeFilter !== 'all' && { fileType: fileTypeFilter }),
   });
@@ -65,6 +66,17 @@ export const FileList = () => {
             <FileCard key={file.id} file={file} />
           ))}
         </ul>
+      )}
+
+      {hasNextPage && (
+        <Button
+          variant="outline"
+          onClick={() => fetchNextPage()}
+          disabled={isFetchingNextPage}
+          className="self-center"
+        >
+          {isFetchingNextPage ? t('loadingFiles') : t('loadMore')}
+        </Button>
       )}
     </div>
   );

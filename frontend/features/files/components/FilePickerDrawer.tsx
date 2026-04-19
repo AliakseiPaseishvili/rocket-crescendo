@@ -40,10 +40,11 @@ export const FilePickerDrawer: FC<FilePickerDrawerProps> = ({
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<FileModel[]>([]);
 
-  const { data: files = [], isPending } = useFiles({
+  const { items: files = [], fetchNextPage, queryProps: { isPending, hasNextPage, isFetchingNextPage } } = useFiles({
     fileType: fileType as never,
     name: search || undefined,
   });
+
 
   const handleOpenChange = useCallback(
     (nextOpen: boolean) => {
@@ -147,6 +148,17 @@ export const FilePickerDrawer: FC<FilePickerDrawerProps> = ({
                 );
               })}
             </ul>
+          )}
+          {hasNextPage && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => fetchNextPage()}
+              disabled={isFetchingNextPage}
+              className="mt-4 w-full"
+            >
+              {isFetchingNextPage ? t('loading') : t('loadMore')}
+            </Button>
           )}
         </div>
 

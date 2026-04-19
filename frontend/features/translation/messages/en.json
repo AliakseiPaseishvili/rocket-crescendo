@@ -83,7 +83,8 @@
     "loading": "Loading...",
     "noFilesFound": "No files found",
     "select": "Select",
-    "selectCount": "Select ({count})"
+    "selectCount": "Select ({count})",
+    "loadMore": "Load more"
   },
   "breadcrumb": {
     "admin": "Admin",

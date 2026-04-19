@@ -83,7 +83,8 @@
     "loading": "Загрузка...",
     "noFilesFound": "Файлы не найдены",
     "select": "Выбрать",
-    "selectCount": "Выбрать ({count})"
+    "selectCount": "Выбрать ({count})",
+    "loadMore": "Загрузить ещё"
   },
   "breadcrumb": {
     "admin": "Админ",
