@@ -1,6 +1,7 @@
+import { ProductFileRole } from "@/backend/app/generated/prisma/enums";
+
 import { ProductRepository } from "./Product.repository";
 import {
-  ProductFileRole,
   type ProductCreateInput,
   type ProductFileInput,
   type ProductFilter,

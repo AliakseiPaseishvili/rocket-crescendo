@@ -31,7 +31,7 @@ export const CreateProductForm = () => {
     <div className="flex w-full flex-col gap-6">
       <h1 className="text-2xl font-bold">{tProduct("createProduct")}</h1>
       <div className="grid w-full gap-8 md:grid-cols-[320px_1fr]">
-        <div className="overflow-y-auto md:max-h-[calc(100vh-160px)]">
+        <div className="overflow-y-auto md:max-h-[calc(100vh-200px)]">
           <ProductMediaPanel
             mainImage={mediaState.mainImage}
             video={mediaState.video}

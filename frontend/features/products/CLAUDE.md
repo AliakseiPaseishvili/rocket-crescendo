@@ -14,8 +14,9 @@ products/
     CreateProductForm.tsx         # Two-column page layout: scrollable media panel (left) + ProductFormFields (right); title "Create Product"
     CreateProductLink.tsx         # "+" link to the admin create-product page
     EditProductModal.tsx          # Dialog wrapper for editing an existing product
+    AdditionalImagesPanel.tsx     # Grid of selected additional images + "Add Images" button + FilePickerDrawer; owns its own drawer open state; max 8 images
     MediaPickerCard.tsx           # Always-clickable box card for selecting a single image or video; opens FilePickerDrawer on click; shows preview + trash when file selected
-    ProductMediaPanel.tsx         # Scrollable column with MediaPickerCard for main image + video, grid of selected additional images, and "Add Images" button
+    ProductMediaPanel.tsx         # Scrollable column with MediaPickerCard for main image + video, then AdditionalImagesPanel
     index.ts                      # Barrel export for components
   hooks/
     use-products.ts               # useQuery: fetch all products (accepts optional ProductFilter)
@@ -51,7 +52,8 @@ products/
 - **`CreateProductForm` two-column layout** — renders a full-width `<h1>` title then a `md:grid-cols-[320px_1fr]` grid. The left column is a `overflow-y-auto md:max-h-[calc(100vh-160px)]` wrapper around `ProductMediaPanel`; the right column is `ProductFormFields`. Media state lives in `useCreateProductForm`, not in `ProductFormFields`, keeping the shared form component unaware of file picking.
 - **`useCreateProductForm` media state** — holds `ProductMediaState` in local `useState` alongside the react-hook-form instance. Exposes `setMainImage`, `removeMainImage`, `setVideo`, `removeVideo`, `addAdditionalImages`, `removeAdditionalImage`. On submit, maps state to `ProductFileInput[]` with roles `MAIN_IMAGE`, `VIDEO`, `ADDITIONAL_IMAGE` and includes them in the `files` field of the create payload. On success, calls both `reset()` and `resetMedia()` to clear the form and media panel. Files are omitted from the payload entirely if none are selected.
 - **`MediaPickerCard`** — a `div` with `role="button"` and full keyboard support (`Enter`/`Space`). Always clickable to open `FilePickerDrawer` regardless of whether a file is already selected — clicking the card replaces the current file. The trash `Button` calls `e.stopPropagation()` before `onRemove` so it doesn't re-open the drawer. Uses `maxSelection={1}` and `alreadySelectedIds={[]}`.
-- **`ProductMediaPanel`** — manages a separate `FilePickerDrawer` for additional images (`fileType="IMAGE"`, multi-select). Passes `maxSelection = 8 - additionalImages.length` so the drawer caps selection at the remaining slots. Passes `alreadySelectedIds` so already-picked images are shown as disabled in the drawer. The "Add Images" button is disabled when `additionalImages.length >= 8`.
+- **`AdditionalImagesPanel`** — self-contained component for the additional images section. Owns its own `drawerOpen` state. Renders the 2-column image grid (when images are selected) and the "Add Images" button. Passes `maxSelection = 8 - additionalImages.length` to the drawer; passes `alreadySelectedIds` so already-picked images appear disabled. Button is disabled when all 8 slots are filled.
+- **`ProductMediaPanel`** — renders `MediaPickerCard` for main image and video, then delegates the additional images section to `AdditionalImagesPanel`. No longer holds any drawer state.
 - **`ProductFormFields`** is the shared form UI used by both `CreateProductForm` and `EditProductModal`. It accepts all form state as props so the two wrappers can supply their own hooks.
 - **Translation tabs** — one tab per supported language, driven by `useFieldArray`. `TranslationTabContent` renders a single language tab panel with name and description inputs; `TranslationTabTrigger` (from the `translation` feature) renders the tab trigger and shows an error indicator.
 - **Favorite toggle** — `favorite` field is a boolean checkbox/switch rendered in `ProductFormFields` and displayed as a star icon in the `Product` card.
