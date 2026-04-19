@@ -1,13 +1,12 @@
 'use client';
 
-import { FileVideo, ImageIcon, Trash2 } from 'lucide-react';
+import { FileVideo, ImageIcon } from 'lucide-react';
 import Image from 'next/image';
 import { FC, useCallback } from 'react';
 
 import type { FileModel } from '@/backend/features/file';
 import { Badge } from '@/frontend/components/ui/badge';
-import { Button } from '@/frontend/components/ui/button';
-import { Card, CardAction, CardContent, CardHeader } from '@/frontend/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/frontend/components/ui/card';
 
 import { useDeleteFile, useUpdateFile } from '../hooks';
 import { FileCardNameEditor } from './FileCardNameEditor';
@@ -39,20 +38,10 @@ export const FileCard: FC<FileCardProps> = ({ file }) => {
           <FileCardNameEditor
             name={file.name}
             onSave={handleSave}
+            onDelete={handleDelete}
             isSaving={isUpdating}
             disabled={isDeleting || isUpdating}
           />
-          <CardAction>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="size-7"
-              disabled={isDeleting || isUpdating}
-              onClick={handleDelete}
-            >
-              <Trash2 className="text-muted-foreground" size={16} />
-            </Button>
-          </CardAction>
         </CardHeader>
         <CardContent className="flex flex-col gap-3">
           {file.fileType === 'IMAGE' ? (

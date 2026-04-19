@@ -1,20 +1,27 @@
-'use client';
+"use client";
 
-import { Check, Pencil, X } from 'lucide-react';
-import { FC, KeyboardEvent, useCallback, useRef, useState } from 'react';
+import { Check, Pencil, Trash2, X } from "lucide-react";
+import { FC, KeyboardEvent, useCallback, useRef, useState } from "react";
 
-import { Button } from '@/frontend/components/ui/button';
-import { CardAction, CardTitle } from '@/frontend/components/ui/card';
-import { Input } from '@/frontend/components/ui/input';
+import { Button } from "@/frontend/components/ui/button";
+import { CardAction, CardTitle } from "@/frontend/components/ui/card";
+import { Input } from "@/frontend/components/ui/input";
 
 interface FileCardNameEditorProps {
   name: string;
   onSave: (name: string) => void;
+  onDelete: () => void;
   isSaving: boolean;
   disabled: boolean;
 }
 
-export const FileCardNameEditor: FC<FileCardNameEditorProps> = ({ name, onSave, isSaving, disabled }) => {
+export const FileCardNameEditor: FC<FileCardNameEditorProps> = ({
+  name,
+  onSave,
+  onDelete,
+  isSaving,
+  disabled,
+}) => {
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState(name);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -42,10 +49,10 @@ export const FileCardNameEditor: FC<FileCardNameEditorProps> = ({ name, onSave, 
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter') commit();
-      if (e.key === 'Escape') cancel();
+      if (e.key === "Enter") commit();
+      if (e.key === "Escape") cancel();
     },
-    [commit, cancel]
+    [commit, cancel],
   );
 
   if (editing) {
@@ -60,12 +67,26 @@ export const FileCardNameEditor: FC<FileCardNameEditorProps> = ({ name, onSave, 
           disabled={isSaving}
           autoFocus
         />
-        <Button variant="ghost" size="icon" className="size-7 shrink-0" onClick={commit} disabled={isSaving}>
-          <Check size={14} className="text-green-600" />
-        </Button>
-        <Button variant="ghost" size="icon" className="size-7 shrink-0" onClick={cancel} disabled={isSaving}>
-          <X size={14} className="text-muted-foreground" />
-        </Button>
+        <CardAction className="flex flex-row items-center gap-1">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-7 shrink-0"
+            onClick={commit}
+            disabled={isSaving}
+          >
+            <Check size={14} className="text-green-600" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-7 shrink-0"
+            onClick={cancel}
+            disabled={isSaving}
+          >
+            <X size={14} className="text-muted-foreground" />
+          </Button>
+        </CardAction>
       </div>
     );
   }
@@ -74,8 +95,23 @@ export const FileCardNameEditor: FC<FileCardNameEditorProps> = ({ name, onSave, 
     <>
       <CardTitle className="truncate text-sm">{name}</CardTitle>
       <CardAction className="flex items-center gap-1">
-        <Button variant="ghost" size="icon" className="size-7" disabled={disabled} onClick={startEditing}>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="size-7"
+          disabled={disabled}
+          onClick={startEditing}
+        >
           <Pencil className="text-muted-foreground" size={14} />
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="size-7"
+          disabled={disabled}
+          onClick={onDelete}
+        >
+          <Trash2 className="text-muted-foreground" size={16} />
         </Button>
       </CardAction>
     </>

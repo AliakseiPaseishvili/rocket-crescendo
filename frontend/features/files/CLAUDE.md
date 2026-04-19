@@ -8,8 +8,8 @@ File management feature — listing, uploading, renaming, deleting, and picking 
 files/
   components/
     FileList.tsx              # Admin list of all files: name/type filters + upload button + FileCard grid + "Load more" button
-    FileCard.tsx              # Single file card: delegates name editing to FileCardNameEditor, owns useDeleteFile + useUpdateFile, renders image/video preview and type badge
-    FileCardNameEditor.tsx    # Self-contained name editor: view mode (CardTitle + Pencil button) or edit mode (Input + Check/X buttons); manages editing/value/inputRef state internally; props: name, onSave, isSaving, disabled
+    FileCard.tsx              # Single file card: delegates name editing and delete to FileCardNameEditor, owns useDeleteFile + useUpdateFile, renders image/video preview and type badge
+    FileCardNameEditor.tsx    # Self-contained name editor + delete button: view mode (CardTitle + Pencil + Trash2 buttons) or edit mode (Input + Check/X buttons); manages editing/value/inputRef state internally; props: name, onSave, onDelete, isSaving, disabled
     FileVideoPlayer.tsx       # shadcn Button thumbnail (ghost variant, h-40) + fullscreen-on-mobile Dialog containing VideoPlayer
     FileUploadInput.tsx       # Controlled input: hidden file picker triggered by a Paperclip Button + name Input in one row; auto-fills name from filename
     UploadFileDialog.tsx      # Dialog with Plus trigger button wrapping FileUploadInput; delegates form state to useUploadFileForm
@@ -53,9 +53,9 @@ files/
 
 - **`FilePickerItem`** — extracted presentational component used by `FilePickerDrawer`. Renders a single selectable `<li>` tile. Props: `file`, `isSelected`, `isAlreadySelected`, `onToggle`. Selection state is derived and passed in by the parent drawer; the item itself is stateless. `isAlreadySelected` disables the button and reduces opacity; `isSelected` shows a primary-colored ring and checkmark badge.
 
-- **`FileCardNameEditor`** — self-contained component extracted from `FileCard`. Props: `name`, `onSave(name: string)`, `isSaving`, `disabled`. Manages `editing`, `value`, and `inputRef` internally. View mode: `CardTitle` + Pencil button. Edit mode: `Input` + Check/X buttons. Enter confirms; Escape cancels. Skips `onSave` if value is empty or unchanged.
+- **`FileCardNameEditor`** — self-contained component that owns both the rename and delete interactions for a card header. Props: `name`, `onSave(name: string)`, `onDelete()`, `isSaving`, `disabled`. Manages `editing`, `value`, and `inputRef` internally. View mode: `CardTitle` + Pencil button + Trash2 button — both Pencil and Trash2 are disabled when `disabled` is true. Edit mode: `Input` + Check/X buttons (Trash2 is hidden while editing). Enter confirms; Escape cancels. Skips `onSave` if value is empty or unchanged.
 
-- **`FileCard` delete isolation** — each `FileCard` owns its own `useDeleteFile` and `useUpdateFile` instances so `isPending` is scoped per card; mutating one card never disables others.
+- **`FileCard` delete isolation** — each `FileCard` owns its own `useDeleteFile` and `useUpdateFile` instances so `isPending` is scoped per card; mutating one card never disables others. `FileCard` passes both `onSave` and `onDelete` callbacks into `FileCardNameEditor`, keeping mutation logic in `FileCard` and UI in `FileCardNameEditor`.
 
 - **`FilePickerDrawer` selection** — controlled right-side vaul drawer (`direction="right"`). Props: `open`, `onOpenChange`, `fileType`, `maxSelection` (1 for single-pick, up to 8 for multi), `alreadySelectedIds` (shown as disabled/grayed), `onConfirm(files: FileModel[])`. For `maxSelection === 1`, clicking replaces selection; for `> 1`, toggles up to the limit. Resets search and selection on close without confirm.
 
