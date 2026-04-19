@@ -1,40 +1,46 @@
-import type { FileType } from "../../app/generated/prisma/enums";
-import {
-  ProductTranslationModel,
+import type { ProductFileRole } from "../../app/generated/prisma/enums";
+import type {
   ProductTranslationCreateInput,
   ProductCreateInput as ProductCreateInputBase,
   ProductUpdateInput as ProductUpdateInputBase,
+  ProductFileGetPayload,
+  ProductGetPayload,
 } from "../../app/generated/prisma/models";
 
-export type { ProductModel, ProductWhereInput } from "../../app/generated/prisma/models/Product";
+export type {
+  ProductModel,
+  ProductWhereInput,
+} from "../../app/generated/prisma/models/Product";
 export type { ProductTranslationModel } from "../../app/generated/prisma/models/ProductTranslation";
+export { ProductFileRole } from "../../app/generated/prisma/enums";
 
-export type ProductFileRole = "MAIN_IMAGE" | "VIDEO" | "ADDITIONAL_IMAGE";
-
-export type ProductFileItem = {
-  id: number;
-  role: ProductFileRole;
-  file: {
-    id: number;
-    fileId: string;
-    fileUrl: string;
-    fileType: FileType;
-    name: string;
+export type ProductFileItem = ProductFileGetPayload<{
+  select: {
+    id: true;
+    role: true;
+    file: {
+      select: {
+        id: true;
+        fileId: true;
+        fileUrl: true;
+        fileType: true;
+        name: true;
+      };
+    };
   };
-};
+}>;
 
 export type ProductFileInput = {
   fileId: number;
   role: ProductFileRole;
 };
 
-export type ProductWithTranslations = {
-  id: number;
-  favorite: boolean;
-  categoryId: number;
-  translations: ProductTranslationModel[];
-  productFiles: ProductFileItem[];
-};
+export type ProductWithTranslations = ProductGetPayload<{
+  include: {
+    translations: true;
+    productFiles: { include: { file: true } };
+  };
+}>;
 
 export type ProductCreateInput = Omit<
   ProductCreateInputBase,

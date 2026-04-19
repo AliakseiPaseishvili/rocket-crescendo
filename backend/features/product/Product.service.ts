@@ -1,10 +1,11 @@
 import { ProductRepository } from "./Product.repository";
-import type {
-  ProductCreateInput,
-  ProductFileInput,
-  ProductFilter,
-  ProductUpdateInput,
-  ProductWithTranslations,
+import {
+  ProductFileRole,
+  type ProductCreateInput,
+  type ProductFileInput,
+  type ProductFilter,
+  type ProductUpdateInput,
+  type ProductWithTranslations,
 } from "./types";
 
 export class ProductService {
@@ -26,12 +27,16 @@ export class ProductService {
 
   private validateFiles(files: ProductFileInput[] | undefined): void {
     if (!files?.length) return;
+    const validRoles = new Set([ProductFileRole.MAIN_IMAGE, ProductFileRole.VIDEO, ProductFileRole.ADDITIONAL_IMAGE]);
+    for (const f of files) {
+      if (!validRoles.has(f.role)) throw new Error(`Invalid file role: "${f.role}"`);
+    }
     const uniqueIds = new Set(files.map((f) => f.fileId));
     if (uniqueIds.size !== files.length) throw new Error("Duplicate file IDs are not allowed");
     if (files.length > 10) throw new Error("A product can have at most 10 files");
-    const mainImages = files.filter((f) => f.role === "MAIN_IMAGE");
-    const videos = files.filter((f) => f.role === "VIDEO");
-    const additional = files.filter((f) => f.role === "ADDITIONAL_IMAGE");
+    const mainImages = files.filter((f) => f.role === ProductFileRole.MAIN_IMAGE);
+    const videos = files.filter((f) => f.role === ProductFileRole.VIDEO);
+    const additional = files.filter((f) => f.role === ProductFileRole.ADDITIONAL_IMAGE);
     if (mainImages.length > 1) throw new Error("A product can have at most 1 main image");
     if (videos.length > 1) throw new Error("A product can have at most 1 video");
     if (additional.length > 8) throw new Error("A product can have at most 8 additional images");
