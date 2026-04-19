@@ -6,7 +6,6 @@ export type {
   ProductCreateInput,
   ProductUpdateInput,
   ProductFilter,
-  ProductFileRole,
   ProductFileItem,
   ProductFileInput,
 } from "./types";

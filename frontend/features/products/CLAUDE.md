@@ -1,6 +1,6 @@
 # products feature
 
-Product management feature — listing, creating, editing, and deleting products with multilingual translations and category assignment.
+Product management feature — listing, creating, editing, and deleting products with multilingual translations, category assignment, and media file attachments (main image, video, up to 8 additional images).
 
 ## Structure
 
@@ -11,19 +11,21 @@ products/
     Product.tsx                   # Single product card with favorite toggle, edit/delete actions
     ProductFormFields.tsx         # Shared form layout: favorite toggle + category selector + per-language name/description tabs + submit
     TranslationTabContent.tsx     # Tab panel for a single language's name and description fields
-    CreateProductForm.tsx         # Form wrapper for creating a new product
+    CreateProductForm.tsx         # Two-column page layout: scrollable media panel (left) + ProductFormFields (right); title "Create Product"
     CreateProductLink.tsx         # "+" link to the admin create-product page
     EditProductModal.tsx          # Dialog wrapper for editing an existing product
+    MediaPickerCard.tsx           # Always-clickable box card for selecting a single image or video; opens FilePickerDrawer on click; shows preview + trash when file selected
+    ProductMediaPanel.tsx         # Scrollable column with MediaPickerCard for main image + video, grid of selected additional images, and "Add Images" button
     index.ts                      # Barrel export for components
   hooks/
     use-products.ts               # useQuery: fetch all products (accepts optional ProductFilter)
     use-create-product.ts         # useMutation: POST new product, invalidates list, redirects to admin
-    use-create-product-form.ts    # react-hook-form + Yup wired to useCreateProduct
+    use-create-product-form.ts    # react-hook-form + Yup + ProductMediaState wired to useCreateProduct
     use-delete-product.ts         # useMutation: DELETE product by id, invalidates list
     use-update-product.ts         # useMutation: PUT product by id, invalidates list
     use-edit-product-form.ts      # react-hook-form + Yup wired to useUpdateProduct, pre-fills from product
     index.ts                      # Barrel export for hooks
-  types.ts                        # TranslationField, ProductFormValues
+  types.ts                        # TranslationField, ProductFormValues, ProductMediaState
   constants.ts                    # PRODUCTS_QUERY_KEY
   index.ts                        # Barrel export: CreateProductForm, ProductList
 ```
@@ -34,8 +36,9 @@ products/
 |---|---|
 | `TranslationField` | `{ language: SUPPORTED_LANGUAGE; name: string; description: string }` |
 | `ProductFormValues` | `{ favorite: boolean; categoryId: number; translations: TranslationField[] }` |
+| `ProductMediaState` | `{ mainImage: FileModel \| null; video: FileModel \| null; additionalImages: FileModel[] }` |
 
-`ProductWithTranslations` (and related backend types) come from `@/backend/features/product`.
+`ProductWithTranslations`, `ProductFileRole`, and `ProductFileInput` come from `@/backend/features/product`. `FileModel` comes from `@/backend/features/file`.
 
 ## Query keys
 
@@ -45,12 +48,17 @@ products/
 
 ## Key patterns
 
+- **`CreateProductForm` two-column layout** — renders a full-width `<h1>` title then a `md:grid-cols-[320px_1fr]` grid. The left column is a `overflow-y-auto md:max-h-[calc(100vh-160px)]` wrapper around `ProductMediaPanel`; the right column is `ProductFormFields`. Media state lives in `useCreateProductForm`, not in `ProductFormFields`, keeping the shared form component unaware of file picking.
+- **`useCreateProductForm` media state** — holds `ProductMediaState` in local `useState` alongside the react-hook-form instance. Exposes `setMainImage`, `removeMainImage`, `setVideo`, `removeVideo`, `addAdditionalImages`, `removeAdditionalImage`. On submit, maps state to `ProductFileInput[]` with roles `MAIN_IMAGE`, `VIDEO`, `ADDITIONAL_IMAGE` and includes them in the `files` field of the create payload. On success, calls both `reset()` and `resetMedia()` to clear the form and media panel. Files are omitted from the payload entirely if none are selected.
+- **`MediaPickerCard`** — a `div` with `role="button"` and full keyboard support (`Enter`/`Space`). Always clickable to open `FilePickerDrawer` regardless of whether a file is already selected — clicking the card replaces the current file. The trash `Button` calls `e.stopPropagation()` before `onRemove` so it doesn't re-open the drawer. Uses `maxSelection={1}` and `alreadySelectedIds={[]}`.
+- **`ProductMediaPanel`** — manages a separate `FilePickerDrawer` for additional images (`fileType="IMAGE"`, multi-select). Passes `maxSelection = 8 - additionalImages.length` so the drawer caps selection at the remaining slots. Passes `alreadySelectedIds` so already-picked images are shown as disabled in the drawer. The "Add Images" button is disabled when `additionalImages.length >= 8`.
 - **`ProductFormFields`** is the shared form UI used by both `CreateProductForm` and `EditProductModal`. It accepts all form state as props so the two wrappers can supply their own hooks.
 - **Translation tabs** — one tab per supported language, driven by `useFieldArray`. `TranslationTabContent` renders a single language tab panel with name and description inputs; `TranslationTabTrigger` (from the `translation` feature) renders the tab trigger and shows an error indicator.
 - **Favorite toggle** — `favorite` field is a boolean checkbox/switch rendered in `ProductFormFields` and displayed as a star icon in the `Product` card.
 - **Category selector** — `categoryId` field uses `CategorySelector` (from the `categories` feature) via `Controller`.
 - **Edit flow** — `EditProductModal` uses the shared `Modal` component (`@/frontend/components/Modal`) with controlled state (`useState`). It passes an `onSuccess` callback to `useEditProductForm` which calls `setOpen(false)` after a successful mutation. The trigger is a ghost icon `Button` (size-7, Pencil icon); the content is constrained to `max-w-lg`.
 - **Delete flow** — `Product` calls `useDeleteProduct` directly; the button is disabled while the mutation is pending.
+- **`ProductFileRole` value export** — `backend/features/product/index.ts` exports `ProductFileRole` as a plain `export` (not `export type`) so it is usable as a runtime enum value in `useCreateProductForm`.
 
 ## Adding a new product field
 

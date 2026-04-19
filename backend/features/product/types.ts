@@ -12,7 +12,6 @@ export type {
   ProductWhereInput,
 } from "../../app/generated/prisma/models/Product";
 export type { ProductTranslationModel } from "../../app/generated/prisma/models/ProductTranslation";
-export { ProductFileRole } from "../../app/generated/prisma/enums";
 
 export type ProductFileItem = ProductFileGetPayload<{
   select: {
