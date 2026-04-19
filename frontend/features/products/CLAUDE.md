@@ -14,9 +14,9 @@ products/
     CreateProductForm.tsx         # Two-column page layout: scrollable media panel (left) + ProductFormFields (right); title "Create Product"
     CreateProductLink.tsx         # "+" link to the admin create-product page
     EditProductModal.tsx          # Dialog wrapper for editing an existing product
-    AdditionalImagesPanel.tsx     # Grid of selected additional images + "Add Images" button + FilePickerDrawer; owns its own drawer open state; max 8 images
-    MediaPickerCard.tsx           # Always-clickable box card for selecting a single image or video; opens FilePickerDrawer on click; shows preview + trash when file selected
-    ProductMediaPanel.tsx         # Scrollable column with MediaPickerCard for main image + video, then AdditionalImagesPanel
+    AdditionalImagesPanel.tsx     # Grid of selected additional images + "Add Images" button + FilePickerDrawer; owns its own drawer open state; max 8 images; text via useTranslations('product')
+    MediaPickerCard.tsx           # Always-clickable box card for selecting a single image or video; opens FilePickerDrawer on click; shows preview + trash when file selected; aria-labels via useTranslations('product')
+    ProductMediaPanel.tsx         # Scrollable column with MediaPickerCard for main image + video, then AdditionalImagesPanel; label strings via useTranslations('product')
     index.ts                      # Barrel export for components
   hooks/
     use-products.ts               # useQuery: fetch all products (accepts optional ProductFilter)
@@ -27,7 +27,7 @@ products/
     use-edit-product-form.ts      # react-hook-form + Yup wired to useUpdateProduct, pre-fills from product
     index.ts                      # Barrel export for hooks
   types.ts                        # TranslationField, ProductFormValues, ProductMediaState
-  constants.ts                    # PRODUCTS_QUERY_KEY
+  constants.ts                    # PRODUCTS_QUERY_KEY, MAX_ADDITIONAL_IMAGES (= 8)
   index.ts                        # Barrel export: CreateProductForm, ProductList
 ```
 

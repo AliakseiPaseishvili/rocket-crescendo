@@ -2,13 +2,14 @@
 
 import { ImageIcon, Trash2 } from 'lucide-react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { FC, useState } from 'react';
 
 import type { FileModel } from '@/backend/features/file';
 import { Button } from '@/frontend/components/ui/button';
 import { FilePickerDrawer } from '@/frontend/features/files';
 
-const MAX_ADDITIONAL_IMAGES = 8;
+import { MAX_ADDITIONAL_IMAGES } from '../constants';
 
 interface AdditionalImagesPanelProps {
   additionalImages: FileModel[];
@@ -21,6 +22,7 @@ export const AdditionalImagesPanel: FC<AdditionalImagesPanelProps> = ({
   onSelectAdditionalImages,
   onRemoveAdditionalImage,
 }) => {
+  const t = useTranslations('product');
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const alreadySelectedIds = additionalImages.map((f) => f.id);
@@ -61,8 +63,8 @@ export const AdditionalImagesPanel: FC<AdditionalImagesPanelProps> = ({
       >
         <ImageIcon size={16} />
         {additionalImages.length > 0
-          ? `Add Images (${additionalImages.length}/${MAX_ADDITIONAL_IMAGES})`
-          : 'Add Images'}
+          ? t('addImagesCount', { count: additionalImages.length, max: MAX_ADDITIONAL_IMAGES })
+          : t('addImages')}
       </Button>
 
       <FilePickerDrawer

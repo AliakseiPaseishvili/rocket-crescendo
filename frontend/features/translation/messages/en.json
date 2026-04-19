@@ -76,7 +76,14 @@
     "images": "Images",
     "videos": "Videos",
     "nameRequired": "Name is required",
-    "fileRequired": "File is required"
+    "fileRequired": "File is required",
+    "selectImage": "Select Image",
+    "selectVideo": "Select Video",
+    "searchPlaceholder": "Search...",
+    "loading": "Loading...",
+    "noFilesFound": "No files found",
+    "select": "Select",
+    "selectCount": "Select ({count})"
   },
   "breadcrumb": {
     "admin": "Admin",
@@ -98,6 +105,12 @@
     "loadingProducts": "Loading products…",
     "errorLoadingProducts": "Failed to load products.",
     "noProducts": "No products found.",
-    "products": "Products"
+    "products": "Products",
+    "mainImage": "Main Image",
+    "video": "Video",
+    "addImages": "Add Images",
+    "addImagesCount": "Add Images ({count}/{max})",
+    "changeMedia": "Change {label}",
+    "selectMedia": "Select {label}"
   }
 }

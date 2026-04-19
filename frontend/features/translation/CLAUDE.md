@@ -57,3 +57,10 @@ translation/
 
 1. Add the key to [messages/en.json](messages/en.json), [messages/fr.json](messages/fr.json), and [messages/ru.json](messages/ru.json).
 2. If using TypeScript strict types (via `next-intl.d.ts`), the type will update automatically from the JSON shape.
+
+## Recent key additions
+
+- **`file.selectImage/selectVideo/searchPlaceholder/loading/noFilesFound/select/selectCount`** — UI strings for `FilePickerDrawer` (drawer title, search placeholder, loading/empty states, confirm button).
+- **`product.mainImage/video`** — labels passed to `MediaPickerCard` from `ProductMediaPanel`.
+- **`product.addImages/addImagesCount`** — "Add Images" button text in `AdditionalImagesPanel`; `addImagesCount` uses `{count}` and `{max}` interpolation.
+- **`product.changeMedia/selectMedia`** — aria-labels in `MediaPickerCard`; use `{label}` interpolation.

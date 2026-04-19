@@ -2,6 +2,7 @@
 
 import { FileVideo, ImageIcon, Trash2 } from 'lucide-react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { FC, useState } from 'react';
 
 import type { FileModel } from '@/backend/features/file';
@@ -23,6 +24,7 @@ export const MediaPickerCard: FC<MediaPickerCardProps> = ({
   onSelect,
   onRemove,
 }) => {
+  const t = useTranslations('product');
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
@@ -30,7 +32,7 @@ export const MediaPickerCard: FC<MediaPickerCardProps> = ({
       <div
         role="button"
         tabIndex={0}
-        aria-label={selectedFile ? `Change ${label}` : `Select ${label}`}
+        aria-label={selectedFile ? t('changeMedia', { label }) : t('selectMedia', { label })}
         onClick={() => setDrawerOpen(true)}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {

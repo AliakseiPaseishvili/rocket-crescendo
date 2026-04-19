@@ -76,7 +76,14 @@
     "images": "Изображения",
     "videos": "Видео",
     "nameRequired": "Название обязательно",
-    "fileRequired": "Файл обязателен"
+    "fileRequired": "Файл обязателен",
+    "selectImage": "Выбрать изображение",
+    "selectVideo": "Выбрать видео",
+    "searchPlaceholder": "Поиск...",
+    "loading": "Загрузка...",
+    "noFilesFound": "Файлы не найдены",
+    "select": "Выбрать",
+    "selectCount": "Выбрать ({count})"
   },
   "breadcrumb": {
     "admin": "Админ",
@@ -98,6 +105,12 @@
     "loadingProducts": "Загрузка продуктов…",
     "errorLoadingProducts": "Не удалось загрузить продукты.",
     "noProducts": "Продукты не найдены.",
-    "products": "Продукты"
+    "products": "Продукты",
+    "mainImage": "Главное изображение",
+    "video": "Видео",
+    "addImages": "Добавить изображения",
+    "addImagesCount": "Добавить изображения ({count}/{max})",
+    "changeMedia": "Изменить {label}",
+    "selectMedia": "Выбрать {label}"
   }
 }

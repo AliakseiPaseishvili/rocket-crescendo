@@ -76,7 +76,14 @@
     "images": "Images",
     "videos": "Vidéos",
     "nameRequired": "Le nom est requis",
-    "fileRequired": "Le fichier est requis"
+    "fileRequired": "Le fichier est requis",
+    "selectImage": "Sélectionner une image",
+    "selectVideo": "Sélectionner une vidéo",
+    "searchPlaceholder": "Rechercher...",
+    "loading": "Chargement...",
+    "noFilesFound": "Aucun fichier trouvé",
+    "select": "Sélectionner",
+    "selectCount": "Sélectionner ({count})"
   },
   "breadcrumb": {
     "admin": "Admin",
@@ -98,6 +105,12 @@
     "loadingProducts": "Chargement des produits…",
     "errorLoadingProducts": "Échec du chargement des produits.",
     "noProducts": "Aucun produit trouvé.",
-    "products": "Produits"
+    "products": "Produits",
+    "mainImage": "Image principale",
+    "video": "Vidéo",
+    "addImages": "Ajouter des images",
+    "addImagesCount": "Ajouter des images ({count}/{max})",
+    "changeMedia": "Changer {label}",
+    "selectMedia": "Sélectionner {label}"
   }
 }

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 
 import type { FileModel } from '@/backend/features/file';
@@ -30,10 +31,12 @@ export const ProductMediaPanel: FC<ProductMediaPanelProps> = ({
   onSelectAdditionalImages,
   onRemoveAdditionalImage,
 }) => {
+  const t = useTranslations('product');
+
   return (
     <div className="flex flex-col gap-4 overflow-y-auto">
       <MediaPickerCard
-        label="Main Image"
+        label={t('mainImage')}
         fileType="IMAGE"
         selectedFile={mainImage}
         onSelect={onSelectMainImage}
@@ -41,7 +44,7 @@ export const ProductMediaPanel: FC<ProductMediaPanelProps> = ({
       />
 
       <MediaPickerCard
-        label="Video"
+        label={t('video')}
         fileType="VIDEO"
         selectedFile={video}
         onSelect={onSelectVideo}

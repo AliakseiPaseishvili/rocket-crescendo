@@ -2,6 +2,7 @@
 
 import { Check, FileVideo, Search } from 'lucide-react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { FC, useCallback, useState } from 'react';
 
 import type { FileModel } from '@/backend/features/file';
@@ -35,6 +36,7 @@ export const FilePickerDrawer: FC<FilePickerDrawerProps> = ({
   alreadySelectedIds,
   onConfirm,
 }) => {
+  const t = useTranslations('file');
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<FileModel[]>([]);
 
@@ -80,7 +82,7 @@ export const FilePickerDrawer: FC<FilePickerDrawerProps> = ({
       <DrawerContent className="flex flex-col">
         <DrawerHeader className="border-b pb-4">
           <DrawerTitle>
-            {fileType === 'IMAGE' ? 'Select Image' : 'Select Video'}
+            {fileType === 'IMAGE' ? t('selectImage') : t('selectVideo')}
           </DrawerTitle>
           <div className="relative mt-2">
             <Search
@@ -88,7 +90,7 @@ export const FilePickerDrawer: FC<FilePickerDrawerProps> = ({
               size={16}
             />
             <Input
-              placeholder="Search..."
+              placeholder={t('searchPlaceholder')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="pl-9"
@@ -98,9 +100,9 @@ export const FilePickerDrawer: FC<FilePickerDrawerProps> = ({
 
         <div className="flex-1 overflow-y-auto p-4">
           {isPending ? (
-            <p className="py-8 text-center text-sm text-muted-foreground">Loading...</p>
+            <p className="py-8 text-center text-sm text-muted-foreground">{t('loading')}</p>
           ) : files.length === 0 ? (
-            <p className="py-8 text-center text-sm text-muted-foreground">No files found</p>
+            <p className="py-8 text-center text-sm text-muted-foreground">{t('noFilesFound')}</p>
           ) : (
             <ul className="grid grid-cols-2 gap-3">
               {files.map((file) => {
@@ -108,12 +110,13 @@ export const FilePickerDrawer: FC<FilePickerDrawerProps> = ({
                 const isSelected = selected.some((f) => f.id === file.id);
                 return (
                   <li key={file.id}>
-                    <button
+                    <Button
                       type="button"
+                      variant="outline"
                       onClick={() => toggleFile(file)}
                       disabled={isAlreadySelected}
                       className={cn(
-                        'relative w-full overflow-hidden rounded-lg border transition-all',
+                        'relative h-auto w-full overflow-hidden rounded-lg border p-0 transition-all',
                         isSelected && 'border-primary ring-2 ring-primary',
                         isAlreadySelected && 'cursor-not-allowed opacity-40',
                         !isSelected && !isAlreadySelected && 'cursor-pointer hover:border-primary/50'
@@ -139,7 +142,7 @@ export const FilePickerDrawer: FC<FilePickerDrawerProps> = ({
                           <Check size={12} className="text-primary-foreground" />
                         </div>
                       )}
-                    </button>
+                    </Button>
                   </li>
                 );
               })}
@@ -149,7 +152,7 @@ export const FilePickerDrawer: FC<FilePickerDrawerProps> = ({
 
         <DrawerFooter className="border-t">
           <Button onClick={handleConfirm} disabled={selected.length === 0}>
-            {selected.length > 0 ? `Select (${selected.length})` : 'Select'}
+            {selected.length > 0 ? t('selectCount', { count: selected.length }) : t('select')}
           </Button>
         </DrawerFooter>
       </DrawerContent>

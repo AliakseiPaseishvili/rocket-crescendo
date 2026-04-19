@@ -12,7 +12,7 @@ files/
     FileVideoPlayer.tsx   # shadcn Button thumbnail (ghost variant, h-40) + fullscreen-on-mobile Dialog containing VideoPlayer
     FileUploadInput.tsx   # Controlled input: hidden file picker triggered by a Paperclip Button + name Input in one row; auto-fills name from filename
     UploadFileDialog.tsx  # Dialog with Plus trigger button wrapping FileUploadInput; delegates form state to useUploadFileForm
-    FilePickerDrawer.tsx  # Controlled right-side drawer for picking files from the library; used by product media selection
+    FilePickerDrawer.tsx  # Controlled right-side drawer for picking files from the library; used by product media selection; all UI text via useTranslations('file'); file grid items use shadcn Button (variant="outline", p-0, h-auto)
     index.ts              # Barrel export for components
   hooks/
     use-files.ts          # useQuery: fetch all files, accepts optional FileFilter (debounced)
