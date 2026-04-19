@@ -116,14 +116,14 @@ export const FilePickerDrawer: FC<FilePickerDrawerProps> = ({
                       onClick={() => toggleFile(file)}
                       disabled={isAlreadySelected}
                       className={cn(
-                        'relative h-auto w-full overflow-hidden rounded-lg border p-0 transition-all',
+                        'relative h-auto w-full overflow-hidden rounded-lg border p-0 transition-all flex flex-col',
                         isSelected && 'border-primary ring-2 ring-primary',
                         isAlreadySelected && 'cursor-not-allowed opacity-40',
                         !isSelected && !isAlreadySelected && 'cursor-pointer hover:border-primary/50'
                       )}
                     >
                       {file.fileType === 'IMAGE' ? (
-                        <div className="relative h-24 bg-muted">
+                        <div className="relative w-full h-24 bg-muted">
                           <Image
                             src={file.fileUrl}
                             alt={file.name}
@@ -136,7 +136,7 @@ export const FilePickerDrawer: FC<FilePickerDrawerProps> = ({
                           <FileVideo className="text-muted-foreground" size={32} />
                         </div>
                       )}
-                      <p className="truncate px-2 py-1 text-left text-xs">{file.name}</p>
+                      <p className="truncate px-2 py-1 text-left text-xs max-w-[calc(100%-16px)]">{file.name}</p>
                       {isSelected && (
                         <div className="absolute right-1.5 top-1.5 flex size-5 items-center justify-center rounded-full bg-primary">
                           <Check size={12} className="text-primary-foreground" />
