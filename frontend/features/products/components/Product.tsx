@@ -1,9 +1,11 @@
 "use client";
 
-import { Star, Trash2 } from "lucide-react";
+import { ImageIcon, Star, Trash2 } from "lucide-react";
+import Image from "next/image";
 import { FC, useCallback } from "react";
 import { twMerge } from "tailwind-merge";
 
+import { ProductFileRole } from "@/backend/app/generated/prisma/enums";
 import type { CategoryWithTranslations } from "@/backend/features/category";
 import type { ProductWithTranslations } from "@/backend/features/product";
 import { Button } from "@/frontend/components/ui/button";
@@ -33,6 +35,12 @@ export const Product: FC<ProductProps> = ({ product, isHiddenActions, className 
   const isPending = isUpdating || isDeleting;
 
   const translation = usePickTranslation(product.translations);
+
+  const displayImage = product.productFiles.find(
+    (f) => f.role === ProductFileRole.MAIN_IMAGE
+  )?.file ?? product.productFiles.find(
+    (f) => f.role === ProductFileRole.ADDITIONAL_IMAGE
+  )?.file ?? null;
 
   const handleFavoriteToggle = useCallback(() => {
     updateProduct({
@@ -82,6 +90,20 @@ export const Product: FC<ProductProps> = ({ product, isHiddenActions, className 
           )}
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
+          <div className="relative h-40 overflow-hidden rounded-md bg-muted">
+            {displayImage ? (
+              <Image
+                src={displayImage.fileUrl}
+                alt={displayImage.name}
+                fill
+                className="object-cover"
+              />
+            ) : (
+              <div className="flex h-full items-center justify-center">
+                <ImageIcon className="text-muted-foreground" size={32} />
+              </div>
+            )}
+          </div>
           <span className="text-sm text-muted-foreground">
             {translation?.description}
           </span>

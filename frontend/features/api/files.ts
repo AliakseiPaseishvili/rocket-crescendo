@@ -10,11 +10,13 @@ const FILE_API_ROUTES = {
 export type FileApiTypes = {
   getFiles: RequestApiType<undefined, undefined, FileFilter | undefined, FileModel[]>;
   uploadFile: RequestApiType<FormData, undefined, undefined, FileModel>;
+  updateFile: RequestApiType<{ name: string }, { id: number }, undefined, FileModel>;
   deleteFile: RequestApiType<undefined, { id: number }, undefined, void>;
 };
 
 export const FILE_REQUEST_MAP: RequestMap<FileApiTypes> = {
   getFiles: { url: FILE_API_ROUTES.FILES, method: HttpMethod.GET },
   uploadFile: { url: FILE_API_ROUTES.FILES, method: HttpMethod.POST },
+  updateFile: { url: FILE_API_ROUTES.FILE, method: HttpMethod.PATCH },
   deleteFile: { url: FILE_API_ROUTES.FILE, method: HttpMethod.DELETE },
 };

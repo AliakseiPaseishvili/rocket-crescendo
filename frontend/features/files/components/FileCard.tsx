@@ -7,9 +7,10 @@ import { FC, useCallback } from 'react';
 import type { FileModel } from '@/backend/features/file';
 import { Badge } from '@/frontend/components/ui/badge';
 import { Button } from '@/frontend/components/ui/button';
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/frontend/components/ui/card';
+import { Card, CardAction, CardContent, CardHeader } from '@/frontend/components/ui/card';
 
-import { useDeleteFile } from '../hooks';
+import { useDeleteFile, useUpdateFile } from '../hooks';
+import { FileCardNameEditor } from './FileCardNameEditor';
 import { FileVideoPlayer } from './FileVideoPlayer';
 
 interface FileCardProps {
@@ -17,23 +18,36 @@ interface FileCardProps {
 }
 
 export const FileCard: FC<FileCardProps> = ({ file }) => {
-  const { mutate: deleteFile, isPending } = useDeleteFile();
+  const { mutate: deleteFile, isPending: isDeleting } = useDeleteFile();
+  const { mutate: updateFile, isPending: isUpdating } = useUpdateFile();
 
   const handleDelete = useCallback(() => {
     deleteFile({ params: { id: file.id } });
   }, [deleteFile, file.id]);
 
+  const handleSave = useCallback(
+    (name: string) => {
+      updateFile({ body: { name }, params: { id: file.id } });
+    },
+    [updateFile, file.id]
+  );
+
   return (
     <li className="flex flex-col">
       <Card className="h-full">
         <CardHeader>
-          <CardTitle className="truncate text-sm">{file.name}</CardTitle>
+          <FileCardNameEditor
+            name={file.name}
+            onSave={handleSave}
+            isSaving={isUpdating}
+            disabled={isDeleting || isUpdating}
+          />
           <CardAction>
             <Button
               variant="ghost"
               size="icon"
               className="size-7"
-              disabled={isPending}
+              disabled={isDeleting || isUpdating}
               onClick={handleDelete}
             >
               <Trash2 className="text-muted-foreground" size={16} />
@@ -43,12 +57,7 @@ export const FileCard: FC<FileCardProps> = ({ file }) => {
         <CardContent className="flex flex-col gap-3">
           {file.fileType === 'IMAGE' ? (
             <div className="relative h-40 overflow-hidden rounded-md bg-muted">
-              <Image
-                src={file.fileUrl}
-                alt={file.name}
-                fill
-                className="object-cover"
-              />
+              <Image src={file.fileUrl} alt={file.name} fill className="object-cover" />
             </div>
           ) : (
             <FileVideoPlayer src={file.fileUrl} name={file.name} />

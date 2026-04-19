@@ -132,7 +132,7 @@ export const FilePickerDrawer: FC<FilePickerDrawerProps> = ({
                           />
                         </div>
                       ) : (
-                        <div className="flex h-24 items-center justify-center bg-muted">
+                        <div className="flex w-full h-24 items-center justify-center bg-muted">
                           <FileVideo className="text-muted-foreground" size={32} />
                         </div>
                       )}
