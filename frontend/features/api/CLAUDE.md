@@ -37,6 +37,7 @@ Each resource file defines:
 | Method | HTTP | Route | Body / Query | Response |
 |---|---|---|---|---|
 | `getProducts` | GET | `/api/products` | `ProductFilter?` (query) | `ProductWithTranslations[]` |
+| `getProduct` | GET | `/api/products/:id` | — | `ProductWithTranslations` |
 | `createProduct` | POST | `/api/products` | `ProductCreateInput` | `ProductWithTranslations` |
 | `updateProduct` | PATCH | `/api/products/:id` | `ProductUpdateInput` | `ProductWithTranslations` |
 | `deleteProduct` | DELETE | `/api/products/:id` | — | `void` |

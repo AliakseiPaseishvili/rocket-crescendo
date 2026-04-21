@@ -54,6 +54,13 @@ translation/
 | `breadcrumb` | Breadcrumb segment labels |
 | `product` | Product list, create/edit form, media panel labels |
 
+## Notable `breadcrumb` namespace keys
+
+| Key | Value (en) | Used by |
+|---|---|---|
+| `breadcrumb.create` | `"Create"` | `BREADCRUMBS_ADMIN_PRODUCTS_CREATE`, `BREADCRUMBS_ADMIN_CATEGORIES_CREATE` |
+| `breadcrumb.edit` | `"Edit"` | `BREADCRUMBS_ADMIN_PRODUCTS_EDIT` |
+
 ## Notable `file` namespace keys
 
 | Key | Value (en) | Used by |

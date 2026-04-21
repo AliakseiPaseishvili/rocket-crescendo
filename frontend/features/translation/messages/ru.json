@@ -91,7 +91,8 @@
     "products": "Продукты",
     "categories": "Категории",
     "files": "Файлы",
-    "create": "Создать"
+    "create": "Создать",
+    "edit": "Изменить"
   },
   "product": {
     "createProduct": "Создать продукт",

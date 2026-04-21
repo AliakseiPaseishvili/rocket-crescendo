@@ -1,1 +1,1 @@
-export { CreateProductForm, ProductList } from './components';
+export { CreateProductForm, EditProductForm, ProductList } from './components';

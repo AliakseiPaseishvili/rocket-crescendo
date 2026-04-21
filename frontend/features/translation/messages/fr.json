@@ -91,7 +91,8 @@
     "products": "Produits",
     "categories": "Catégories",
     "files": "Fichiers",
-    "create": "Créer"
+    "create": "Créer",
+    "edit": "Modifier"
   },
   "product": {
     "createProduct": "Créer un produit",

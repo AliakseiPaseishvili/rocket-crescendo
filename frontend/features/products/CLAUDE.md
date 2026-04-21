@@ -1,6 +1,6 @@
 # products feature
 
-Product management feature used by admins to list, create, edit, and delete products. Each product has multilingual translations, a category assignment, a favorite flag, and media attachments (main image, video, up to 8 additional images).
+Product management feature used by admins to list, create, and edit products. Each product has multilingual translations, a category assignment, a favorite flag, and media attachments (main image, video, up to 8 additional images). Editing navigates to a dedicated full-page form rather than a modal.
 
 ## Structure
 
@@ -8,18 +8,21 @@ Product management feature used by admins to list, create, edit, and delete prod
 products/
   components/
     ProductList.tsx               # Admin list of all products with create link; prefetches category data via useCategoriesByIds
-    Product.tsx                   # Single product card: image preview, favorite toggle, edit/delete actions
-    ProductFormFields.tsx         # Shared form layout: per-language tabs + category selector + favorite checkbox + submit; used by CreateProductForm and EditProductModal
+    Product.tsx                   # Single product card: image preview, favorite toggle, edit link, delete action
+    ProductFormFields.tsx         # Shared form layout: per-language tabs + category selector + favorite checkbox + submit; used by CreateProductForm and EditProductFormContent
     TranslationTabContent.tsx     # Tab panel for a single language's name and description fields
     CreateProductForm.tsx         # Two-column page layout: ProductMediaPanel (left) + ProductFormFields (right)
     CreateProductLink.tsx         # Button link to the admin create-product page
-    EditProductModal.tsx          # Dialog wrapper for editing an existing product; uses shared Modal component
+    EditProductForm.tsx           # Data-fetching wrapper: fetches product by id via useProduct, shows loading/error states, renders EditProductFormContent
+    EditProductFormContent.tsx    # Full-page edit form wired to useEditProductForm; pre-fills translations, category, favorite from the fetched product
+    EditProductLink.tsx           # Ghost icon button (Pencil) rendered as a next-intl Link to /admin/products/:id/edit
     AdditionalImagesPanel.tsx     # Grid of selected additional images + "Add Images" button + FilePickerDrawer; max 8 images
     MediaPickerCard.tsx           # Clickable card for selecting a single image or video; opens FilePickerDrawer; shows preview + trash when file selected
     ProductMediaPanel.tsx         # Scrollable column with Controller-wired MediaPickerCard for main image + video, then AdditionalImagesPanel; accepts additionalImages as FileModel[]
     index.ts                      # Barrel export for components
   hooks/
     use-products.ts               # useQuery: fetch all products (accepts optional ProductFilter)
+    use-product.ts                # useQuery: fetch single product by id via GET /api/products/:id
     use-create-product.ts         # useMutation: POST new product, invalidates list, redirects to admin products
     use-product-form-schema.ts    # useMemo-wrapped Yup schema shared by create and edit forms; uses next-intl for error messages
     use-create-product-form.ts    # react-hook-form + useProductFormSchema wired to useCreateProduct; manages mainImage/video via Controller, additionalImages via useFieldArray
@@ -29,7 +32,7 @@ products/
     index.ts                      # Barrel export for hooks
   types.ts                        # TranslationField, ProductFormValues
   constants.ts                    # PRODUCTS_QUERY_KEY, MAX_ADDITIONAL_IMAGES
-  index.ts                        # Barrel export: CreateProductForm, ProductList
+  index.ts                        # Barrel export: CreateProductForm, EditProductForm, ProductList
 ```
 
 ## Types
@@ -45,19 +48,20 @@ products/
 
 | Constant | Value | Used by |
 |---|---|---|
-| `PRODUCTS_QUERY_KEY` | `'products'` | `useProducts`, `useCreateProduct`, `useDeleteProduct`, `useUpdateProduct` |
+| `PRODUCTS_QUERY_KEY` | `'products'` | `useProducts`, `useProduct`, `useCreateProduct`, `useDeleteProduct`, `useUpdateProduct` |
 
 ## Key patterns
 
-- **`useProductFormSchema`** — extracted into its own hook so both `useCreateProductForm` and `useEditProductForm` share one source of truth for Yup rules. It calls `useTranslations` internally and wraps the schema in `useMemo` so it is only rebuilt when translations change. Any new validation rules should be added here, not in the individual form hooks.
-- **`ProductFormValues` includes media fields** — `mainImage`, `video`, and `additionalImages` are part of the react-hook-form schema so all form state lives in one place. They are stripped from the API payload in `onSubmit` (destructured out before calling `mutate`). `useEditProductForm` also carries these fields to satisfy the shared type but always strips them since the edit endpoint doesn't handle media.
-- **`mainImage` and `video` via `Controller`** — `ProductMediaPanel` receives `control: Control<ProductFormValues>` and wraps each `MediaPickerCard` in a `<Controller>`. `field.onChange` is passed as `onSelect`; `() => field.onChange(null)` as `onRemove`. No watch hooks or manual `setValue` calls are needed.
-- **`additionalImages` via `useFieldArray`** — `useCreateProductForm` calls `useFieldArray({ control, name: 'additionalImages', keyName: '_rhfId' })`. The `keyName: '_rhfId'` avoids clobbering `FileModel.id` with RHF's internal key. `addAdditionalImages` deduplicates by `id` and respects `MAX_ADDITIONAL_IMAGES`; `removeAdditionalImage(id)` finds the index and calls `remove(index)`.
-- **`CreateProductForm` two-column layout** — renders a full-width `<h1>` then a `md:grid-cols-[320px_1fr]` grid. Left column is a `overflow-y-auto md:max-h-[calc(100vh-200px)]` wrapper around `ProductMediaPanel`; right column is `ProductFormFields`. `ProductMediaPanel` gets `control` + the `additionalImageFields` array + add/remove callbacks from `useCreateProductForm`.
+- **`useProductFormSchema`** — extracted into its own hook so both `useCreateProductForm` and `useEditProductForm` share one source of truth for Yup rules. It calls `useTranslations` internally and wraps the schema in `useMemo`. Any new validation rules should be added here only.
+- **`ProductFormValues` includes media fields** — `mainImage`, `video`, and `additionalImages` are part of the react-hook-form schema so all form state lives in one place. They are destructured out before calling `mutate` in both form hooks. `useEditProductForm` carries these fields to satisfy the shared type but always strips them since the edit endpoint doesn't handle media.
+- **`mainImage` and `video` via `Controller`** — `ProductMediaPanel` receives `control: Control<ProductFormValues>` and wraps each `MediaPickerCard` in a `<Controller>`. `field.onChange` is passed as `onSelect`; `() => field.onChange(null)` as `onRemove`.
+- **`additionalImages` via `useFieldArray`** — `useCreateProductForm` calls `useFieldArray({ control, name: 'additionalImages', keyName: '_rhfId' })`. The `keyName: '_rhfId'` avoids clobbering `FileModel.id` with RHF's internal key. `addAdditionalImages` deduplicates by `id` and respects `MAX_ADDITIONAL_IMAGES`.
+- **`CreateProductForm` two-column layout** — renders a full-width `<h1>` then a `md:grid-cols-[320px_1fr]` grid. Left column is a `overflow-y-auto md:max-h-[calc(100vh-200px)]` wrapper around `ProductMediaPanel`; right column is `ProductFormFields`.
+- **Edit flow is a full page, not a modal** — `EditProductLink` renders a ghost `Button asChild` wrapping a next-intl `Link` to `/admin/products/{id}/edit`. The edit page (`app/[lng]/(admin)/admin/products/[id]/edit/page.tsx`) renders `EditProductForm` which fetches the product then mounts `EditProductFormContent` once data is available. This two-component split (`EditProductForm` + `EditProductFormContent`) is required because `useEditProductForm` needs the product for `defaultValues` and hooks cannot be called conditionally.
+- **`useProduct` query key** — uses `[PRODUCTS_QUERY_KEY, id]` so the single-product cache is scoped under the same root key as the list, but keyed by id so each product is cached independently.
 - **`MediaPickerCard`** — a `div` with `role="button"` and full keyboard support (`Enter`/`Space`). Always opens `FilePickerDrawer` on click regardless of current selection — clicking the card replaces the file. The trash `Button` calls `e.stopPropagation()` before `onRemove` to avoid re-opening the drawer. Uses `maxSelection={1}`.
 - **`AdditionalImagesPanel`** — self-contained; owns its own `drawerOpen` state. Passes `maxSelection = MAX_ADDITIONAL_IMAGES - additionalImages.length` and `alreadySelectedIds` to the drawer so already-picked images appear disabled. Button is disabled when all 8 slots are filled.
 - **`Product` image display** — derives `displayImage` by searching `product.productFiles` for the first `MAIN_IMAGE` entry, falling back to the first `ADDITIONAL_IMAGE`, then `null`. `ProductFileRole` is imported from `@/backend/app/generated/prisma/enums` (not the product barrel) to avoid pulling Prisma client into the browser.
-- **`EditProductModal`** — uses the shared `Modal` component with controlled `open` state. Passes `handleSuccess = () => setOpen(false)` as `onSuccess` to `useEditProductForm` so the dialog closes after a successful mutation. Trigger is a ghost icon `Button` (size-7, Pencil icon); content is `max-w-lg`.
 - **`ProductList` category prefetch** — calls `useCategoriesByIds` with all category IDs from the product list, populating the React Query cache so each `Product` card reads its category via `useCacheQuery` without individual network requests.
 - **Translation tabs** — one tab per supported language, driven by `useFieldArray` on `translations`. `TranslationTabContent` renders name/description inputs for a single language; `TranslationTabTrigger` shows an error indicator dot when that language has validation errors.
 

@@ -2,7 +2,7 @@
 
 Renders accessible breadcrumb navigation using shadcn/ui's `Breadcrumb` primitives and next-intl translations.
 
-## Files
+## Structure
 
 ```
 breadcrumbs/
@@ -18,7 +18,7 @@ breadcrumbs/
 
 ```ts
 interface BreadcrumbItem {
-  labelKey: "admin" | "products" | "categories" | "files" | "create";
+  labelKey: "admin" | "products" | "categories" | "files" | "create" | "edit";
   href?: string;   // omit for the current (last) item
 }
 ```
@@ -40,6 +40,7 @@ import { Breadcrumbs, BREADCRUMBS_ADMIN_PRODUCTS_CREATE } from "@/frontend/featu
 | `BREADCRUMBS_ADMIN` | Admin |
 | `BREADCRUMBS_ADMIN_PRODUCTS` | Admin › Products |
 | `BREADCRUMBS_ADMIN_PRODUCTS_CREATE` | Admin › Products › Create |
+| `BREADCRUMBS_ADMIN_PRODUCTS_EDIT` | Admin › Products › Edit |
 | `BREADCRUMBS_ADMIN_FILES` | Admin › Files |
 | `BREADCRUMBS_ADMIN_CATEGORIES` | Admin › Categories |
 | `BREADCRUMBS_ADMIN_CATEGORIES_CREATE` | Admin › Categories › Create |

@@ -16,6 +16,11 @@ export const BREADCRUMBS_ADMIN_PRODUCTS_CREATE: BreadcrumbItem[] = [
   { labelKey: 'create' },
 ];
 
+export const BREADCRUMBS_ADMIN_PRODUCTS_EDIT: BreadcrumbItem[] = [
+  ...BREADCRUMBS_ADMIN_PRODUCTS,
+  { labelKey: 'edit' },
+];
+
 export const BREADCRUMBS_ADMIN_FILES: BreadcrumbItem[] = [
   ...BREADCRUMBS_ADMIN,
   { labelKey: 'files' },

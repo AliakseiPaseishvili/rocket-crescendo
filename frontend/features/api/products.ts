@@ -19,6 +19,7 @@ export type ProductApiTypes = {
     ProductFilter | undefined,
     ProductWithTranslations[]
   >;
+  getProduct: RequestApiType<undefined, { id: number }, undefined, ProductWithTranslations>;
   createProduct: RequestApiType<
     ProductCreateInput,
     undefined,
@@ -36,6 +37,7 @@ export type ProductApiTypes = {
 
 export const PRODUCT_REQUEST_MAP: RequestMap<ProductApiTypes> = {
   getProducts: { url: PRODUCT_API_ROUTES.PRODUCTS, method: HttpMethod.GET },
+  getProduct: { url: PRODUCT_API_ROUTES.PRODUCT, method: HttpMethod.GET },
   createProduct: { url: PRODUCT_API_ROUTES.PRODUCTS, method: HttpMethod.POST },
   deleteProduct: { url: PRODUCT_API_ROUTES.PRODUCT, method: HttpMethod.DELETE },
   updateProduct: { url: PRODUCT_API_ROUTES.PRODUCT, method: HttpMethod.PATCH },
