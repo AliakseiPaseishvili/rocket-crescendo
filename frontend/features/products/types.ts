@@ -12,9 +12,6 @@ export type ProductFormValues = {
   favorite: boolean;
   categoryId: number;
   translations: TranslationField[];
-};
-
-export type ProductMediaState = {
   mainImage: FileModel | null;
   video: FileModel | null;
   additionalImages: FileModel[];

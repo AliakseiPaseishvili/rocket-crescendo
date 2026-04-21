@@ -18,11 +18,7 @@ export const CreateProductForm = () => {
     isPending,
     isSuccess,
     error,
-    mediaState,
-    setMainImage,
-    removeMainImage,
-    setVideo,
-    removeVideo,
+    additionalImageFields,
     addAdditionalImages,
     removeAdditionalImage,
   } = useCreateProductForm();
@@ -33,13 +29,8 @@ export const CreateProductForm = () => {
       <div className="grid w-full gap-8 md:grid-cols-[320px_1fr]">
         <div className="overflow-y-auto md:max-h-[calc(100vh-200px)]">
           <ProductMediaPanel
-            mainImage={mediaState.mainImage}
-            video={mediaState.video}
-            additionalImages={mediaState.additionalImages}
-            onSelectMainImage={setMainImage}
-            onRemoveMainImage={removeMainImage}
-            onSelectVideo={setVideo}
-            onRemoveVideo={removeVideo}
+            control={control}
+            additionalImages={additionalImageFields}
             onSelectAdditionalImages={addAdditionalImages}
             onRemoveAdditionalImage={removeAdditionalImage}
           />

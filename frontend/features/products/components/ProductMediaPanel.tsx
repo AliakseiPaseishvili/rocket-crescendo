@@ -2,32 +2,24 @@
 
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
+import { Control, Controller } from 'react-hook-form';
 
 import type { FileModel } from '@/backend/features/file';
 
+import { ProductFormValues } from '../types';
 import { AdditionalImagesPanel } from './AdditionalImagesPanel';
 import { MediaPickerCard } from './MediaPickerCard';
 
 interface ProductMediaPanelProps {
-  mainImage: FileModel | null;
-  video: FileModel | null;
+  control: Control<ProductFormValues>;
   additionalImages: FileModel[];
-  onSelectMainImage: (file: FileModel) => void;
-  onRemoveMainImage: () => void;
-  onSelectVideo: (file: FileModel) => void;
-  onRemoveVideo: () => void;
   onSelectAdditionalImages: (files: FileModel[]) => void;
   onRemoveAdditionalImage: (id: number) => void;
 }
 
 export const ProductMediaPanel: FC<ProductMediaPanelProps> = ({
-  mainImage,
-  video,
+  control,
   additionalImages,
-  onSelectMainImage,
-  onRemoveMainImage,
-  onSelectVideo,
-  onRemoveVideo,
   onSelectAdditionalImages,
   onRemoveAdditionalImage,
 }) => {
@@ -35,20 +27,32 @@ export const ProductMediaPanel: FC<ProductMediaPanelProps> = ({
 
   return (
     <div className="flex flex-col gap-4 overflow-y-auto">
-      <MediaPickerCard
-        label={t('mainImage')}
-        fileType="IMAGE"
-        selectedFile={mainImage}
-        onSelect={onSelectMainImage}
-        onRemove={onRemoveMainImage}
+      <Controller
+        control={control}
+        name="mainImage"
+        render={({ field }) => (
+          <MediaPickerCard
+            label={t('mainImage')}
+            fileType="IMAGE"
+            selectedFile={field.value}
+            onSelect={field.onChange}
+            onRemove={() => field.onChange(null)}
+          />
+        )}
       />
 
-      <MediaPickerCard
-        label={t('video')}
-        fileType="VIDEO"
-        selectedFile={video}
-        onSelect={onSelectVideo}
-        onRemove={onRemoveVideo}
+      <Controller
+        control={control}
+        name="video"
+        render={({ field }) => (
+          <MediaPickerCard
+            label={t('video')}
+            fileType="VIDEO"
+            selectedFile={field.value}
+            onSelect={field.onChange}
+            onRemove={() => field.onChange(null)}
+          />
+        )}
       />
 
       <AdditionalImagesPanel
