@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
 After applying the skill, `Product.repository.ts` gains:
 
 ```ts
-async findByIds(ids: number[]): Promise<ProductWithTranslations[]> {
+async findByIds(ids: string[]): Promise<ProductWithTranslations[]> {
   return prisma.product.findMany({
     where: { id: { in: ids } },
     include: { translations: true },
@@ -92,7 +92,7 @@ async findByIds(ids: number[]): Promise<ProductWithTranslations[]> {
 `Product.service.ts` gains:
 
 ```ts
-async getByIds(ids: number[]): Promise<ProductWithTranslations[]> {
+async getByIds(ids: string[]): Promise<ProductWithTranslations[]> {
   return this.repository.findByIds(ids);
 }
 ```

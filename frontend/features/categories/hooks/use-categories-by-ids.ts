@@ -7,7 +7,7 @@ import { api } from '@/frontend/features/api';
 
 import { CATEGORIES_BY_IDS, CATEGORY_DETAILS } from '../constants';
 
-export function useCategoriesByIds(ids: number[]) {
+export function useCategoriesByIds(ids: string[]) {
   const queryClient = useQueryClient();
 
   const uniqueIds = useMemo(
