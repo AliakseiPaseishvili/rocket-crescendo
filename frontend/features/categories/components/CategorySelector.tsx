@@ -13,7 +13,7 @@ import { useCategories } from "../hooks";
 import { CategorySelectItem } from "./CategorySelectItem";
 
 type CategorySelectorProps = {
-  value: number;
+  value: string;
   onChange: (value: number) => void;
   error?: string;
 };
@@ -43,7 +43,7 @@ export const CategorySelector = ({
   return (
     <div className="flex flex-col gap-1">
       <Select
-        value={value > 0 ? String(value) : ""}
+        value={value ? String(value) : ""}
         onValueChange={(val) => onChange(Number(val))}
       >
         <SelectTrigger className={error ? "border-destructive" : ""}>
