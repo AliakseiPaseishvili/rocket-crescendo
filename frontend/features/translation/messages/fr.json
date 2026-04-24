@@ -94,6 +94,44 @@
     "create": "Créer",
     "edit": "Modifier"
   },
+  "auth": {
+    "signIn": {
+      "title": "Se connecter",
+      "description": "Saisissez votre e-mail et votre mot de passe pour continuer.",
+      "submit": "Se connecter",
+      "submitting": "Connexion…",
+      "noAccount": "Vous n'avez pas de compte ?",
+      "signUpLink": "S'inscrire"
+    },
+    "signUp": {
+      "title": "Créer un compte",
+      "description": "Remplissez les informations ci-dessous pour commencer.",
+      "submit": "Créer un compte",
+      "submitting": "Création du compte…",
+      "haveAccount": "Vous avez déjà un compte ?",
+      "signInLink": "Se connecter"
+    },
+    "fields": {
+      "name": "Nom",
+      "namePlaceholder": "Votre nom",
+      "email": "E-mail",
+      "emailPlaceholder": "vous@exemple.com",
+      "password": "Mot de passe",
+      "passwordPlaceholder": "Mot de passe"
+    },
+    "validation": {
+      "nameRequired": "Le nom est requis",
+      "nameMinLength": "Le nom doit comporter au moins 2 caractères",
+      "emailRequired": "L'e-mail est requis",
+      "emailInvalid": "E-mail invalide",
+      "passwordRequired": "Le mot de passe est requis",
+      "passwordMinLength": "Le mot de passe doit comporter au moins 8 caractères"
+    },
+    "errors": {
+      "signInFailed": "Échec de la connexion",
+      "signUpFailed": "Échec de la création du compte"
+    }
+  },
   "product": {
     "createProduct": "Créer un produit",
     "categoryRequired": "La catégorie est requise",

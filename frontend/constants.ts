@@ -6,4 +6,6 @@ export const ROUTES = {
   ADMIN_CATEGORIES_CREATE: '/admin/categories/create',
   ADMIN_FILES: '/admin/files',
   BASE: '/',
+  SIGN_IN: '/sign-in',
+  SIGN_UP: '/sign-up',
 } as const;

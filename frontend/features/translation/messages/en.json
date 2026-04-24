@@ -94,6 +94,44 @@
     "create": "Create",
     "edit": "Edit"
   },
+  "auth": {
+    "signIn": {
+      "title": "Sign in",
+      "description": "Enter your email and password to continue.",
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Sign up"
+    },
+    "signUp": {
+      "title": "Create an account",
+      "description": "Fill in the details below to get started.",
+      "submit": "Create account",
+      "submitting": "Creating account…",
+      "haveAccount": "Already have an account?",
+      "signInLink": "Sign in"
+    },
+    "fields": {
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "Password"
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "nameMinLength": "Name must be at least 2 characters",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email",
+      "passwordRequired": "Password is required",
+      "passwordMinLength": "Password must be at least 8 characters"
+    },
+    "errors": {
+      "signInFailed": "Sign in failed",
+      "signUpFailed": "Sign up failed"
+    }
+  },
   "product": {
     "createProduct": "Create Product",
     "categoryRequired": "Category is required",

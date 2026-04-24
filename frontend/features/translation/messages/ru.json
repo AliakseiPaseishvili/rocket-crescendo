@@ -94,6 +94,44 @@
     "create": "Создать",
     "edit": "Изменить"
   },
+  "auth": {
+    "signIn": {
+      "title": "Войти",
+      "description": "Введите e-mail и пароль для продолжения.",
+      "submit": "Войти",
+      "submitting": "Вход…",
+      "noAccount": "Нет аккаунта?",
+      "signUpLink": "Зарегистрироваться"
+    },
+    "signUp": {
+      "title": "Создать аккаунт",
+      "description": "Заполните данные ниже, чтобы начать.",
+      "submit": "Создать аккаунт",
+      "submitting": "Создание аккаунта…",
+      "haveAccount": "Уже есть аккаунт?",
+      "signInLink": "Войти"
+    },
+    "fields": {
+      "name": "Имя",
+      "namePlaceholder": "Ваше имя",
+      "email": "E-mail",
+      "emailPlaceholder": "вы@пример.com",
+      "password": "Пароль",
+      "passwordPlaceholder": "Пароль"
+    },
+    "validation": {
+      "nameRequired": "Имя обязательно",
+      "nameMinLength": "Имя должно содержать не менее 2 символов",
+      "emailRequired": "E-mail обязателен",
+      "emailInvalid": "Неверный e-mail",
+      "passwordRequired": "Пароль обязателен",
+      "passwordMinLength": "Пароль должен содержать не менее 8 символов"
+    },
+    "errors": {
+      "signInFailed": "Ошибка входа",
+      "signUpFailed": "Ошибка создания аккаунта"
+    }
+  },
   "product": {
     "createProduct": "Создать продукт",
     "categoryRequired": "Категория обязательна",
