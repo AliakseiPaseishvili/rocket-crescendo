@@ -15,7 +15,7 @@ export function useProductFormSchema() {
     () =>
       yup.object({
         favorite: yup.boolean().required(),
-        categoryId: yup.number().required(tProduct('categoryRequired')).min(1, tProduct('categoryRequired')),
+        categoryId: yup.string().required(tProduct('categoryRequired')).min(1, tProduct('categoryRequired')),
         translations: yup.array(
           yup.object({
             language: yup.mixed<SUPPORTED_LANGUAGE>().oneOf(supportedLngs).required(),
