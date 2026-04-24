@@ -24,7 +24,7 @@ export class FileService {
     return this.repository.findAll(filter);
   }
 
-  async getById(id: number): Promise<FileModel> {
+  async getById(id: string): Promise<FileModel> {
     const file = await this.repository.findById(id);
     if (!file) throw new Error(`File with id ${id} not found`);
     return file;
@@ -57,12 +57,12 @@ export class FileService {
     return this.repository.create(data);
   }
 
-  async update(id: number, data: FileUpdateInput): Promise<FileModel> {
+  async update(id: string, data: FileUpdateInput): Promise<FileModel> {
     await this.getById(id);
     return this.repository.update(id, data);
   }
 
-  async delete(id: number): Promise<FileModel> {
+  async delete(id: string): Promise<FileModel> {
     const file = await this.getById(id);
     await this.storage.delete(file.fileId);
     return this.repository.delete(id);

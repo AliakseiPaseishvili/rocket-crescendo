@@ -28,7 +28,7 @@ export class ProductRepository {
     });
   }
 
-  async findById(id: number): Promise<ProductWithTranslations | null> {
+  async findById(id: string): Promise<ProductWithTranslations | null> {
     return prisma.product.findUnique({
       where: { id },
       include: PRODUCT_INCLUDE,
@@ -52,7 +52,7 @@ export class ProductRepository {
   }
 
   async update(
-    id: number,
+    id: string,
     data: ProductUpdateInput,
   ): Promise<ProductWithTranslations> {
     return prisma.product.update({
@@ -75,7 +75,7 @@ export class ProductRepository {
     });
   }
 
-  async delete(id: number): Promise<ProductWithTranslations> {
+  async delete(id: string): Promise<ProductWithTranslations> {
     return prisma.product.delete({
       where: { id },
       include: PRODUCT_INCLUDE,

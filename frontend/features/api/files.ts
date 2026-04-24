@@ -10,8 +10,8 @@ const FILE_API_ROUTES = {
 export type FileApiTypes = {
   getFiles: RequestApiType<undefined, undefined, FileFilter | undefined, PaginatedFiles>;
   uploadFile: RequestApiType<FormData, undefined, undefined, FileModel>;
-  updateFile: RequestApiType<{ name: string }, { id: number }, undefined, FileModel>;
-  deleteFile: RequestApiType<undefined, { id: number }, undefined, void>;
+  updateFile: RequestApiType<{ name: string }, { id: string }, undefined, FileModel>;
+  deleteFile: RequestApiType<undefined, { id: string }, undefined, void>;
 };
 
 export const FILE_REQUEST_MAP: RequestMap<FileApiTypes> = {

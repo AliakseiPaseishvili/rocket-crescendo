@@ -57,7 +57,7 @@ files/
 
 - **`FileCard` delete isolation** — each `FileCard` owns its own `useDeleteFile` and `useUpdateFile` instances so `isPending` is scoped per card; mutating one card never disables others. `FileCard` passes both `onSave` and `onDelete` callbacks into `FileCardNameEditor`, keeping mutation logic in `FileCard` and UI in `FileCardNameEditor`.
 
-- **`FilePickerDrawer` selection** — controlled right-side vaul drawer (`direction="right"`). Props: `open`, `onOpenChange`, `fileType`, `maxSelection` (1 for single-pick, up to 8 for multi), `alreadySelectedIds` (shown as disabled/grayed), `onConfirm(files: FileModel[])`. For `maxSelection === 1`, clicking replaces selection; for `> 1`, toggles up to the limit. Resets search and selection on close without confirm.
+- **`FilePickerDrawer` selection** — controlled right-side vaul drawer (`direction="right"`). Props: `open`, `onOpenChange`, `fileType`, `maxSelection` (1 for single-pick, up to 8 for multi), `alreadySelectedIds: string[]` (UUID strings, shown as disabled/grayed), `onConfirm(files: FileModel[])`. For `maxSelection === 1`, clicking replaces selection; for `> 1`, toggles up to the limit. Resets search and selection on close without confirm.
 
 - **`FileVideoPlayer` responsive modal** — uses the shared `Modal` component (uncontrolled). Trigger is a ghost `Button` (`h-40`). On mobile the dialog goes edge-to-edge; on `sm+` it restores a centred panel (`max-w-[min(90vw,1200px)]`). `VideoPlayer` is lazily mounted (only rendered when the dialog opens).
 

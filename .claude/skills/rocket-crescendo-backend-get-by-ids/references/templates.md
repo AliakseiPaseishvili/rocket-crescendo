@@ -9,7 +9,7 @@ Substitute `<Entity>` (PascalCase), `<entity>` (camelCase), and `<ReturnType>` t
 ### With relations (entity has translations or other includes)
 
 ```ts
-async findByIds(ids: number[]): Promise<<ReturnType>[]> {
+async findByIds(ids: string[]): Promise<<ReturnType>[]> {
   return prisma.<entity>.findMany({
     where: { id: { in: ids } },
     include: { translations: true },
@@ -20,7 +20,7 @@ async findByIds(ids: number[]): Promise<<ReturnType>[]> {
 ### Simple (flat entity, no relations)
 
 ```ts
-async findByIds(ids: number[]): Promise<<ReturnType>[]> {
+async findByIds(ids: string[]): Promise<<ReturnType>[]> {
   return prisma.<entity>.findMany({
     where: { id: { in: ids } },
   });
@@ -32,7 +32,7 @@ async findByIds(ids: number[]): Promise<<ReturnType>[]> {
 ## Service — add `getByIds` after `getById`
 
 ```ts
-async getByIds(ids: number[]): Promise<<ReturnType>[]> {
+async getByIds(ids: string[]): Promise<<ReturnType>[]> {
   return this.repository.findByIds(ids);
 }
 ```
@@ -51,7 +51,7 @@ const service = new <Entity>Service();
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const ids: number[] = body?.ids;
+    const ids: string[] = body?.ids;
     if (!Array.isArray(ids)) {
       return NextResponse.json({ error: 'ids must be an array' }, { status: 400 });
     }
@@ -109,7 +109,7 @@ const service = new ProductService();
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const ids: number[] = body?.ids;
+    const ids: string[] = body?.ids;
     if (!Array.isArray(ids)) {
       return NextResponse.json({ error: 'ids must be an array' }, { status: 400 });
     }

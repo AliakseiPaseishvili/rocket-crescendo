@@ -9,14 +9,14 @@ Two variants: **with relations** (e.g. entity + translation table) and **simple*
 ### With translation table
 ```prisma
 model <Entity> {
-  id           Int                    @id @default(autoincrement())
+  id           String                 @id @default(uuid())
   active       Boolean                @default(true)
   translations <Entity>Translation[]
 }
 
 model <Entity>Translation {
-  id          Int     @id @default(autoincrement())
-  <entity>Id  Int
+  id          String  @id @default(uuid())
+  <entity>Id  String
   language    String
   name        String
   description String
@@ -29,7 +29,7 @@ model <Entity>Translation {
 ### Simple (flat)
 ```prisma
 model <Entity> {
-  id     Int     @id @default(autoincrement())
+  id     String  @id @default(uuid())
   name   String
   active Boolean @default(true)
 }
@@ -53,7 +53,7 @@ export type { <Entity>Model, <Entity>WhereInput } from '../../app/generated/pris
 export type { <Entity>TranslationModel } from '../../app/generated/prisma/models/<Entity>Translation';
 
 export type <Entity>WithRelations = {
-  id: number;
+  id: string;
   active: boolean;
   translations: <Entity>TranslationModel[];
 };
@@ -117,7 +117,7 @@ export class <Entity>Repository {
     });
   }
 
-  async findById(id: number): Promise<<Entity>WithRelations | null> {
+  async findById(id: string): Promise<<Entity>WithRelations | null> {
     return prisma.<entity>.findUnique({
       where: { id },
       include: { translations: true },
@@ -134,7 +134,7 @@ export class <Entity>Repository {
     });
   }
 
-  async update(id: number, data: <Entity>UpdateInput): Promise<<Entity>WithRelations> {
+  async update(id: string, data: <Entity>UpdateInput): Promise<<Entity>WithRelations> {
     return prisma.<entity>.update({
       where: { id },
       data: {
@@ -147,7 +147,7 @@ export class <Entity>Repository {
     });
   }
 
-  async delete(id: number): Promise<<Entity>WithRelations> {
+  async delete(id: string): Promise<<Entity>WithRelations> {
     return prisma.<entity>.delete({
       where: { id },
       include: { translations: true },
@@ -172,7 +172,7 @@ export class <Entity>Repository {
     return prisma.<entity>.findMany({ where });
   }
 
-  async findById(id: number): Promise<<Entity>Model | null> {
+  async findById(id: string): Promise<<Entity>Model | null> {
     return prisma.<entity>.findUnique({ where: { id } });
   }
 
@@ -180,11 +180,11 @@ export class <Entity>Repository {
     return prisma.<entity>.create({ data });
   }
 
-  async update(id: number, data: <Entity>UpdateInput): Promise<<Entity>Model> {
+  async update(id: string, data: <Entity>UpdateInput): Promise<<Entity>Model> {
     return prisma.<entity>.update({ where: { id }, data });
   }
 
-  async delete(id: number): Promise<<Entity>Model> {
+  async delete(id: string): Promise<<Entity>Model> {
     return prisma.<entity>.delete({ where: { id } });
   }
 }
@@ -216,7 +216,7 @@ export class <Entity>Service {
     return this.repository.findAll(filter);
   }
 
-  async getById(id: number): Promise<<Entity>WithRelations> {
+  async getById(id: string): Promise<<Entity>WithRelations> {
     const item = await this.repository.findById(id);
     // This exact wording is checked in API routes to distinguish 404 vs 400
     if (!item) throw new Error(`<Entity> with id ${id} not found`);
@@ -233,12 +233,12 @@ export class <Entity>Service {
     return this.repository.create(data);
   }
 
-  async update(id: number, data: <Entity>UpdateInput): Promise<<Entity>WithRelations> {
+  async update(id: string, data: <Entity>UpdateInput): Promise<<Entity>WithRelations> {
     await this.getById(id); // throws 'not found' if missing
     return this.repository.update(id, data);
   }
 
-  async delete(id: number): Promise<<Entity>WithRelations> {
+  async delete(id: string): Promise<<Entity>WithRelations> {
     await this.getById(id); // throws 'not found' if missing
     return this.repository.delete(id);
   }
@@ -313,7 +313,7 @@ type Params = { params: Promise<{ id: string }> };
 export async function GET(_: NextRequest, { params }: Params) {
   try {
     const { id } = await params;
-    const item = await service.getById(Number(id));
+    const item = await service.getById(id);
     return NextResponse.json(item);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Not found';
@@ -325,7 +325,7 @@ export async function PATCH(request: NextRequest, { params }: Params) {
   try {
     const { id } = await params;
     const body = await request.json();
-    const item = await service.update(Number(id), body);
+    const item = await service.update(id, body);
     return NextResponse.json(item);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to update <entity>';
@@ -337,7 +337,7 @@ export async function PATCH(request: NextRequest, { params }: Params) {
 export async function DELETE(_: NextRequest, { params }: Params) {
   try {
     const { id } = await params;
-    await service.delete(Number(id));
+    await service.delete(id);
     return new NextResponse(null, { status: 204 }); // no body
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to delete <entity>';

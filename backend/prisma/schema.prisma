@@ -13,17 +13,17 @@ datasource db {
 }
 
 model Product {
-  id           Int                  @id @default(autoincrement())
+  id           String               @id @default(uuid())
   favorite     Boolean              @default(false)
-  categoryId   Int
+  categoryId   String
   category     Category             @relation(fields: [categoryId], references: [id])
   translations ProductTranslation[]
   productFiles ProductFile[]
 }
 
 model ProductTranslation {
-  id          Int     @id @default(autoincrement())
-  productId   Int
+  id          String  @id @default(uuid())
+  productId   String
   language    String
   name        String
   description String
@@ -33,7 +33,7 @@ model ProductTranslation {
 }
 
 model Category {
-  id           Int                   @id @default(autoincrement())
+  id           String                @id @default(uuid())
   color        String
   products     Product[]
   translations CategoryTranslation[]
@@ -45,7 +45,7 @@ enum FileType {
 }
 
 model File {
-  id           Int           @id @default(autoincrement())
+  id           String        @id @default(uuid())
   fileId       String
   fileUrl      String
   fileType     FileType
@@ -60,9 +60,9 @@ enum ProductFileRole {
 }
 
 model ProductFile {
-  id        Int             @id @default(autoincrement())
-  productId Int
-  fileId    Int
+  id        String          @id @default(uuid())
+  productId String
+  fileId    String
   role      ProductFileRole
   product   Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
   file      File            @relation(fields: [fileId], references: [id])
@@ -71,8 +71,8 @@ model ProductFile {
 }
 
 model CategoryTranslation {
-  id         Int      @id @default(autoincrement())
-  categoryId Int
+  id         String   @id @default(uuid())
+  categoryId String
   language   String
   name       String
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)

@@ -9,7 +9,7 @@ export type { CategoryModel, CategoryWhereInput } from '../../app/generated/pris
 export type { CategoryTranslationModel } from '../../app/generated/prisma/models/CategoryTranslation';
 
 export type CategoryWithTranslations = {
-  id: number;
+  id: string;
   color: string;
   translations: CategoryTranslationModel[];
 };

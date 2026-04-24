@@ -47,7 +47,7 @@ Each resource file defines:
 | Method | HTTP | Route | Body / Query | Response |
 |---|---|---|---|---|
 | `getCategories` | GET | `/api/category` | `CategoryFilter?` (query) | `CategoryWithTranslations[]` |
-| `getCategoriesByIds` | POST | `/api/category/by-ids` | `{ ids: number[] }` | `CategoryWithTranslations[]` |
+| `getCategoriesByIds` | POST | `/api/category/by-ids` | `{ ids: string[] }` | `CategoryWithTranslations[]` |
 | `createCategory` | POST | `/api/category` | `CategoryCreateInput` | `CategoryWithTranslations` |
 | `updateCategory` | PATCH | `/api/category/:id` | `CategoryUpdateInput` | `CategoryWithTranslations` |
 | `deleteCategory` | DELETE | `/api/category/:id` | — | `void` |
@@ -65,6 +65,6 @@ Each resource file defines:
 
 ## Key patterns
 
-- **`RequestApiType<Data, Params, Query, Response>`** — the four generics map to: JSON body type, URL params type (e.g. `{ id: number }`), query-string type, and the resolved response type. Pass `undefined` for unused slots.
+- **`RequestApiType<Data, Params, Query, Response>`** — the four generics map to: JSON body type, URL params type (e.g. `{ id: string }`), query-string type, and the resolved response type. Pass `undefined` for unused slots.
 - **`FormData` bodies** — pass `FormData` as `body`; `executeRequest` detects `instanceof FormData` and skips JSON serialisation and the `Content-Type` header so the browser sets the multipart boundary.
 - **Adding a new resource** — create `<resource>.ts` following the pattern in `products.ts`, then spread both `*ApiTypes` and `*_REQUEST_MAP` into `ApiTypes` / `REQUEST_MAP` in `index.ts`.

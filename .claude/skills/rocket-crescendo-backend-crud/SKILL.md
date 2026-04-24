@@ -49,7 +49,7 @@ Then execute in order:
 
 ## Prisma schema rules
 
-- Primary key: `id Int @id @default(autoincrement())`
+- Primary key: `id String @id @default(uuid())`
 - Foreign keys: use `onDelete: Cascade` on the child relation
 - For i18n translation tables: `@@unique([entityId, language])`
 - Run `npx prisma generate` after every schema change — the generated client is at `backend/app/generated/prisma/`

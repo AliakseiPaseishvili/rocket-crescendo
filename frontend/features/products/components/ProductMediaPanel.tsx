@@ -14,7 +14,7 @@ interface ProductMediaPanelProps {
   control: Control<ProductFormValues>;
   additionalImages: FileModel[];
   onSelectAdditionalImages: (files: FileModel[]) => void;
-  onRemoveAdditionalImage: (id: number) => void;
+  onRemoveAdditionalImage: (id: string) => void;
 }
 
 export const ProductMediaPanel: FC<ProductMediaPanelProps> = ({

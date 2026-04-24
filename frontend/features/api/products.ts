@@ -19,17 +19,17 @@ export type ProductApiTypes = {
     ProductFilter | undefined,
     ProductWithTranslations[]
   >;
-  getProduct: RequestApiType<undefined, { id: number }, undefined, ProductWithTranslations>;
+  getProduct: RequestApiType<undefined, { id: string }, undefined, ProductWithTranslations>;
   createProduct: RequestApiType<
     ProductCreateInput,
     undefined,
     undefined,
     ProductWithTranslations
   >;
-  deleteProduct: RequestApiType<undefined, { id: number }, undefined, void>;
+  deleteProduct: RequestApiType<undefined, { id: string }, undefined, void>;
   updateProduct: RequestApiType<
     ProductUpdateInput,
-    { id: number },
+    { id: string },
     undefined,
     ProductWithTranslations
   >;

@@ -14,7 +14,7 @@ import { MAX_ADDITIONAL_IMAGES } from '../constants';
 interface AdditionalImagesPanelProps {
   additionalImages: FileModel[];
   onSelectAdditionalImages: (files: FileModel[]) => void;
-  onRemoveAdditionalImage: (id: number) => void;
+  onRemoveAdditionalImage: (id: string) => void;
 }
 
 export const AdditionalImagesPanel: FC<AdditionalImagesPanelProps> = ({

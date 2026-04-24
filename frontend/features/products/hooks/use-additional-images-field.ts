@@ -24,7 +24,7 @@ export function useAdditionalImagesField(control: Control<ProductFormValues>) {
     append(newFiles.slice(0, slots));
   }, [additionalImageFields, append]);
 
-  const removeAdditionalImage = useCallback((id: number) => {
+  const removeAdditionalImage = useCallback((id: string) => {
     const index = additionalImageFields.findIndex((f) => f.id === id);
     if (index !== -1) remove(index);
   }, [additionalImageFields, remove]);

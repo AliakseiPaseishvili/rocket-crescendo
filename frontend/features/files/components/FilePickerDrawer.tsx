@@ -23,7 +23,7 @@ interface FilePickerDrawerProps {
   onOpenChange: (open: boolean) => void;
   fileType: 'IMAGE' | 'VIDEO';
   maxSelection: number;
-  alreadySelectedIds: number[];
+  alreadySelectedIds: string[];
   onConfirm: (files: FileModel[]) => void;
 }
 

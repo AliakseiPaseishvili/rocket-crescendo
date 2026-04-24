@@ -17,13 +17,13 @@ export class CategoryService {
     return this.repository.findAll(filter);
   }
 
-  async getById(id: number): Promise<CategoryWithTranslations> {
+  async getById(id: string): Promise<CategoryWithTranslations> {
     const category = await this.repository.findById(id);
     if (!category) throw new Error(`Category with id ${id} not found`);
     return category;
   }
 
-  async getByIds(ids: number[]): Promise<CategoryWithTranslations[]> {
+  async getByIds(ids: string[]): Promise<CategoryWithTranslations[]> {
     return this.repository.findByIds(ids);
   }
 
@@ -36,12 +36,12 @@ export class CategoryService {
     return this.repository.create(data);
   }
 
-  async update(id: number, data: CategoryUpdateInput): Promise<CategoryWithTranslations> {
+  async update(id: string, data: CategoryUpdateInput): Promise<CategoryWithTranslations> {
     await this.getById(id);
     return this.repository.update(id, data);
   }
 
-  async delete(id: number): Promise<CategoryWithTranslations> {
+  async delete(id: string): Promise<CategoryWithTranslations> {
     await this.getById(id);
     return this.repository.delete(id);
   }

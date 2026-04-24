@@ -7,7 +7,7 @@ const service = new CategoryService();
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const ids: number[] = body?.ids;
+    const ids: string[] = body?.ids;
     if (!Array.isArray(ids)) {
       return NextResponse.json({ error: 'ids must be an array' }, { status: 400 });
     }

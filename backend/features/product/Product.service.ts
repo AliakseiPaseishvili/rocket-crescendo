@@ -20,7 +20,7 @@ export class ProductService {
     return this.repository.findAll(filter);
   }
 
-  async getById(id: number): Promise<ProductWithTranslations> {
+  async getById(id: string): Promise<ProductWithTranslations> {
     const product = await this.repository.findById(id);
     if (!product) throw new Error(`Product with id ${id} not found`);
     return product;
@@ -55,13 +55,13 @@ export class ProductService {
     return this.repository.create(data);
   }
 
-  async update(id: number, data: ProductUpdateInput): Promise<ProductWithTranslations> {
+  async update(id: string, data: ProductUpdateInput): Promise<ProductWithTranslations> {
     await this.getById(id);
     this.validateFiles(data.files);
     return this.repository.update(id, data);
   }
 
-  async delete(id: number): Promise<ProductWithTranslations> {
+  async delete(id: string): Promise<ProductWithTranslations> {
     await this.getById(id);
     return this.repository.delete(id);
   }

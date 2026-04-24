@@ -19,14 +19,14 @@ export class CategoryRepository {
     });
   }
 
-  async findById(id: number): Promise<CategoryWithTranslations | null> {
+  async findById(id: string): Promise<CategoryWithTranslations | null> {
     return prisma.category.findUnique({
       where: { id },
       include: { translations: true },
     });
   }
 
-  async findByIds(ids: number[]): Promise<CategoryWithTranslations[]> {
+  async findByIds(ids: string[]): Promise<CategoryWithTranslations[]> {
     return prisma.category.findMany({
       where: { id: { in: ids } },
       include: { translations: true },
@@ -43,7 +43,7 @@ export class CategoryRepository {
     });
   }
 
-  async update(id: number, data: CategoryUpdateInput): Promise<CategoryWithTranslations> {
+  async update(id: string, data: CategoryUpdateInput): Promise<CategoryWithTranslations> {
     return prisma.category.update({
       where: { id },
       data: {
@@ -56,7 +56,7 @@ export class CategoryRepository {
     });
   }
 
-  async delete(id: number): Promise<CategoryWithTranslations> {
+  async delete(id: string): Promise<CategoryWithTranslations> {
     return prisma.category.delete({
       where: { id },
       include: { translations: true },

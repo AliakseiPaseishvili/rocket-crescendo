@@ -18,7 +18,7 @@ export class FileRepository {
     return { items, total, offset, limit };
   }
 
-  async findById(id: number): Promise<FileModel | null> {
+  async findById(id: string): Promise<FileModel | null> {
     return prisma.file.findUnique({ where: { id } });
   }
 
@@ -37,7 +37,7 @@ export class FileRepository {
     });
   }
 
-  async update(id: number, data: FileUpdateInput): Promise<FileModel> {
+  async update(id: string, data: FileUpdateInput): Promise<FileModel> {
     return prisma.file.update({
       where: { id },
       data: {
@@ -46,7 +46,7 @@ export class FileRepository {
     });
   }
 
-  async delete(id: number): Promise<FileModel> {
+  async delete(id: string): Promise<FileModel> {
     return prisma.file.delete({ where: { id } });
   }
 }

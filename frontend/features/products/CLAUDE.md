@@ -42,7 +42,7 @@ products/
 | Type | Shape |
 |---|---|
 | `TranslationField` | `{ language: SUPPORTED_LANGUAGE; name: string; description: string }` |
-| `ProductFormValues` | `{ favorite: boolean; categoryId: number; translations: TranslationField[]; mainImage: FileModel \| null; video: FileModel \| null; additionalImages: FileModel[] }` |
+| `ProductFormValues` | `{ favorite: boolean; categoryId: string (UUID); translations: TranslationField[]; mainImage: FileModel \| null; video: FileModel \| null; additionalImages: FileModel[] }` |
 
 `ProductWithTranslations`, `ProductFileRole`, and `ProductFileInput` come from `@/backend/features/product`. `FileModel` comes from `@/backend/features/file`.
 

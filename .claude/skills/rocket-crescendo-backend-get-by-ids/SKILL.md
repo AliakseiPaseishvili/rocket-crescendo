@@ -9,7 +9,7 @@ Adds a bulk-fetch-by-IDs operation to an **existing** backend feature following 
 
 1. `findByIds` method on `<Entity>Repository`
 2. `getByIds` method on `<Entity>Service`
-3. New API route `app/api/<entity>/by-ids/route.ts` — `POST` with `{ ids: number[] }` body
+3. New API route `app/api/<entity>/by-ids/route.ts` — `POST` with `{ ids: string[] }` body
 
 Full copy-paste templates: see [references/templates.md](references/templates.md).
 
@@ -33,14 +33,14 @@ No Prisma schema changes are needed — this uses existing `prisma.<entity>.find
 
 ## Repository rules
 
-- Method signature: `async findByIds(ids: number[]): Promise<ReturnType[]>`
+- Method signature: `async findByIds(ids: string[]): Promise<ReturnType[]>`
 - Prisma query: `prisma.<entity>.findMany({ where: { id: { in: ids } }, include: { translations: true } })`
 - Omit `include` for simple entities (no relations).
 - Insert the method right after `findById`.
 
 ## Service rules
 
-- Method signature: `async getByIds(ids: number[]): Promise<ReturnType[]>`
+- Method signature: `async getByIds(ids: string[]): Promise<ReturnType[]>`
 - Body: delegates directly to `this.repository.findByIds(ids)` — no extra validation needed.
 - Insert the method right after `getById`.
 

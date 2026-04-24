@@ -21,7 +21,7 @@ export type CategoryApiTypes = {
     CategoryWithTranslations[]
   >;
   getCategoriesByIds: RequestApiType<
-    { ids: number[] },
+    { ids: string[] },
     undefined,
     undefined,
     CategoryWithTranslations[]
@@ -32,10 +32,10 @@ export type CategoryApiTypes = {
     undefined,
     CategoryWithTranslations
   >;
-  deleteCategory: RequestApiType<undefined, { id: number }, undefined, void>;
+  deleteCategory: RequestApiType<undefined, { id: string }, undefined, void>;
   updateCategory: RequestApiType<
     CategoryUpdateInput,
-    { id: number },
+    { id: string },
     undefined,
     CategoryWithTranslations
   >;

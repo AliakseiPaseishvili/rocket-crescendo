@@ -25,7 +25,7 @@ backend/features/category/
 
 | Type | Purpose |
 |---|---|
-| `CategoryWithTranslations` | `{ id, color, translations[] }` — standard return shape |
+| `CategoryWithTranslations` | `{ id: string (UUID), color, translations[] }` — standard return shape |
 | `CategoryCreateInput` | `{ color, translations[] }` |
 | `CategoryUpdateInput` | `{ color?, translations? }` — translations replace all if provided |
 | `CategoryFilter` | `{ color?: string }` |
@@ -53,7 +53,7 @@ const categories = await service.getAll();
 const red = await service.getAll({ color: '#ff0000' });
 
 // Bulk fetch by IDs
-const subset = await service.getByIds([1, 2, 3]);
+const subset = await service.getByIds(['uuid-1', 'uuid-2', 'uuid-3']);
 
 // Update (replace translations)
 await service.update(category.id, {

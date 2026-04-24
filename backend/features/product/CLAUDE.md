@@ -32,8 +32,8 @@ backend/features/product/
 |---|---|
 | `ProductWithTranslations` | `ProductGetPayload<{ include: { translations: true; productFiles: { include: { file: true } } } }>` — standard return shape for all queries |
 | `ProductFileItem` | `ProductFileGetPayload<{ select: { id, role, file: { select: { id, fileId, fileUrl, fileType, name } } } }>` — shape of each item in `productFiles[]` |
-| `ProductFileInput` | `{ fileId: number; role: ProductFileRole }` — used in create/update payloads |
-| `ProductCreateInput` | `{ categoryId: number; favorite?: boolean; translations[]; files? }` |
+| `ProductFileInput` | `{ fileId: string (UUID); role: ProductFileRole }` — used in create/update payloads |
+| `ProductCreateInput` | `{ categoryId: string (UUID); favorite?: boolean; translations[]; files? }` |
 | `ProductUpdateInput` | `{ favorite?, translations?, files? }` — all fields optional; translations/files replace all existing if provided |
 | `ProductFilter` | `{ favorite?: boolean }` |
 
@@ -47,15 +47,15 @@ const service = new ProductService();
 
 // Create with files
 const product = await service.create({
-  categoryId: 1,
+  categoryId: 'category-uuid',
   favorite: false,
   translations: [
     { language: 'en', name: 'My Book', description: 'A great book' },
   ],
   files: [
-    { fileId: 10, role: ProductFileRole.MAIN_IMAGE },
-    { fileId: 11, role: ProductFileRole.VIDEO },
-    { fileId: 12, role: ProductFileRole.ADDITIONAL_IMAGE },
+    { fileId: 'file-uuid-1', role: ProductFileRole.MAIN_IMAGE },
+    { fileId: 'file-uuid-2', role: ProductFileRole.VIDEO },
+    { fileId: 'file-uuid-3', role: ProductFileRole.ADDITIONAL_IMAGE },
   ],
 });
 

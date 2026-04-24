@@ -6,7 +6,7 @@ import { api } from '@/frontend/features/api';
 
 import { PRODUCTS_QUERY_KEY } from '../constants';
 
-export function useProduct(id: number) {
+export function useProduct(id: string) {
   return useQuery({
     queryKey: [PRODUCTS_QUERY_KEY, id],
     queryFn: () => api.getProduct({ params: { id } }),

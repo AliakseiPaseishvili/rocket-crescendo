@@ -7,7 +7,7 @@ import { Button } from '@/frontend/components/ui/button';
 import { Link } from '@/frontend/features/translation/i18n/navigation';
 
 interface EditProductLinkProps {
-  productId: number;
+  productId: string;
   disabled?: boolean;
 }
 

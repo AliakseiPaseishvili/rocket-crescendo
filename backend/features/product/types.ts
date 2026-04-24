@@ -30,7 +30,7 @@ export type ProductFileItem = ProductFileGetPayload<{
 }>;
 
 export type ProductFileInput = {
-  fileId: number;
+  fileId: string;
   role: ProductFileRole;
 };
 
@@ -46,7 +46,7 @@ export type ProductCreateInput = Omit<
   "translations" | "category"
 > & {
   favorite?: boolean;
-  categoryId: number;
+  categoryId: string;
   translations: Omit<ProductTranslationCreateInput, "product">[];
   files?: ProductFileInput[];
 };

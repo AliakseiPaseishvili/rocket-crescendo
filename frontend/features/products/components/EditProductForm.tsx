@@ -7,7 +7,7 @@ import { useProduct } from '../hooks';
 import { EditProductFormContent } from './EditProductFormContent';
 
 interface EditProductFormProps {
-  id: number;
+  id: string;
 }
 
 export const EditProductForm: FC<EditProductFormProps> = ({ id }) => {

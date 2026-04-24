@@ -32,7 +32,7 @@ backend/features/file/
 
 | Type | Purpose |
 |---|---|
-| `FileModel` | `{ id: number; fileId: string; fileUrl: string; fileType: FileType; name: string }` — Prisma DB row |
+| `FileModel` | `{ id: string (UUID); fileId: string; fileUrl: string; fileType: FileType; name: string }` — Prisma DB row |
 | `FileFilter` | `PaginationFilter & { fileType?: FileType; name?: string }` — passed to `getAll()` and the API route |
 | `PaginatedFiles` | `PaginatedItems<FileModel>` → `{ items: FileModel[]; total: number; offset: number; limit: number }` |
 | `FileCreateInput` | `{ fileId, fileUrl, fileType, name }` — internal, built inside `upload()` |
@@ -73,13 +73,13 @@ const page = await service.getAll({ fileType: 'IMAGE', offset: 20, limit: 20 });
 // → { items: FileModel[], total: number, offset: 20, limit: 20 }
 
 // Get by ID
-const file = await service.getById(3);
+const file = await service.getById('some-uuid');
 
 // Rename
-await service.update(3, { name: 'hero-banner-v2' });
+await service.update('some-uuid', { name: 'hero-banner-v2' });
 
 // Delete (removes from R2 then DB)
-await service.delete(3);
+await service.delete('some-uuid');
 ```
 
 ## API query params (`GET /api/file`)
