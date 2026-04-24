@@ -16,7 +16,7 @@ export function useCreateProductForm() {
 
   const defaultValues: ProductFormValues = {
     favorite: false,
-    categoryId: 0,
+    categoryId: '',
     translations: supportedLngs.map((lng) => ({
       language: lng,
       name: '',
