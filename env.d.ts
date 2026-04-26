@@ -6,5 +6,8 @@ declare namespace NodeJS {
     R2_SECRET_ACCESS_KEY: string;
     R2_BUCKET_NAME: string;
     R2_PUBLIC_URL: string;
+    BETTER_AUTH_URL: string;
+    BETTER_AUTH_SECRET: string;
+    NEXT_PUBLIC_BETTER_AUTH_URL: string;
   }
 }

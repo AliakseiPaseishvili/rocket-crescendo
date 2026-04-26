@@ -5,11 +5,13 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 
 import { Button } from "@/frontend/components/ui/button";
+import { SignInButton, SignOutButton, useSession } from "@/frontend/features/auth";
 import { NavMobileMenu } from "@/frontend/features/nav";
 import { LanguageSelector } from "@/frontend/features/translation/components";
 
 export const BurgerMenu = () => {
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -33,10 +35,12 @@ export const BurgerMenu = () => {
       {open &&
         createPortal(
           <div className="fixed inset-0 top-14 z-40 bg-background flex flex-col px-6 py-8 gap-6 overflow-y-auto">
+            {!session?.user && <SignInButton />}
             <NavMobileMenu onSelect={() => setOpen(false)} />
             <div className="flex">
               <LanguageSelector />
             </div>
+            {session?.user && <SignOutButton />}
           </div>,
           document.body,
         )}

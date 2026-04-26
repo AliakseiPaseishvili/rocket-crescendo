@@ -127,6 +127,9 @@
       "passwordRequired": "Пароль обязателен",
       "passwordMinLength": "Пароль должен содержать не менее 8 символов"
     },
+    "signOut": {
+      "submit": "Выйти"
+    },
     "errors": {
       "signInFailed": "Ошибка входа",
       "signUpFailed": "Ошибка создания аккаунта"

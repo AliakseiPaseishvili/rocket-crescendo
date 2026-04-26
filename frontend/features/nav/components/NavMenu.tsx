@@ -9,17 +9,19 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from '@/frontend/components/ui/navigation-menu';
+import { useSession } from '@/frontend/features/auth';
 import { Link } from '@/frontend/features/translation/i18n/navigation';
 
 import { NAV_ITEMS } from '../constants';
 
 export const NavMenu = () => {
   const t = useTranslations('nav');
+  const { data: session, isPending } = useSession();
 
   return (
     <NavigationMenu>
       <NavigationMenuList>
-        {NAV_ITEMS.map(({ key, href }) => {
+        {NAV_ITEMS.filter(({ key }) => key !== 'admin' || (!isPending && !!session?.user)).map(({ key, href }) => {
           const isRoute = href.startsWith('/');
           return (
             <NavigationMenuItem key={href}>

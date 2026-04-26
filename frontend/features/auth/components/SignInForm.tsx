@@ -1,18 +1,18 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
 
 import { Button } from '@/frontend/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/frontend/components/ui/card';
-import { Input } from '@/frontend/components/ui/input';
-import { Label } from '@/frontend/components/ui/label';
+import { ROUTES } from '@/frontend/constants';
+import { Link, useRouter } from '@/frontend/features/translation/i18n/navigation';
 
+import { EmailPasswordFields } from './EmailPasswordFields';
 import { signIn } from '../auth-client';
+import { useSignInSchema } from '../hooks';
 
 type FormValues = {
   email: string;
@@ -24,20 +24,7 @@ export const SignInForm = () => {
   const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
 
-  const schema = useMemo(
-    () =>
-      yup.object({
-        email: yup
-          .string()
-          .email(t('validation.emailInvalid'))
-          .required(t('validation.emailRequired')),
-        password: yup
-          .string()
-          .min(8, t('validation.passwordMinLength'))
-          .required(t('validation.passwordRequired')),
-      }),
-    [t],
-  );
+  const schema = useSignInSchema();
 
   const {
     register,
@@ -55,7 +42,7 @@ export const SignInForm = () => {
       setServerError(error.message ?? t('errors.signInFailed'));
       return;
     }
-    router.push('/');
+    router.push(ROUTES.BASE);
     router.refresh();
   };
 
@@ -67,29 +54,7 @@ export const SignInForm = () => {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="email">{t('fields.email')}</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder={t('fields.emailPlaceholder')}
-              {...register('email')}
-            />
-            {errors.email && <p className="text-destructive text-sm">{errors.email.message}</p>}
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="password">{t('fields.password')}</Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder={t('fields.passwordPlaceholder')}
-              {...register('password')}
-            />
-            {errors.password && (
-              <p className="text-destructive text-sm">{errors.password.message}</p>
-            )}
-          </div>
+          <EmailPasswordFields register={register} errors={errors} />
 
           {serverError && <p className="text-destructive text-sm">{serverError}</p>}
 
@@ -99,9 +64,12 @@ export const SignInForm = () => {
 
           <p className="text-center text-sm text-muted-foreground">
             {t('signIn.noAccount')}{' '}
-            <a href="../sign-up" className="underline underline-offset-4 hover:text-foreground">
+            <Link
+              href={ROUTES.SIGN_UP}
+              className="underline underline-offset-4 hover:text-foreground"
+            >
               {t('signIn.signUpLink')}
-            </a>
+            </Link>
           </p>
         </form>
       </CardContent>

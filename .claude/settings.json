@@ -1,4 +1,10 @@
 {
+  "permissions": {
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.*)"
+    ]
+  },
   "enabledPlugins": {
     "skill-creator@claude-plugins-official": true
   },

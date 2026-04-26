@@ -24,7 +24,7 @@ export const ShopSection = () => {
   return (
     <LandingSection id="shop" titleKey="shop">
       {products && products.length > 0 ? (
-        <Carousel className="mt-8 w-full max-w-xl">
+        <Carousel className="px-8 md:px-0 mt-8 w-full max-w-xl">
           <CarouselContent>
             {products.map((product) => (
               <CarouselItem key={product.id}>
@@ -32,8 +32,8 @@ export const ShopSection = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          <CarouselPrevious className="left-2 md:-left-12" />
+          <CarouselNext className="right-2 md:-right-12" />
         </Carousel>
       ) : (
         products !== undefined && (

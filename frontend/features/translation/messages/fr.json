@@ -127,6 +127,9 @@
       "passwordRequired": "Le mot de passe est requis",
       "passwordMinLength": "Le mot de passe doit comporter au moins 8 caractères"
     },
+    "signOut": {
+      "submit": "Se déconnecter"
+    },
     "errors": {
       "signInFailed": "Échec de la connexion",
       "signUpFailed": "Échec de la création du compte"

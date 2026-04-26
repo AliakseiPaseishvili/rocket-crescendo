@@ -53,7 +53,7 @@ translation/
 | `file` | File manager list, upload dialog, file picker drawer, load-more button |
 | `breadcrumb` | Breadcrumb segment labels |
 | `product` | Product list, create/edit form, media panel labels |
-| `auth` | Sign-in and sign-up forms: titles, labels, placeholders, validation messages, server error fallbacks |
+| `auth` | Sign-in, sign-up, and sign-out UI: titles, labels, placeholders, validation messages, server error fallbacks. `auth.signOut.submit` is used by `SignOutButton`. |
 
 ## Notable `breadcrumb` namespace keys
 

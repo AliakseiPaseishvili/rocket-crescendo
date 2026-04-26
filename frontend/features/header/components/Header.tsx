@@ -29,25 +29,23 @@ export const Header: FC<HeaderProps> = ({ navItems, rightActions }) => {
           <div className="hidden md:flex flex-1 items-center">{navItems}</div>
         )}
 
-        <div className="flex flex-row">
+        <div className="flex flex-row items-center">
           <div className="hidden md:flex">
             <LanguageSelector />
           </div>
 
-          {/* Right actions — always visible */}
           {rightActions && (
             <div className="ml-auto md:ml-0 flex items-center">
               {rightActions}
             </div>
           )}
-        </div>
 
-        {/* Burger — mobile/tablet only, only when navItems present */}
-        {navItems && (
-          <div className="md:hidden">
-            <BurgerMenu />
-          </div>
-        )}
+          {navItems && (
+            <div className="md:hidden">
+              <BurgerMenu />
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );

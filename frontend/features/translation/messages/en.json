@@ -127,6 +127,9 @@
       "passwordRequired": "Password is required",
       "passwordMinLength": "Password must be at least 8 characters"
     },
+    "signOut": {
+      "submit": "Sign out"
+    },
     "errors": {
       "signInFailed": "Sign in failed",
       "signUpFailed": "Sign up failed"
