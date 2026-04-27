@@ -117,7 +117,16 @@
       "email": "E-mail",
       "emailPlaceholder": "вы@пример.com",
       "password": "Пароль",
-      "passwordPlaceholder": "Пароль"
+      "passwordPlaceholder": "Пароль",
+      "confirmPassword": "Подтвердите пароль",
+      "confirmPasswordPlaceholder": "Повторите пароль"
+    },
+    "passwordPolicy": {
+      "minLength": "Не менее 8 символов",
+      "uppercase": "Не менее 1 заглавной буквы",
+      "lowercase": "Не менее 1 строчной буквы",
+      "number": "Не менее 1 цифры",
+      "special": "Не менее 1 специального символа"
     },
     "validation": {
       "nameRequired": "Имя обязательно",
@@ -125,7 +134,13 @@
       "emailRequired": "E-mail обязателен",
       "emailInvalid": "Неверный e-mail",
       "passwordRequired": "Пароль обязателен",
-      "passwordMinLength": "Пароль должен содержать не менее 8 символов"
+      "passwordMinLength": "Пароль должен содержать не менее 8 символов",
+      "passwordUppercase": "Пароль должен содержать хотя бы 1 заглавную букву",
+      "passwordLowercase": "Пароль должен содержать хотя бы 1 строчную букву",
+      "passwordNumber": "Пароль должен содержать хотя бы 1 цифру",
+      "passwordSpecial": "Пароль должен содержать хотя бы 1 специальный символ",
+      "confirmPasswordRequired": "Пожалуйста, подтвердите пароль",
+      "passwordsMustMatch": "Пароли не совпадают"
     },
     "signOut": {
       "submit": "Выйти"

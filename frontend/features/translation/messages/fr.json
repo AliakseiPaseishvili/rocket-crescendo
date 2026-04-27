@@ -117,7 +117,16 @@
       "email": "E-mail",
       "emailPlaceholder": "vous@exemple.com",
       "password": "Mot de passe",
-      "passwordPlaceholder": "Mot de passe"
+      "passwordPlaceholder": "Mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "confirmPasswordPlaceholder": "Répéter le mot de passe"
+    },
+    "passwordPolicy": {
+      "minLength": "Au moins 8 caractères",
+      "uppercase": "Au moins 1 lettre majuscule",
+      "lowercase": "Au moins 1 lettre minuscule",
+      "number": "Au moins 1 chiffre",
+      "special": "Au moins 1 caractère spécial"
     },
     "validation": {
       "nameRequired": "Le nom est requis",
@@ -125,7 +134,13 @@
       "emailRequired": "L'e-mail est requis",
       "emailInvalid": "E-mail invalide",
       "passwordRequired": "Le mot de passe est requis",
-      "passwordMinLength": "Le mot de passe doit comporter au moins 8 caractères"
+      "passwordMinLength": "Le mot de passe doit comporter au moins 8 caractères",
+      "passwordUppercase": "Le mot de passe doit contenir au moins 1 lettre majuscule",
+      "passwordLowercase": "Le mot de passe doit contenir au moins 1 lettre minuscule",
+      "passwordNumber": "Le mot de passe doit contenir au moins 1 chiffre",
+      "passwordSpecial": "Le mot de passe doit contenir au moins 1 caractère spécial",
+      "confirmPasswordRequired": "Veuillez confirmer votre mot de passe",
+      "passwordsMustMatch": "Les mots de passe ne correspondent pas"
     },
     "signOut": {
       "submit": "Se déconnecter"

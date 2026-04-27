@@ -110,3 +110,9 @@ npm run lint     # ESLint
 - `executeRequest` in `frontend/features/api/utils.ts` supports both JSON bodies and `FormData`; pass `FormData` as `body` and it skips `Content-Type` so the browser sets the multipart boundary automatically
 - File images are rendered with Next.js `<Image>`; allowed hostnames come from `R2_PUBLIC_URL` via `remotePatterns` in `next.config.ts`
 - Prisma schema is in `backend/prisma/schema.prisma`; run `npx prisma generate` after schema changes
+
+## TypeScript rules
+
+- **Never use `any`** — use `unknown`, proper generics, or narrowed types instead; `eslint-disable @typescript-eslint/no-explicit-any` comments are not allowed
+- Each component and its props type live together in one file; if a component is complex enough to warrant helpers, each helper component and its own props type also live in their own dedicated file
+- Types shared between multiple components within a feature go in `types.ts` at the feature root (e.g. `frontend/features/auth/types.ts`); types shared between multiple features or used by a common component go in `types.ts` alongside that common component

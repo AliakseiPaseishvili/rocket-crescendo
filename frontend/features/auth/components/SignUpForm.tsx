@@ -3,7 +3,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import { Button } from '@/frontend/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/frontend/components/ui/card';
@@ -13,14 +13,10 @@ import { ROUTES } from '@/frontend/constants';
 import { Link, useRouter } from '@/frontend/features/translation/i18n/navigation';
 
 import { EmailPasswordFields } from './EmailPasswordFields';
+import { PasswordPolicyChecklist } from './PasswordPolicyChecklist';
 import { signUp } from '../auth-client';
 import { useSignUpSchema } from '../hooks';
-
-type FormValues = {
-  name: string;
-  email: string;
-  password: string;
-};
+import { SignUpFormValues } from '../types';
 
 export const SignUpForm = () => {
   const t = useTranslations('auth');
@@ -29,13 +25,10 @@ export const SignUpForm = () => {
 
   const schema = useSignUpSchema();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<FormValues>({ resolver: yupResolver(schema) });
+  const methods = useForm<SignUpFormValues>({ resolver: yupResolver(schema) });
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = methods;
 
-  const onSubmit = async (values: FormValues) => {
+  const onSubmit = async (values: SignUpFormValues) => {
     setServerError(null);
     const { error } = await signUp.email({
       name: values.name,
@@ -51,6 +44,7 @@ export const SignUpForm = () => {
   };
 
   return (
+    <FormProvider {...methods}>
     <Card className="w-full max-w-sm">
       <CardHeader>
         <CardTitle className="text-2xl">{t('signUp.title')}</CardTitle>
@@ -71,6 +65,21 @@ export const SignUpForm = () => {
 
           <EmailPasswordFields register={register} errors={errors} />
 
+          <PasswordPolicyChecklist />
+
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="confirmPassword">{t('fields.confirmPassword')}</Label>
+            <Input
+              id="confirmPassword"
+              type="password"
+              placeholder={t('fields.confirmPasswordPlaceholder')}
+              {...register('confirmPassword')}
+            />
+            {errors.confirmPassword && (
+              <p className="text-destructive text-sm">{errors.confirmPassword.message}</p>
+            )}
+          </div>
+
           {serverError && <p className="text-destructive text-sm">{serverError}</p>}
 
           <Button type="submit" className="w-full" disabled={isSubmitting}>
@@ -89,5 +98,6 @@ export const SignUpForm = () => {
         </form>
       </CardContent>
     </Card>
+    </FormProvider>
   );
 };
