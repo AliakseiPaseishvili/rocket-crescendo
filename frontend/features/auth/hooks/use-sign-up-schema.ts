@@ -11,10 +11,15 @@ export const useSignUpSchema = () => {
   return useMemo(
     () =>
       signInSchema.shape({
-        name: yup
+        firstName: yup.string().optional().default(''),
+        lastName: yup.string().optional().default(''),
+        username: yup.string().optional().default(''),
+        gender: yup
           .string()
-          .min(2, t('validation.nameMinLength'))
-          .required(t('validation.nameRequired')),
+          .oneOf(['', 'male', 'female'], t('validation.genderInvalid'))
+          .optional()
+          .default(''),
+        birthdate: yup.string().optional().default(''),
         password: yup
           .string()
           .min(8, t('validation.passwordMinLength'))

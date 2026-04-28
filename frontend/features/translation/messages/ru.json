@@ -112,8 +112,19 @@
       "signInLink": "Войти"
     },
     "fields": {
-      "name": "Имя",
-      "namePlaceholder": "Ваше имя",
+      "firstName": "Имя",
+      "firstNamePlaceholder": "Ваше имя",
+      "lastName": "Фамилия",
+      "lastNamePlaceholder": "Ваша фамилия",
+      "identifier": "E-mail или имя пользователя",
+      "identifierPlaceholder": "вы@пример.com или имя пользователя",
+      "username": "Имя пользователя",
+      "usernamePlaceholder": "Ваше имя пользователя",
+      "gender": "Пол",
+      "genderPlaceholder": "Выберите пол",
+      "genderMale": "Мужской",
+      "genderFemale": "Женский",
+      "birthdate": "Дата рождения",
       "email": "E-mail",
       "emailPlaceholder": "вы@пример.com",
       "password": "Пароль",
@@ -129,8 +140,8 @@
       "special": "Не менее 1 специального символа"
     },
     "validation": {
-      "nameRequired": "Имя обязательно",
-      "nameMinLength": "Имя должно содержать не менее 2 символов",
+      "genderInvalid": "Пожалуйста, выберите корректный пол",
+      "identifierRequired": "E-mail или имя пользователя обязательно",
       "emailRequired": "E-mail обязателен",
       "emailInvalid": "Неверный e-mail",
       "passwordRequired": "Пароль обязателен",

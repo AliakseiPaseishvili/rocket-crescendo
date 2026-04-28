@@ -2,42 +2,50 @@
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
 
 import { Button } from '@/frontend/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/frontend/components/ui/card';
+import { Input } from '@/frontend/components/ui/input';
+import { Label } from '@/frontend/components/ui/label';
 import { ROUTES } from '@/frontend/constants';
 import { Link, useRouter } from '@/frontend/features/translation/i18n/navigation';
 
-import { EmailPasswordFields } from './EmailPasswordFields';
+import { PasswordInput } from './PasswordInput';
 import { signIn } from '../auth-client';
-import { useSignInSchema } from '../hooks';
-
-type FormValues = {
-  email: string;
-  password: string;
-};
+import { SignInFormValues } from '../types';
 
 export const SignInForm = () => {
   const t = useTranslations('auth');
   const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
 
-  const schema = useSignInSchema();
+  const schema = useMemo(
+    () =>
+      yup.object({
+        identifier: yup.string().required(t('validation.identifierRequired')),
+        password: yup
+          .string()
+          .min(8, t('validation.passwordMinLength'))
+          .required(t('validation.passwordRequired')),
+      }),
+    [t],
+  );
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<FormValues>({ resolver: yupResolver(schema) });
+  } = useForm<SignInFormValues>({ resolver: yupResolver(schema) });
 
-  const onSubmit = async (values: FormValues) => {
+  const onSubmit = async (values: SignInFormValues) => {
     setServerError(null);
-    const { error } = await signIn.email({
-      email: values.email,
-      password: values.password,
-    });
+    const isEmail = values.identifier.includes('@');
+    const { error } = isEmail
+      ? await signIn.email({ email: values.identifier, password: values.password })
+      : await signIn.username({ username: values.identifier, password: values.password });
     if (error) {
       setServerError(error.message ?? t('errors.signInFailed'));
       return;
@@ -54,7 +62,31 @@ export const SignInForm = () => {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          <EmailPasswordFields register={register} errors={errors} />
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="identifier">{t('fields.identifier')}</Label>
+            <Input
+              id="identifier"
+              type="text"
+              placeholder={t('fields.identifierPlaceholder')}
+              autoComplete="username"
+              {...register('identifier')}
+            />
+            {errors.identifier && (
+              <p className="text-destructive text-sm">{errors.identifier.message}</p>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="password">{t('fields.password')}</Label>
+            <PasswordInput
+              id="password"
+              placeholder={t('fields.passwordPlaceholder')}
+              {...register('password')}
+            />
+            {errors.password && (
+              <p className="text-destructive text-sm">{errors.password.message}</p>
+            )}
+          </div>
 
           {serverError && <p className="text-destructive text-sm">{serverError}</p>}
 

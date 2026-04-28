@@ -112,8 +112,19 @@
       "signInLink": "Se connecter"
     },
     "fields": {
-      "name": "Nom",
-      "namePlaceholder": "Votre nom",
+      "firstName": "Prénom",
+      "firstNamePlaceholder": "Votre prénom",
+      "lastName": "Nom de famille",
+      "lastNamePlaceholder": "Votre nom de famille",
+      "identifier": "E-mail ou pseudo",
+      "identifierPlaceholder": "vous@exemple.com ou pseudo",
+      "username": "Pseudo",
+      "usernamePlaceholder": "Votre pseudo",
+      "gender": "Genre",
+      "genderPlaceholder": "Sélectionner le genre",
+      "genderMale": "Homme",
+      "genderFemale": "Femme",
+      "birthdate": "Date de naissance",
       "email": "E-mail",
       "emailPlaceholder": "vous@exemple.com",
       "password": "Mot de passe",
@@ -129,8 +140,8 @@
       "special": "Au moins 1 caractère spécial"
     },
     "validation": {
-      "nameRequired": "Le nom est requis",
-      "nameMinLength": "Le nom doit comporter au moins 2 caractères",
+      "genderInvalid": "Veuillez sélectionner un genre valide",
+      "identifierRequired": "L'e-mail ou le pseudo est requis",
       "emailRequired": "L'e-mail est requis",
       "emailInvalid": "E-mail invalide",
       "passwordRequired": "Le mot de passe est requis",
