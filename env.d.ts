@@ -9,5 +9,7 @@ declare namespace NodeJS {
     BETTER_AUTH_URL: string;
     BETTER_AUTH_SECRET: string;
     NEXT_PUBLIC_BETTER_AUTH_URL: string;
+    SENDGRID_API_KEY: string;
+    SENDGRID_FROM_EMAIL: string;
   }
 }

@@ -6,3 +6,4 @@ export { SignInButton } from './SignInButton';
 export { SignInForm } from './SignInForm';
 export { SignOutButton } from './SignOutButton';
 export { SignUpForm } from './SignUpForm';
+export { VerifyEmailView } from './VerifyEmailView';

@@ -159,6 +159,12 @@
     "errors": {
       "signInFailed": "Échec de la connexion",
       "signUpFailed": "Échec de la création du compte"
+    },
+    "verifyEmail": {
+      "title": "Vérifiez votre boîte mail",
+      "description": "Nous avons envoyé un lien de vérification à votre adresse e-mail.",
+      "hint": "Cliquez sur le lien dans l'e-mail pour activer votre compte. Si vous ne le voyez pas, vérifiez vos spams.",
+      "backToSignIn": "Retour à la connexion"
     }
   },
   "product": {

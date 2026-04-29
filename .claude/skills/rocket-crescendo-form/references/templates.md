@@ -402,7 +402,7 @@ export const Edit<Entity>Modal = ({ entity }: Edit<Entity>ModalProps) => {
 
 ---
 
-## Auth exception — self-contained form (no mutation, no FormFields)
+## Auth exception — simple self-contained form (no mutation, no FormFields, no FormProvider)
 
 ```tsx
 'use client';
@@ -413,9 +413,11 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '@/frontend/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/frontend/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/frontend/components/ui/card';
 import { Input } from '@/frontend/components/ui/input';
 import { Label } from '@/frontend/components/ui/label';
+import { ROUTES } from '@/frontend/constants';
+import { Link, useRouter } from '@/frontend/features/translation/i18n/navigation';
 
 import { someAuthMethod } from '../auth-client';
 import { useSomeSchema } from '../hooks';
@@ -427,6 +429,7 @@ type FormValues = {
 
 export const SomeAuthForm = () => {
   const t = useTranslations('auth');
+  const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
 
   const schema = useSomeSchema();
@@ -443,13 +446,15 @@ export const SomeAuthForm = () => {
       setServerError(error.message ?? t('errors.failed'));
       return;
     }
-    // redirect / refresh
+    router.push(ROUTES.BASE);
+    router.refresh();
   };
 
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
         <CardTitle className="text-2xl">{t('someForm.title')}</CardTitle>
+        <CardDescription>{t('someForm.description')}</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -464,9 +469,147 @@ export const SomeAuthForm = () => {
           <Button type="submit" className="w-full" disabled={isSubmitting}>
             {isSubmitting ? t('someForm.submitting') : t('someForm.submit')}
           </Button>
+
+          <p className="text-center text-sm text-muted-foreground">
+            {t('someForm.haveAccount')}{' '}
+            <Link href={ROUTES.SIGN_IN} className="underline underline-offset-4 hover:text-foreground">
+              {t('someForm.signInLink')}
+            </Link>
+          </p>
         </form>
       </CardContent>
     </Card>
+  );
+};
+```
+
+---
+
+## Auth exception — form with `FormProvider` (child components consume form context)
+
+Use this variant when sub-components like `PasswordPolicyChecklist` or `PasswordWithConfirmFields` call `useFormContext` internally.
+
+```tsx
+'use client';
+
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
+
+import { Button } from '@/frontend/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/frontend/components/ui/card';
+import { Input } from '@/frontend/components/ui/input';
+import { Label } from '@/frontend/components/ui/label';
+import {
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+} from '@/frontend/components/ui/select';
+import { ROUTES } from '@/frontend/constants';
+import { Link, useRouter } from '@/frontend/features/translation/i18n/navigation';
+
+import { PasswordPolicyChecklist } from './PasswordPolicyChecklist';
+import { PasswordWithConfirmFields } from './PasswordWithConfirmFields';
+import { someAuthMethod } from '../auth-client';
+import { useSomeSchema } from '../hooks';
+import { SomeFormValues } from '../types';
+
+export const SomeAuthFormWithProvider = () => {
+  const t = useTranslations('auth');
+  const router = useRouter();
+  const [serverError, setServerError] = useState<string | null>(null);
+
+  const schema = useSomeSchema();
+
+  // Assign to `methods` so the whole object can be spread into FormProvider
+  const methods = useForm<SomeFormValues>({ resolver: yupResolver(schema) });
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = methods;
+
+  const onSubmit = async (values: SomeFormValues) => {
+    setServerError(null);
+    const { error } = await someAuthMethod({
+      email: values.email,
+      password: values.password,
+      // Pass optional fields as `|| undefined` — Better Auth ignores undefined
+      // instead of writing empty strings to the user record
+      username: values.username || undefined,
+      gender: values.gender || undefined,
+    });
+    if (error) {
+      setServerError(error.message ?? t('errors.failed'));
+      return;
+    }
+    router.push(ROUTES.BASE);
+    router.refresh();
+  };
+
+  return (
+    <FormProvider {...methods}>
+      <Card className="w-full max-w-sm">
+        <CardHeader>
+          <CardTitle className="text-2xl">{t('someForm.title')}</CardTitle>
+          <CardDescription>{t('someForm.description')}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+            {/* Two-column layout for closely related field pairs */}
+            <div className="flex gap-3">
+              <div className="flex flex-col gap-1.5 flex-1">
+                <Label htmlFor="firstName">{t('fields.firstName')}</Label>
+                <Input id="firstName" type="text" {...register('firstName')} />
+                {errors.firstName && (
+                  <p className="text-destructive text-sm">{errors.firstName.message}</p>
+                )}
+              </div>
+              <div className="flex flex-col gap-1.5 flex-1">
+                <Label htmlFor="lastName">{t('fields.lastName')}</Label>
+                <Input id="lastName" type="text" {...register('lastName')} />
+                {errors.lastName && (
+                  <p className="text-destructive text-sm">{errors.lastName.message}</p>
+                )}
+              </div>
+            </div>
+
+            {/* Controlled Select via Controller */}
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="gender">{t('fields.gender')}</Label>
+              <Controller
+                name="gender"
+                control={control}
+                render={({ field }) => (
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger id="gender">
+                      <SelectValue placeholder={t('fields.genderPlaceholder')} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="male">{t('fields.genderMale')}</SelectItem>
+                      <SelectItem value="female">{t('fields.genderFemale')}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+              {errors.gender && (
+                <p className="text-destructive text-sm">{errors.gender.message}</p>
+              )}
+            </div>
+
+            {/* Child components that call useFormContext() */}
+            <PasswordWithConfirmFields />
+            <PasswordPolicyChecklist />
+
+            {serverError && <p className="text-destructive text-sm">{serverError}</p>}
+
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? t('someForm.submitting') : t('someForm.submit')}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </FormProvider>
   );
 };
 ```

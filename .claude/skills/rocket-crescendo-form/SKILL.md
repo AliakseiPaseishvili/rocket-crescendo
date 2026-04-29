@@ -138,7 +138,10 @@ Rules specific to auth forms:
 - Server error is stored in `const [serverError, setServerError] = useState<string | null>(null)`.
 - `onSubmit` is an `async` function (not `handleSubmit` only): calls `setServerError(null)` first, then `await auth.method(...)`, checks `error` in the result, sets `serverError` if present.
 - Use `formState: { errors, isSubmitting }` (not `isPending` from a mutation hook) for submit-in-progress state.
-- Use `FormProvider` only when a child component needs form context (e.g. `PasswordPolicyChecklist`); omit it for simple auth forms.
+- **`FormProvider` variant**: when child components consume form context (e.g. `PasswordPolicyChecklist`, `PasswordWithConfirmFields`), assign `useForm` to a `methods` variable, wrap the card content in `<FormProvider {...methods}>`, and destructure `register`, `control`, `handleSubmit`, `formState` from `methods`. Omit `FormProvider` for simple forms with no context-consuming children.
+- **Optional fields**: pass optional values as `values.field || undefined` in the auth client call — Better Auth ignores `undefined` rather than writing empty strings to the user record.
+- **Multi-column field layout**: group closely related fields side-by-side using `<div className="flex gap-3">` with two `<div className="flex flex-col gap-1.5 flex-1">` children. Use for pairs like firstName/lastName or gender/birthdate.
+- **`FormValues` for sign-up**: goes in `frontend/features/auth/types.ts` (not inlined) because the type is referenced by the schema hook and the component.
 - Schema extension: `useSignUpSchema` calls `useSignInSchema()` and extends via `.shape({...})` — the sign-up form never defines its own schema from scratch.
 
 ---

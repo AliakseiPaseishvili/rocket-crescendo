@@ -64,8 +64,7 @@ export const SignUpForm = () => {
       setServerError(error.message ?? t("errors.signUpFailed"));
       return;
     }
-    router.push(ROUTES.BASE);
-    router.refresh();
+    router.push(ROUTES.VERIFY_EMAIL);
   };
 
   return (
