@@ -101,7 +101,9 @@
       "submit": "Sign in",
       "submitting": "Signing in…",
       "noAccount": "Don't have an account?",
-      "signUpLink": "Sign up"
+      "signUpLink": "Sign up",
+      "orContinueWith": "or continue with",
+      "continueWithGoogle": "Continue with Google"
     },
     "signUp": {
       "title": "Create an account",

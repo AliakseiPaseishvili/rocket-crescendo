@@ -13,6 +13,7 @@ import { Label } from '@/frontend/components/ui/label';
 import { ROUTES } from '@/frontend/constants';
 import { Link, useRouter } from '@/frontend/features/translation/i18n/navigation';
 
+import { GoogleSignInButton } from './GoogleSignInButton';
 import { PasswordInput } from './PasswordInput';
 import { signIn } from '../auth-client';
 import { SignInFormValues } from '../types';
@@ -101,6 +102,14 @@ export const SignInForm = () => {
           <Button type="submit" className="w-full" disabled={isSubmitting}>
             {isSubmitting ? t('signIn.submitting') : t('signIn.submit')}
           </Button>
+
+          <div className="flex items-center gap-2">
+            <div className="flex-1 border-t" />
+            <span className="text-muted-foreground text-xs">{t('signIn.orContinueWith')}</span>
+            <div className="flex-1 border-t" />
+          </div>
+
+          <GoogleSignInButton />
 
           <p className="text-center text-sm text-muted-foreground">
             {t('signIn.noAccount')}{' '}

@@ -11,5 +11,7 @@ declare namespace NodeJS {
     NEXT_PUBLIC_BETTER_AUTH_URL: string;
     SENDGRID_API_KEY: string;
     SENDGRID_FROM_EMAIL: string;
+    GOOGLE_CLIENT_ID: string;
+    GOOGLE_CLIENT_SECRET: string;
   }
 }

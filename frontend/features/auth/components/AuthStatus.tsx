@@ -1,6 +1,8 @@
-'use client';
+"use client";
 
-import { Avatar, AvatarFallback } from '@/frontend/components/ui/avatar';
+import { useMemo } from "react";
+
+import { Avatar, AvatarFallback } from "@/frontend/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,20 +10,24 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/frontend/components/ui/dropdown-menu';
+} from "@/frontend/components/ui/dropdown-menu";
 
-import { useSession } from '../auth-client';
-import { SignInButton } from './SignInButton';
-import { SignOutButton } from './SignOutButton';
+import { useSession } from "../auth-client";
+import { getAvatarFallback } from "../utils";
+import { SignInButton } from "./SignInButton";
+import { SignOutButton } from "./SignOutButton";
 
 export const AuthStatus = () => {
   const { data: session } = useSession();
 
+  const fallback = useMemo(
+    () => getAvatarFallback(session?.user ?? {}),
+    [session?.user],
+  );
+
   if (!session?.user) {
     return <SignInButton />;
   }
-
-  const fallback = session.user.name?.charAt(0).toUpperCase() ?? '?';
 
   return (
     <DropdownMenu>
@@ -31,7 +37,20 @@ export const AuthStatus = () => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>{session.user.name}</DropdownMenuLabel>
+        <DropdownMenuLabel className="flex flex-col gap-0.5">
+          {session.user.username && (
+            <span className="text-sm font-medium">
+              @{session.user.username}
+            </span>
+          )}
+          {(session.user.name || session.user.lastName) && (
+            <span className="text-xs font-normal text-muted-foreground">
+              {[session.user.name, session.user.lastName]
+                .filter(Boolean)
+                .join(" ")}
+            </span>
+          )}
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <SignOutButton className="w-full" />

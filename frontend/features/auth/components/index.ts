@@ -1,4 +1,5 @@
 export { AuthStatus } from './AuthStatus';
+export { GoogleSignInButton } from './GoogleSignInButton';
 export { EmailPasswordFields } from './EmailPasswordFields';
 export { ForgotPasswordForm } from './ForgotPasswordForm';
 export { PasswordInput } from './PasswordInput';

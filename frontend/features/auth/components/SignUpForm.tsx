@@ -28,6 +28,7 @@ import {
   useRouter,
 } from "@/frontend/features/translation/i18n/navigation";
 
+import { GoogleSignInButton } from "./GoogleSignInButton";
 import { PasswordPolicyChecklist } from "./PasswordPolicyChecklist";
 import { PasswordWithConfirmFields } from "./PasswordWithConfirmFields";
 import { signUp } from "../auth-client";
@@ -182,6 +183,14 @@ export const SignUpForm = () => {
             <Button type="submit" className="w-full" disabled={isSubmitting}>
               {isSubmitting ? t("signUp.submitting") : t("signUp.submit")}
             </Button>
+
+            <div className="flex items-center gap-2">
+              <div className="flex-1 border-t" />
+              <span className="text-muted-foreground text-xs">{t("signIn.orContinueWith")}</span>
+              <div className="flex-1 border-t" />
+            </div>
+
+            <GoogleSignInButton />
 
             <p className="text-center text-sm text-muted-foreground">
               {t("signUp.haveAccount")}{" "}

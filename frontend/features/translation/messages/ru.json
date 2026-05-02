@@ -101,7 +101,9 @@
       "submit": "Войти",
       "submitting": "Вход…",
       "noAccount": "Нет аккаунта?",
-      "signUpLink": "Зарегистрироваться"
+      "signUpLink": "Зарегистрироваться",
+      "orContinueWith": "или продолжить через",
+      "continueWithGoogle": "Продолжить через Google"
     },
     "signUp": {
       "title": "Создать аккаунт",

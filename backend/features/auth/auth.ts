@@ -27,6 +27,20 @@ export const auth = betterAuth({
     autoSignInAfterVerification: true,
     expiresIn: 60 * 60 * 24,
   },
+  socialProviders: {
+    google: {
+      prompt: "select_account consent", 
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      accessType: "offline", 
+    },
+  },
+  account: {
+    accountLinking: {
+      enabled: true,
+      trustedProviders: ["google", "email-password"],
+    },
+  },
   plugins: [username()],
   user: {
     additionalFields: {
