@@ -1,1 +1,1 @@
-export { sendVerificationEmail } from './sendgrid';
+export { sendPasswordResetEmail, sendVerificationEmail } from './sendgrid';

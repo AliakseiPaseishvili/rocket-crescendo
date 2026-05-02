@@ -1,7 +1,9 @@
 export { AuthStatus } from './AuthStatus';
 export { EmailPasswordFields } from './EmailPasswordFields';
+export { ForgotPasswordForm } from './ForgotPasswordForm';
 export { PasswordInput } from './PasswordInput';
 export { PasswordWithConfirmFields } from './PasswordWithConfirmFields';
+export { ResetPasswordForm } from './ResetPasswordForm';
 export { SignInButton } from './SignInButton';
 export { SignInForm } from './SignInForm';
 export { SignOutButton } from './SignOutButton';

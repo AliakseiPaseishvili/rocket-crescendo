@@ -77,7 +77,15 @@ export const SignInForm = () => {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="password">{t('fields.password')}</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="password">{t('fields.password')}</Label>
+              <Link
+                href={ROUTES.FORGOT_PASSWORD}
+                className="text-sm underline underline-offset-4 hover:text-foreground text-muted-foreground"
+              >
+                {t('forgotPassword.forgotPassword')}
+              </Link>
+            </div>
             <PasswordInput
               id="password"
               placeholder={t('fields.passwordPlaceholder')}

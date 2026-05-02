@@ -64,7 +64,7 @@ export const SignUpForm = () => {
       setServerError(error.message ?? t("errors.signUpFailed"));
       return;
     }
-    router.push(ROUTES.VERIFY_EMAIL);
+    router.push(`${ROUTES.VERIFY_EMAIL}?email=${encodeURIComponent(values.email)}`);
   };
 
   return (
