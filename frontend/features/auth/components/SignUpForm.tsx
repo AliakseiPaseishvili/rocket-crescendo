@@ -112,7 +112,10 @@ export const SignUpForm = () => {
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="username">{t("fields.username")}</Label>
+              <Label htmlFor="username">
+                {t("fields.username")}{" "}
+                <span className="text-destructive">*</span>
+              </Label>
               <Input
                 id="username"
                 type="text"
@@ -133,10 +136,7 @@ export const SignUpForm = () => {
                   name="gender"
                   control={control}
                   render={({ field }) => (
-                    <Select
-                      value={field.value}
-                      onValueChange={field.onChange}
-                    >
+                    <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger id="gender">
                         <SelectValue
                           placeholder={t("fields.genderPlaceholder")}
@@ -162,11 +162,7 @@ export const SignUpForm = () => {
 
               <div className="flex flex-col gap-1.5 flex-1">
                 <Label htmlFor="birthdate">{t("fields.birthdate")}</Label>
-                <Input
-                  id="birthdate"
-                  type="date"
-                  {...register("birthdate")}
-                />
+                <Input id="birthdate" type="date" {...register("birthdate")} />
                 {errors.birthdate && (
                   <p className="text-destructive text-sm">
                     {errors.birthdate.message}

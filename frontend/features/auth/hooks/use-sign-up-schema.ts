@@ -13,7 +13,7 @@ export const useSignUpSchema = () => {
       signInSchema.shape({
         firstName: yup.string().optional().default(''),
         lastName: yup.string().optional().default(''),
-        username: yup.string().optional().default(''),
+        username: yup.string().required(t('validation.usernameRequired')).default(''),
         gender: yup
           .string()
           .oneOf(['', 'male', 'female'], t('validation.genderInvalid'))

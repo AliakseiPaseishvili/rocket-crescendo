@@ -150,6 +150,7 @@
       "passwordLowercase": "Le mot de passe doit contenir au moins 1 lettre minuscule",
       "passwordNumber": "Le mot de passe doit contenir au moins 1 chiffre",
       "passwordSpecial": "Le mot de passe doit contenir au moins 1 caractère spécial",
+      "usernameRequired": "Le nom d'utilisateur est requis",
       "confirmPasswordRequired": "Veuillez confirmer votre mot de passe",
       "passwordsMustMatch": "Les mots de passe ne correspondent pas"
     },
