@@ -9,14 +9,21 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const favoriteParam = searchParams.get("favorite");
+    const includeVideoLessonsParam = searchParams.get("includeVideoLessons");
     const filter: ProductFilter = {};
     if (favoriteParam !== null) {
       filter.favorite = favoriteParam === "true";
     }
-    const products = await service.getAll(Object.keys(filter).length ? filter : undefined);
+    if (includeVideoLessonsParam !== null) {
+      filter.includeVideoLessons = includeVideoLessonsParam === "true";
+    }
+    const products = await service.getAll(
+      Object.keys(filter).length ? filter : undefined,
+    );
     return NextResponse.json(products);
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Failed to fetch products";
+    const message =
+      error instanceof Error ? error.message : "Failed to fetch products";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
@@ -29,7 +36,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(product, { status: 201 });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Failed to create product";
+    const message =
+      error instanceof Error ? error.message : "Failed to create product";
     return NextResponse.json({ error: message }, { status: 400 });
   }
 }

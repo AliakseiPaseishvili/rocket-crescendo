@@ -213,6 +213,11 @@
     "addImages": "Add Images",
     "addImagesCount": "Add Images ({count}/{max})",
     "changeMedia": "Change {label}",
-    "selectMedia": "Select {label}"
+    "selectMedia": "Select {label}",
+    "price": "Price",
+    "priceRequired": "Price is required",
+    "priceMustBePositive": "Price must be greater than 0",
+    "includeVideoLessons": "Include video lessons",
+    "videoLessonsIncluded": "Video lessons included"
   }
 }

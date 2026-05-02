@@ -58,4 +58,5 @@ export type ProductUpdateInput = ProductUpdateInputBase & {
 
 export type ProductFilter = {
   favorite?: boolean;
+  includeVideoLessons?: boolean;
 };

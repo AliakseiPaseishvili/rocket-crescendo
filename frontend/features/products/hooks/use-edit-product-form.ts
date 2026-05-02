@@ -24,7 +24,9 @@ export function useEditProductForm(product: ProductWithTranslations, onSuccess?:
 
   const defaultValues: ProductFormValues = {
     favorite: product.favorite,
-    categoryId: product.categoryId ?? 0,
+    price: product.price,
+    includeVideoLessons: product.includeVideoLessons,
+    categoryId: product.categoryId ?? '',
     translations: supportedLngs.map((lng) => {
       const existing = product.translations.find((tr) => tr.language === lng);
       return {

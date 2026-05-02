@@ -13,12 +13,14 @@ datasource db {
 }
 
 model Product {
-  id           String               @id @default(uuid())
-  favorite     Boolean              @default(false)
-  categoryId   String
-  category     Category             @relation(fields: [categoryId], references: [id])
-  translations ProductTranslation[]
-  productFiles ProductFile[]
+  id                  String               @id @default(uuid())
+  favorite            Boolean              @default(false)
+  price               Float                @default(5.0)
+  includeVideoLessons Boolean              @default(false)
+  categoryId          String
+  category            Category             @relation(fields: [categoryId], references: [id])
+  translations        ProductTranslation[]
+  productFiles        ProductFile[]
 }
 
 model ProductTranslation {

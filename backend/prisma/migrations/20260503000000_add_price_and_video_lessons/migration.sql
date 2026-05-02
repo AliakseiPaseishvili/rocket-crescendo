@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Product" ADD COLUMN "price" DOUBLE PRECISION NOT NULL DEFAULT 5.0;
+ALTER TABLE "Product" ADD COLUMN "includeVideoLessons" BOOLEAN NOT NULL DEFAULT false;

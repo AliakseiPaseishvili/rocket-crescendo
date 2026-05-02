@@ -1,18 +1,24 @@
-'use client';
+"use client";
 
-import { useTranslations } from 'next-intl';
-import { FC } from 'react';
-import { Control, Controller, FieldErrors, UseFormRegister } from 'react-hook-form';
+import { useTranslations } from "next-intl";
+import { FC } from "react";
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  UseFormRegister,
+} from "react-hook-form";
 
-import { Button } from '@/frontend/components/ui/button';
-import { Checkbox } from '@/frontend/components/ui/checkbox';
-import { Label } from '@/frontend/components/ui/label';
-import { Tabs, TabsList } from '@/frontend/components/ui/tabs';
-import { CategorySelector } from '@/frontend/features/categories/components';
-import { TranslationTabTrigger } from '@/frontend/features/translation/components';
+import { Button } from "@/frontend/components/ui/button";
+import { Checkbox } from "@/frontend/components/ui/checkbox";
+import { Input } from "@/frontend/components/ui/input";
+import { Label } from "@/frontend/components/ui/label";
+import { Tabs, TabsList } from "@/frontend/components/ui/tabs";
+import { CategorySelector } from "@/frontend/features/categories/components";
+import { TranslationTabTrigger } from "@/frontend/features/translation/components";
 
-import { ProductFormValues } from '../types';
-import { TranslationTabContent } from './TranslationTabContent';
+import { ProductFormValues } from "../types";
+import { TranslationTabContent } from "./TranslationTabContent";
 
 type FieldItem = { id: string; language: string };
 
@@ -43,7 +49,7 @@ export const ProductFormFields: FC<ProductFormFieldsProps> = ({
   pendingLabel,
   successMessage,
 }) => {
-  const tProduct = useTranslations('product');
+  const tProduct = useTranslations("product");
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
@@ -53,7 +59,12 @@ export const ProductFormFields: FC<ProductFormFieldsProps> = ({
             <TranslationTabTrigger
               language={field.language as never}
               key={field.id}
-              hasError={!!(errors.translations?.[index]?.name || errors.translations?.[index]?.description)}
+              hasError={
+                !!(
+                  errors.translations?.[index]?.name ||
+                  errors.translations?.[index]?.description
+                )
+              }
             />
           ))}
         </TabsList>
@@ -93,7 +104,47 @@ export const ProductFormFields: FC<ProductFormFieldsProps> = ({
           )}
         />
         <Label htmlFor="product-favorite" className="cursor-pointer">
-          {tProduct('favorite')}
+          {tProduct("favorite")}
+        </Label>
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <Label htmlFor="product-price">{tProduct("price")}</Label>
+        <div className="relative">
+          <span className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
+            $
+          </span>
+          <Input
+            id="product-price"
+            type="number"
+            step="0.01"
+            min="0.01"
+            className="pl-6"
+            {...register("price", { valueAsNumber: true })}
+          />
+        </div>
+        {errors.price && (
+          <p className="text-sm text-destructive">{errors.price.message}</p>
+        )}
+      </div>
+
+      <div className="flex items-center gap-2">
+        <Controller
+          name="includeVideoLessons"
+          control={control}
+          render={({ field }) => (
+            <Checkbox
+              id="product-include-video-lessons"
+              checked={field.value}
+              onCheckedChange={field.onChange}
+            />
+          )}
+        />
+        <Label
+          htmlFor="product-include-video-lessons"
+          className="cursor-pointer"
+        >
+          {tProduct("includeVideoLessons")}
         </Label>
       </div>
 

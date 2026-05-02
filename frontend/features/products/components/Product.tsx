@@ -2,6 +2,7 @@
 
 import { ImageIcon, Star, Trash2 } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { FC, useCallback } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -9,7 +10,13 @@ import { ProductFileRole } from "@/backend/app/generated/prisma/enums";
 import type { CategoryWithTranslations } from "@/backend/features/category";
 import type { ProductWithTranslations } from "@/backend/features/product";
 import { Button } from "@/frontend/components/ui/button";
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/frontend/components/ui/card";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/frontend/components/ui/card";
 import { Skeleton } from "@/frontend/components/ui/skeleton";
 import { CategoryBadge } from "@/frontend/features/categories/components/CategoryBadge";
 import { CATEGORY_DETAILS } from "@/frontend/features/categories/constants";
@@ -25,7 +32,12 @@ interface ProductProps {
   isHiddenActions?: boolean;
 }
 
-export const Product: FC<ProductProps> = ({ product, isHiddenActions, className }) => {
+export const Product: FC<ProductProps> = ({
+  product,
+  isHiddenActions,
+  className,
+}) => {
+  const tProduct = useTranslations("product");
   const { mutate: updateProduct, isPending: isUpdating } = useUpdateProduct();
   const { mutate: deleteProduct, isPending: isDeleting } = useDeleteProduct();
   const { data: category } = useCacheQuery<CategoryWithTranslations>({
@@ -36,11 +48,13 @@ export const Product: FC<ProductProps> = ({ product, isHiddenActions, className 
 
   const translation = usePickTranslation(product.translations);
 
-  const displayImage = product.productFiles.find(
-    (f) => f.role === ProductFileRole.MAIN_IMAGE
-  )?.file ?? product.productFiles.find(
-    (f) => f.role === ProductFileRole.ADDITIONAL_IMAGE
-  )?.file ?? null;
+  const displayImage =
+    product.productFiles.find((f) => f.role === ProductFileRole.MAIN_IMAGE)
+      ?.file ??
+    product.productFiles.find(
+      (f) => f.role === ProductFileRole.ADDITIONAL_IMAGE,
+    )?.file ??
+    null;
 
   const handleFavoriteToggle = useCallback(() => {
     updateProduct({
@@ -107,11 +121,22 @@ export const Product: FC<ProductProps> = ({ product, isHiddenActions, className 
           <span className="text-sm text-muted-foreground">
             {translation?.description}
           </span>
-          {product.categoryId && (
-            category
-              ? <CategoryBadge category={category} />
-              : <Skeleton className="h-5 w-20 rounded-full" />
-          )}
+          {product.categoryId &&
+            (category ? (
+              <CategoryBadge category={category} />
+            ) : (
+              <Skeleton className="h-5 w-20 rounded-full" />
+            ))}
+          <div className="flex items-center justify-between gap-2 pt-1">
+            <span className="text-sm font-semibold">
+              ${product.price.toFixed(2)}
+            </span>
+            {!isHiddenActions && product.includeVideoLessons && (
+              <span className="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+                {tProduct("videoLessonsIncluded")}
+              </span>
+            )}
+          </div>
         </CardContent>
       </Card>
     </li>

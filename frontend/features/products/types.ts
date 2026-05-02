@@ -10,6 +10,8 @@ export type TranslationField = {
 
 export type ProductFormValues = {
   favorite: boolean;
+  price: number;
+  includeVideoLessons: boolean;
   categoryId: string;
   translations: TranslationField[];
   mainImage: FileModel | null;

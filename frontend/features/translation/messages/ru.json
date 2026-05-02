@@ -213,6 +213,11 @@
     "addImages": "Добавить изображения",
     "addImagesCount": "Добавить изображения ({count}/{max})",
     "changeMedia": "Изменить {label}",
-    "selectMedia": "Выбрать {label}"
+    "selectMedia": "Выбрать {label}",
+    "price": "Цена",
+    "priceRequired": "Цена обязательна",
+    "priceMustBePositive": "Цена должна быть больше 0",
+    "includeVideoLessons": "Включить видеоуроки",
+    "videoLessonsIncluded": "Видеоуроки включены"
   }
 }

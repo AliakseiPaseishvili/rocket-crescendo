@@ -20,6 +20,9 @@ export class ProductRepository {
       if (typeof filter.favorite === "boolean") {
         where.favorite = filter.favorite;
       }
+      if (typeof filter.includeVideoLessons === "boolean") {
+        where.includeVideoLessons = filter.includeVideoLessons;
+      }
     }
 
     return prisma.product.findMany({
@@ -39,6 +42,8 @@ export class ProductRepository {
     return prisma.product.create({
       data: {
         favorite: data.favorite ?? false,
+        price: data.price ?? 5.0,
+        includeVideoLessons: data.includeVideoLessons ?? false,
         categoryId: data.categoryId,
         translations: { create: data.translations },
         ...(data.files?.length && {
@@ -59,6 +64,8 @@ export class ProductRepository {
       where: { id },
       data: {
         ...(data.favorite !== undefined && { favorite: data.favorite }),
+        ...(data.price !== undefined && { price: data.price }),
+        ...(data.includeVideoLessons !== undefined && { includeVideoLessons: data.includeVideoLessons }),
         ...(data.translations?.length && {
           translations: { deleteMany: {}, create: data.translations },
         }),
@@ -66,7 +73,10 @@ export class ProductRepository {
           productFiles: {
             deleteMany: {},
             ...(data.files.length > 0 && {
-              create: data.files.map((f) => ({ fileId: f.fileId, role: f.role })),
+              create: data.files.map((f) => ({
+                fileId: f.fileId,
+                role: f.role,
+              })),
             }),
           },
         }),
