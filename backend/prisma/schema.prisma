@@ -21,6 +21,7 @@ model Product {
   category            Category             @relation(fields: [categoryId], references: [id])
   translations        ProductTranslation[]
   productFiles        ProductFile[]
+  sections            ProductSection[]
 }
 
 model ProductTranslation {
@@ -53,6 +54,7 @@ model File {
   fileType     FileType
   name         String
   productFiles ProductFile[]
+  videoLessons VideoLesson[]
 }
 
 enum ProductFileRole {
@@ -70,6 +72,45 @@ model ProductFile {
   file      File            @relation(fields: [fileId], references: [id])
 
   @@unique([productId, fileId])
+}
+
+model ProductSection {
+  id           String                      @id @default(uuid())
+  productId    String
+  order        Int                         @default(0)
+  product      Product                     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  translations ProductSectionTranslation[]
+  lessons      VideoLesson[]
+}
+
+model ProductSectionTranslation {
+  id        String         @id @default(uuid())
+  sectionId String
+  language  String
+  name      String
+  section   ProductSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@unique([sectionId, language])
+}
+
+model VideoLesson {
+  id           String                   @id @default(uuid())
+  sectionId    String
+  fileId       String?
+  order        Int                      @default(0)
+  section      ProductSection           @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  file         File?                    @relation(fields: [fileId], references: [id])
+  translations VideoLessonTranslation[]
+}
+
+model VideoLessonTranslation {
+  id       String      @id @default(uuid())
+  lessonId String
+  language String
+  name     String
+  lesson   VideoLesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([lessonId, language])
 }
 
 model CategoryTranslation {

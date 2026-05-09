@@ -1,6 +1,6 @@
 import { formUrlParams, formSearchParams } from "@/frontend/utils/form-url";
 
-type JsonBody = Record<string, boolean | string | number | object>;
+type JsonBody = Record<string, boolean | string | number | object | null>;
 type Body = JsonBody | FormData;
 type Params = Record<string, string | boolean | number | string[]>;
 

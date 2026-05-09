@@ -3,8 +3,11 @@
     "hello": "Привет",
     "name": "Название",
     "description": "Описание",
+    "create": "Создать",
+    "save": "Сохранить",
     "creating": "Создание…",
     "saving": "Сохранение…",
+    "namePlaceholder": "Введите название",
     "nameRequired": "Название обязательно",
     "nameMinLength": "Название должно содержать не менее 2 символов",
     "descriptionRequired": "Описание обязательно",
@@ -113,7 +116,8 @@
     "files": "Файлы",
     "users": "Пользователи",
     "create": "Создать",
-    "edit": "Изменить"
+    "edit": "Изменить",
+    "videoLessons": "Видеоуроки"
   },
   "auth": {
     "signIn": {
@@ -239,7 +243,24 @@
     "priceRequired": "Цена обязательна",
     "priceMustBePositive": "Цена должна быть больше 0",
     "includeVideoLessons": "Включить видеоуроки",
-    "videoLessonsIncluded": "Видеоуроки включены"
+    "videoLessonsIncluded": "Видеоуроки включены",
+    "manageVideoLessons": "Управление видеоуроками"
+  },
+  "videoLesson": {
+    "sections": "Разделы",
+    "addSection": "Добавить раздел",
+    "editSection": "Изменить раздел",
+    "deleteSection": "Удалить раздел",
+    "lessons": "Видеоуроки",
+    "addLesson": "Добавить урок",
+    "editLesson": "Изменить урок",
+    "deleteLesson": "Удалить урок",
+    "sectionName": "Название раздела",
+    "lessonName": "Название урока",
+    "video": "Видеофайл",
+    "manageVideoLessons": "Управление видеоуроками",
+    "noSections": "Разделов пока нет",
+    "noLessons": "Уроков пока нет"
   },
   "notFound": {
     "title": "Страница не найдена",

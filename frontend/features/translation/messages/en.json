@@ -4,8 +4,11 @@
     "name": "Name",
     "description": "Description",
     "color": "Color",
+    "create": "Create",
+    "save": "Save",
     "creating": "Creating…",
     "saving": "Saving…",
+    "namePlaceholder": "Enter name",
     "nameRequired": "Name is required",
     "nameMinLength": "Name must be at least 2 characters",
     "descriptionRequired": "Description is required",
@@ -113,7 +116,8 @@
     "files": "Files",
     "users": "Users",
     "create": "Create",
-    "edit": "Edit"
+    "edit": "Edit",
+    "videoLessons": "Video Lessons"
   },
   "auth": {
     "signIn": {
@@ -239,7 +243,24 @@
     "priceRequired": "Price is required",
     "priceMustBePositive": "Price must be greater than 0",
     "includeVideoLessons": "Include video lessons",
-    "videoLessonsIncluded": "Video lessons included"
+    "videoLessonsIncluded": "Video lessons included",
+    "manageVideoLessons": "Manage Video Lessons"
+  },
+  "videoLesson": {
+    "sections": "Sections",
+    "addSection": "Add Section",
+    "editSection": "Edit Section",
+    "deleteSection": "Delete Section",
+    "lessons": "Video Lessons",
+    "addLesson": "Add Lesson",
+    "editLesson": "Edit Lesson",
+    "deleteLesson": "Delete Lesson",
+    "sectionName": "Section Name",
+    "lessonName": "Lesson Name",
+    "video": "Video File",
+    "manageVideoLessons": "Manage Video Lessons",
+    "noSections": "No sections yet",
+    "noLessons": "No lessons yet"
   },
   "notFound": {
     "title": "Page Not Found",

@@ -4,6 +4,8 @@ import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 
 import type { ProductWithTranslations } from '@/backend/features/product';
+import { Button } from '@/frontend/components/ui/button';
+import { Link } from '@/frontend/features/translation/i18n/navigation';
 
 import { useEditProductForm } from '../hooks';
 import { ProductFormFields } from './ProductFormFields';
@@ -33,7 +35,16 @@ export const EditProductFormContent: FC<EditProductFormContentProps> = ({ produc
 
   return (
     <div className="flex w-full flex-col gap-6">
-      <h1 className="text-2xl font-bold">{tProduct('editProduct')}</h1>
+      <div className="flex items-center justify-between gap-4">
+        <h1 className="text-2xl font-bold">{tProduct('editProduct')}</h1>
+        {product.includeVideoLessons && (
+          <Button asChild variant="outline" size="sm">
+            <Link href={`/admin/products/${product.id}/video-lessons`}>
+              {tProduct('manageVideoLessons')}
+            </Link>
+          </Button>
+        )}
+      </div>
       <div className="grid w-full gap-8 md:grid-cols-[320px_1fr]">
         <div className="overflow-y-auto md:max-h-[calc(100vh-200px)]">
           <ProductMediaPanel

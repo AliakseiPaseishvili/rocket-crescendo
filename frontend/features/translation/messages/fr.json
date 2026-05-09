@@ -3,8 +3,11 @@
     "hello": "Bonjour",
     "name": "Nom",
     "description": "Description",
+    "create": "Créer",
+    "save": "Enregistrer",
     "creating": "Création…",
     "saving": "Enregistrement…",
+    "namePlaceholder": "Entrez un nom",
     "nameRequired": "Le nom est requis",
     "nameMinLength": "Le nom doit comporter au moins 2 caractères",
     "descriptionRequired": "La description est requise",
@@ -113,7 +116,8 @@
     "files": "Fichiers",
     "users": "Utilisateurs",
     "create": "Créer",
-    "edit": "Modifier"
+    "edit": "Modifier",
+    "videoLessons": "Leçons vidéo"
   },
   "auth": {
     "signIn": {
@@ -239,7 +243,24 @@
     "priceRequired": "Le prix est requis",
     "priceMustBePositive": "Le prix doit être supérieur à 0",
     "includeVideoLessons": "Inclure les leçons vidéo",
-    "videoLessonsIncluded": "Leçons vidéo incluses"
+    "videoLessonsIncluded": "Leçons vidéo incluses",
+    "manageVideoLessons": "Gérer les leçons vidéo"
+  },
+  "videoLesson": {
+    "sections": "Sections",
+    "addSection": "Ajouter une section",
+    "editSection": "Modifier la section",
+    "deleteSection": "Supprimer la section",
+    "lessons": "Leçons vidéo",
+    "addLesson": "Ajouter une leçon",
+    "editLesson": "Modifier la leçon",
+    "deleteLesson": "Supprimer la leçon",
+    "sectionName": "Nom de la section",
+    "lessonName": "Nom de la leçon",
+    "video": "Fichier vidéo",
+    "manageVideoLessons": "Gérer les leçons vidéo",
+    "noSections": "Aucune section pour l'instant",
+    "noLessons": "Aucune leçon pour l'instant"
   },
   "notFound": {
     "title": "Page introuvable",

@@ -36,6 +36,11 @@ export const BREADCRUMBS_ADMIN_CATEGORIES_CREATE: BreadcrumbItem[] = [
   { labelKey: 'create' },
 ];
 
+export const BREADCRUMBS_ADMIN_PRODUCTS_VIDEO_LESSONS: BreadcrumbItem[] = [
+  ...BREADCRUMBS_ADMIN_PRODUCTS,
+  { labelKey: 'videoLessons' },
+];
+
 export const BREADCRUMBS_ADMIN_USERS: BreadcrumbItem[] = [
   ...BREADCRUMBS_ADMIN,
   { labelKey: 'users' },
