@@ -64,8 +64,7 @@
     "loadingUsers": "Loading users…",
     "errorLoadingUsers": "Failed to load users.",
     "noUsers": "No users found.",
-    "previous": "Previous",
-    "next": "Next"
+    "loadMore": "Load More"
   },
   "category": {
     "categories": "Categories",

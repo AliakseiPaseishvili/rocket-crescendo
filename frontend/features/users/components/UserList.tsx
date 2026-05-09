@@ -1,73 +1,95 @@
-'use client';
+"use client";
 
-import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { ColumnDef } from "@tanstack/react-table";
+import { UserWithRole } from "better-auth/plugins";
+import { useTranslations } from "next-intl";
 
-import { Button } from '@/frontend/components/ui/button';
+import { Badge } from "@/frontend/components/ui/badge";
+import { Button } from "@/frontend/components/ui/button";
+import { DataTable } from "@/frontend/components/ui/data-table";
 
-import { USERS_PAGE_LIMIT } from '../constants';
-import { useUsersQuery } from '../hooks';
-import { UserRow } from './UserRow';
+import { useUsersQuery } from "../hooks";
+import { UserActionsCell } from "./UserRow";
 
 export const UserList = () => {
-  const t = useTranslations('user');
-  const [offset, setOffset] = useState(0);
-  const { data, isPending, isError } = useUsersQuery(offset);
+  const t = useTranslations("user");
+  const { items, fetchNextPage, queryProps } = useUsersQuery();
+  const { isPending, isError, hasNextPage, isFetchingNextPage } = queryProps;
 
-  if (isPending) return <p className="text-muted-foreground">{t('loadingUsers')}</p>;
-  if (isError) return <p className="text-destructive">{t('errorLoadingUsers')}</p>;
-  if (!data?.users.length) return <p className="text-muted-foreground">{t('noUsers')}</p>;
-
-  const total = data.total ?? data.users.length;
-  const hasPrev = offset > 0;
-  const hasNext = offset + USERS_PAGE_LIMIT < total;
+  const columns: ColumnDef<UserWithRole>[] = [
+    {
+      id: "user",
+      header: () => t("user"),
+      cell: ({ row }) => {
+        const { email } = row.original;
+        return (
+          <div>
+            <div className="text-sm text-muted-foreground">{email}</div>
+          </div>
+        );
+      },
+    },
+    {
+      id: "role",
+      header: () => t("role"),
+      cell: ({ row }) => {
+        const isAdmin = row.original.role === "admin";
+        return (
+          <Badge variant={isAdmin ? "default" : "secondary"}>
+            {isAdmin ? t("roleAdmin") : t("roleUser")}
+          </Badge>
+        );
+      },
+    },
+    {
+      id: "status",
+      header: () => t("status"),
+      cell: ({ row }) => {
+        const { banned } = row.original;
+        return (
+          <Badge variant={banned ? "destructive" : "outline"}>
+            {banned ? t("banned") : t("active")}
+          </Badge>
+        );
+      },
+    },
+    {
+      id: "actions",
+      header: () => <div className="text-right">{t("actions")}</div>,
+      cell: ({ row }) => (
+        <UserActionsCell
+          id={row.original.id}
+          role={row.original.role ?? "user"}
+          banned={row.original.banned}
+        />
+      ),
+    },
+  ];
 
   return (
-    <div className="space-y-4">
-      <div className="overflow-x-auto rounded-lg border">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b bg-muted/50">
-              <th className="py-3 pr-4 text-left font-medium">{t('user')}</th>
-              <th className="py-3 pr-4 text-left font-medium">{t('role')}</th>
-              <th className="py-3 pr-4 text-left font-medium">{t('status')}</th>
-              <th className="py-3 text-right font-medium">{t('actions')}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.users.map((user) => (
-              <UserRow
-                key={user.id}
-                id={user.id}
-                username={(user as unknown as Record<string, unknown>).username as string | undefined}
-                email={user.email}
-                role={user.role ?? 'user'}
-                banned={user.banned}
-              />
-            ))}
-          </tbody>
-        </table>
-      </div>
-      {(hasPrev || hasNext) && (
-        <div className="flex items-center justify-between">
+    <div>
+      <DataTable
+        columns={columns}
+        data={items ?? []}
+        isLoading={isPending}
+        isError={isError}
+        loadingFallback={
+          <p className="text-muted-foreground">{t("loadingUsers")}</p>
+        }
+        errorFallback={
+          <p className="text-destructive">{t("errorLoadingUsers")}</p>
+        }
+        emptyFallback={<p className="text-muted-foreground">{t("noUsers")}</p>}
+      />
+      {hasNextPage && (
+        <div className="flex justify-center">
           <Button
             variant="outline"
             size="sm"
-            disabled={!hasPrev}
-            onClick={() => setOffset(Math.max(0, offset - USERS_PAGE_LIMIT))}
+            disabled={isFetchingNextPage}
+            onClick={fetchNextPage}
           >
-            {t('previous')}
-          </Button>
-          <span className="text-sm text-muted-foreground">
-            {offset + 1}–{Math.min(offset + USERS_PAGE_LIMIT, total)} / {total}
-          </span>
-          <Button
-            variant="outline"
-            size="sm"
-            disabled={!hasNext}
-            onClick={() => setOffset(offset + USERS_PAGE_LIMIT)}
-          >
-            {t('next')}
+            {t("loadMore")}
           </Button>
         </div>
       )}

@@ -64,8 +64,7 @@
     "loadingUsers": "Загрузка пользователей…",
     "errorLoadingUsers": "Не удалось загрузить пользователей.",
     "noUsers": "Пользователи не найдены.",
-    "previous": "Назад",
-    "next": "Вперёд"
+    "loadMore": "Загрузить ещё"
   },
   "category": {
     "categories": "Категории",

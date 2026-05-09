@@ -64,8 +64,7 @@
     "loadingUsers": "Chargement des utilisateurs…",
     "errorLoadingUsers": "Impossible de charger les utilisateurs.",
     "noUsers": "Aucun utilisateur trouvé.",
-    "previous": "Précédent",
-    "next": "Suivant"
+    "loadMore": "Charger plus"
   },
   "category": {
     "categories": "Catégories",
