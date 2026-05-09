@@ -1,31 +1,37 @@
 # admin feature
 
-Admin dashboard navigation feature.
+Admin dashboard entry point — renders a grid of navigation cards that link to each admin section (Products, Categories, Files, Users).
 
 ## Structure
 
 ```
 admin/
   components/
-    AdminNav.tsx   # Dashboard nav cards for Products, Categories, and Files
+    AdminNav.tsx   # 2-column card grid linking to all admin sections; uses ADMIN_LINKS constant defined inline
     index.ts       # Barrel export for components
-  index.ts         # Barrel export: AdminNav
+  index.ts         # Barrel: AdminNav
 ```
 
-## Components
+## Key patterns
 
-### AdminNav
+- **`ADMIN_LINKS`** — defined as a local constant inside `AdminNav.tsx` (not exported). Each entry has `{ labelKey, descriptionKey, href, icon }`. Labels come from multiple i18n namespaces (`product.products`, `category.categories`, `file.files`, `user.users`); descriptions come from the `admin` namespace (`admin.productsDescription`, etc.). `useTranslations()` is called with no namespace argument so both can be resolved in one call.
+- **Icons** — each card uses a Lucide icon (`LayoutList` for products, `Tag` for categories, `FileImage` for files, `Users` for users). The icon is rendered at `size={20}` inside `CardTitle` alongside the label.
+- **Locale-aware links** — cards are wrapped in `<Link>` from `@/frontend/features/translation/i18n/navigation` so routes include the current language prefix.
 
-Client component (`'use client'`) that renders a two-column grid of navigation cards — one each for Products, Categories, and Files.
+## Current admin sections
 
-- Uses `lucide-react` icons (`LayoutList`, `Tag`, `FileImage`)
-- Uses `useTranslations()` for labels/descriptions; keys: `product.products`, `admin.productsDescription`, `category.categories`, `admin.categoriesDescription`, `file.files`, `admin.filesDescription`
-- Uses shadcn/ui `Card`, `CardContent`, `CardHeader`, `CardTitle`
-- Uses `Link` from `@/frontend/features/translation/i18n/navigation` for locale-aware routing
-- Links are driven by `ADMIN_LINKS` constant defined in the component file
+| Section | Route constant | Icon |
+|---|---|---|
+| Products | `ROUTES.ADMIN_PRODUCTS` | `LayoutList` |
+| Categories | `ROUTES.ADMIN_CATEGORIES` | `Tag` |
+| Files | `ROUTES.ADMIN_FILES` | `FileImage` |
+| Users | `ROUTES.ADMIN_USERS` | `Users` |
 
-## Adding a new admin section
+## How to extend
 
-1. Add a new entry to `ADMIN_LINKS` in [AdminNav.tsx](components/AdminNav.tsx) with `labelKey`, `descriptionKey`, `href`, and `icon`.
-2. Add the corresponding route to `ROUTES` in `@/frontend/constants`.
-3. Add translation keys to all language files under `frontend/features/translation/messages/`.
+### Adding a new admin section card
+
+1. Add a new route to `ROUTES` in `frontend/constants.ts`.
+2. Add a new entry to `ADMIN_LINKS` in `AdminNav.tsx` with the matching `labelKey`, `descriptionKey`, `href`, and a Lucide `icon`.
+3. Add translation keys for the label (in the relevant feature namespace, e.g. `order.orders`) and description (`admin.ordersDescription`) in every `frontend/features/translation/messages/<lng>.json`.
+4. Create the page at `app/[lng]/(admin)/admin/<section>/page.tsx`.

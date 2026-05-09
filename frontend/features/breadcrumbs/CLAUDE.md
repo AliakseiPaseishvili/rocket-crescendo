@@ -1,37 +1,32 @@
 # breadcrumbs feature
 
-Renders accessible breadcrumb navigation using shadcn/ui's `Breadcrumb` primitives and next-intl translations.
+Renders accessible breadcrumb navigation for admin pages using shadcn/ui's `Breadcrumb` primitives and next-intl translations. Provides pre-built trail constants for every admin route so pages never assemble their own arrays.
 
 ## Structure
 
 ```
 breadcrumbs/
   components/
-    Breadcrumbs.tsx   # Client component — renders the breadcrumb trail
-    index.ts          # Barrel for components/
-  constants.ts        # Pre-built BreadcrumbItem[] arrays per admin route
-  types.ts            # BreadcrumbItem type
-  index.ts            # Barrel for the feature
+    Breadcrumbs.tsx   # Client component: maps BreadcrumbItem[] to shadcn Breadcrumb; last item = current page (no link)
+    index.ts          # Barrel export for components
+  types.ts            # BreadcrumbItem
+  constants.ts        # Pre-built BreadcrumbItem[] trail constants per admin route
+  index.ts            # Barrel: Breadcrumbs, BreadcrumbItem, all constants
 ```
 
 ## Types
 
-```ts
-interface BreadcrumbItem {
-  labelKey: "admin" | "products" | "categories" | "files" | "create" | "edit";
-  href?: string;   // omit for the current (last) item
-}
-```
+| Type | Shape |
+|---|---|
+| `BreadcrumbItem` | `{ labelKey: "admin" \| "products" \| "categories" \| "files" \| "users" \| "create" \| "edit"; href?: string }` |
 
-## Usage
+`href` is omitted for the last item in a trail (the current page), which `Breadcrumbs` renders as `<BreadcrumbPage>` rather than a link.
 
-Pass a `BreadcrumbItem[]` array to `<Breadcrumbs>`. The last item in the array is rendered as the current page (no link). All other items render as links with a separator.
+## Key patterns
 
-```tsx
-import { Breadcrumbs, BREADCRUMBS_ADMIN_PRODUCTS_CREATE } from "@/frontend/features/breadcrumbs";
-
-<Breadcrumbs items={BREADCRUMBS_ADMIN_PRODUCTS_CREATE} />
-```
+- **Last-item detection** — `Breadcrumbs` checks `index === items.length - 1`. The last item renders as `<BreadcrumbPage>` (plain text). All other items with an `href` render as a locale-aware `<Link>` wrapped in `<BreadcrumbLink asChild>`.
+- **Trail composition** — every constant spreads its parent, so `BREADCRUMBS_ADMIN_PRODUCTS_CREATE` is `[...BREADCRUMBS_ADMIN_PRODUCTS, { labelKey: 'create' }]`. Add new levels by spreading the relevant parent.
+- **Translations** — labels are resolved via `useTranslations("breadcrumb")`. The `labelKey` union in `types.ts` is the source of truth for which keys must exist in the `breadcrumb` namespace of every locale file.
 
 ## Pre-built constants
 
@@ -44,18 +39,14 @@ import { Breadcrumbs, BREADCRUMBS_ADMIN_PRODUCTS_CREATE } from "@/frontend/featu
 | `BREADCRUMBS_ADMIN_FILES` | Admin › Files |
 | `BREADCRUMBS_ADMIN_CATEGORIES` | Admin › Categories |
 | `BREADCRUMBS_ADMIN_CATEGORIES_CREATE` | Admin › Categories › Create |
+| `BREADCRUMBS_ADMIN_USERS` | Admin › Users |
 
-Constants are composable — each one spreads its parent, so adding a new level means spreading the parent constant and appending the new item.
+## How to extend
 
-## Translations
+### Adding a breadcrumb trail for a new admin section
 
-Labels are resolved via `useTranslations("breadcrumb")`. Add new `labelKey` values to:
-1. The `BreadcrumbItem.labelKey` union in `types.ts`
-2. The `breadcrumb` namespace in every `frontend/features/translation/messages/<lng>.json`
-
-## Adding a new route
-
-1. Add the new route to `ROUTES` in `frontend/constants.ts` if it does not exist.
-2. Add the `labelKey` to the union in `types.ts` and to all translation files.
-3. Export a new constant from `constants.ts`, spreading the parent trail.
-4. Re-export it from `index.ts`.
+1. Add the route to `ROUTES` in `frontend/constants.ts` if it does not exist.
+2. Add the new `labelKey` value to the union in `types.ts`.
+3. Add the translation string under `breadcrumb.<labelKey>` in every `frontend/features/translation/messages/<lng>.json`.
+4. Export a new constant from `constants.ts` by spreading the parent trail and appending the new item.
+5. Re-export the constant from `index.ts`.
