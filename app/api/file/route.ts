@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { withAdminAuth } from "@/backend/features/auth";
 import type { FileFilter } from "@/backend/features/file";
 import {
   FileService,
@@ -43,7 +44,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: NextRequest) {
+export const POST = withAdminAuth(async (request) => {
   try {
     const formData = await request.formData();
     const file = formData.get("file") as File | null;
@@ -62,4 +63,4 @@ export async function POST(request: NextRequest) {
       error instanceof Error ? error.message : "Failed to upload file";
     return NextResponse.json({ error: message }, { status: 400 });
   }
-}
+});

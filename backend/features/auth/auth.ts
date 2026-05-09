@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { username } from "better-auth/plugins";
+import { admin, username } from "better-auth/plugins";
 
 import { sendPasswordResetEmail, sendVerificationEmail } from "@/backend/features/emails";
 import prisma from "@/backend/prisma/prisma";
@@ -41,7 +41,7 @@ export const auth = betterAuth({
       trustedProviders: ["google", "email-password"],
     },
   },
-  plugins: [username()],
+  plugins: [username(), admin()],
   user: {
     additionalFields: {
       lastName: { type: "string", required: false, fieldName: "lastName" },

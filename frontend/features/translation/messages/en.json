@@ -44,7 +44,28 @@
   "admin": {
     "productsDescription": "Manage your products",
     "categoriesDescription": "Manage categories for products",
-    "filesDescription": "Manage uploaded images and videos"
+    "filesDescription": "Manage uploaded images and videos",
+    "usersDescription": "Manage user accounts and permissions"
+  },
+  "user": {
+    "users": "Users",
+    "user": "User",
+    "role": "Role",
+    "status": "Status",
+    "actions": "Actions",
+    "roleAdmin": "Admin",
+    "roleUser": "User",
+    "banned": "Banned",
+    "active": "Active",
+    "ban": "Ban",
+    "unban": "Unban",
+    "makeAdmin": "Make Admin",
+    "removeAdmin": "Remove Admin",
+    "loadingUsers": "Loading users…",
+    "errorLoadingUsers": "Failed to load users.",
+    "noUsers": "No users found.",
+    "previous": "Previous",
+    "next": "Next"
   },
   "category": {
     "categories": "Categories",
@@ -91,6 +112,7 @@
     "products": "Products",
     "categories": "Categories",
     "files": "Files",
+    "users": "Users",
     "create": "Create",
     "edit": "Edit"
   },
@@ -219,5 +241,10 @@
     "priceMustBePositive": "Price must be greater than 0",
     "includeVideoLessons": "Include video lessons",
     "videoLessonsIncluded": "Video lessons included"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page you're looking for doesn't exist or you don't have permission to access it.",
+    "goHome": "Go Home"
   }
 }

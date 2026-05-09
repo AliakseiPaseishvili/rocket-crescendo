@@ -21,7 +21,7 @@ export const NavMenu = () => {
   return (
     <NavigationMenu>
       <NavigationMenuList>
-        {NAV_ITEMS.filter(({ key }) => key !== 'admin' || (!isPending && !!session?.user)).map(({ key, href }) => {
+        {NAV_ITEMS.filter(({ key }) => key !== 'admin' || (!isPending && session?.user?.role === 'admin')).map(({ key, href }) => {
           const isRoute = href.startsWith('/');
           return (
             <NavigationMenuItem key={href}>

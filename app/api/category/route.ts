@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { withAdminAuth } from '@/backend/features/auth';
 import { CategoryService } from '@/backend/features/category';
 import type { CategoryFilter } from '@/backend/features/category';
 
@@ -19,7 +20,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: NextRequest) {
+export const POST = withAdminAuth(async (request) => {
   try {
     const body = await request.json();
     const item = await service.create(body);
@@ -28,4 +29,4 @@ export async function POST(request: NextRequest) {
     const message = error instanceof Error ? error.message : 'Failed to create category';
     return NextResponse.json({ error: message }, { status: 400 });
   }
-}
+});

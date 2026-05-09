@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { withAdminAuth } from "@/backend/features/auth";
 import { ProductService } from "@/backend/features/product";
 import type { ProductFilter } from "@/backend/features/product";
 
@@ -28,16 +29,14 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: NextRequest) {
+export const POST = withAdminAuth(async (request) => {
   try {
     const body = await request.json();
-
     const product = await service.create(body);
-
     return NextResponse.json(product, { status: 201 });
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Failed to create product";
     return NextResponse.json({ error: message }, { status: 400 });
   }
-}
+});

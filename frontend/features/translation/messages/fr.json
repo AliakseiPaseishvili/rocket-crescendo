@@ -44,7 +44,28 @@
   "admin": {
     "productsDescription": "Gérez vos produits",
     "categoriesDescription": "Gérez les catégories de produits",
-    "filesDescription": "Gérez les images et vidéos téléversées"
+    "filesDescription": "Gérez les images et vidéos téléversées",
+    "usersDescription": "Gérez les comptes utilisateurs et les permissions"
+  },
+  "user": {
+    "users": "Utilisateurs",
+    "user": "Utilisateur",
+    "role": "Rôle",
+    "status": "Statut",
+    "actions": "Actions",
+    "roleAdmin": "Admin",
+    "roleUser": "Utilisateur",
+    "banned": "Banni",
+    "active": "Actif",
+    "ban": "Bannir",
+    "unban": "Débannir",
+    "makeAdmin": "Rendre admin",
+    "removeAdmin": "Retirer admin",
+    "loadingUsers": "Chargement des utilisateurs…",
+    "errorLoadingUsers": "Impossible de charger les utilisateurs.",
+    "noUsers": "Aucun utilisateur trouvé.",
+    "previous": "Précédent",
+    "next": "Suivant"
   },
   "category": {
     "categories": "Catégories",
@@ -91,6 +112,7 @@
     "products": "Produits",
     "categories": "Catégories",
     "files": "Fichiers",
+    "users": "Utilisateurs",
     "create": "Créer",
     "edit": "Modifier"
   },
@@ -219,5 +241,10 @@
     "priceMustBePositive": "Le prix doit être supérieur à 0",
     "includeVideoLessons": "Inclure les leçons vidéo",
     "videoLessonsIncluded": "Leçons vidéo incluses"
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "description": "La page que vous recherchez n'existe pas ou vous n'avez pas les droits pour y accéder.",
+    "goHome": "Accueil"
   }
 }

@@ -5,6 +5,7 @@ export const ROUTES = {
   ADMIN_CATEGORIES: '/admin/categories',
   ADMIN_CATEGORIES_CREATE: '/admin/categories/create',
   ADMIN_FILES: '/admin/files',
+  ADMIN_USERS: '/admin/users',
   BASE: '/',
   SIGN_IN: '/sign-in',
   SIGN_UP: '/sign-up',

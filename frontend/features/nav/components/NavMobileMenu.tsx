@@ -2,6 +2,8 @@
 
 import { useTranslations } from 'next-intl';
 
+import { useSession } from '@/frontend/features/auth';
+
 import { NAV_ITEMS } from '../constants';
 
 interface NavMobileMenuProps {
@@ -10,10 +12,11 @@ interface NavMobileMenuProps {
 
 export const NavMobileMenu = ({ onSelect }: NavMobileMenuProps) => {
   const t = useTranslations('nav');
+  const { data: session, isPending } = useSession();
 
   return (
     <nav className="flex flex-col gap-1">
-      {NAV_ITEMS.map(({ key, href }) => (
+      {NAV_ITEMS.filter(({ key }) => key !== 'admin' || (!isPending && session?.user?.role === 'admin')).map(({ key, href }) => (
         <a
           key={href}
           href={href}

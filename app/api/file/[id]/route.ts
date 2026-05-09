@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { withAdminAuth } from '@/backend/features/auth';
 import { FileService } from '@/backend/features/file';
 
 const service = new FileService();
@@ -17,9 +18,9 @@ export async function GET(_: NextRequest, { params }: Params) {
   }
 }
 
-export async function PATCH(request: NextRequest, { params }: Params) {
+export const PATCH = withAdminAuth(async (request, ctx) => {
   try {
-    const { id } = await params;
+    const { id } = await ctx!.params;
     const body = await request.json();
     const item = await service.update(id, body);
     return NextResponse.json(item);
@@ -28,11 +29,11 @@ export async function PATCH(request: NextRequest, { params }: Params) {
     const status = message.includes('not found') ? 404 : 400;
     return NextResponse.json({ error: message }, { status });
   }
-}
+});
 
-export async function DELETE(_: NextRequest, { params }: Params) {
+export const DELETE = withAdminAuth(async (_, ctx) => {
   try {
-    const { id } = await params;
+    const { id } = await ctx!.params;
     await service.delete(id);
     return new NextResponse(null, { status: 204 });
   } catch (error) {
@@ -40,4 +41,4 @@ export async function DELETE(_: NextRequest, { params }: Params) {
     const status = message.includes('not found') ? 404 : 400;
     return NextResponse.json({ error: message }, { status });
   }
-}
+});
