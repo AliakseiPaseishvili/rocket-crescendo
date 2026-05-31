@@ -1,6 +1,6 @@
 'use client';
 
-import { FileVideo, Trash2 } from 'lucide-react';
+import { FileVideo, Pencil, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 
@@ -8,8 +8,8 @@ import type { VideoLessonWithTranslations } from '@/backend/features/video-lesso
 import { Button } from '@/frontend/components/ui/button';
 import { usePickTranslation } from '@/frontend/features/translation';
 
-import { EditVideoLessonModal } from './EditVideoLessonModal';
 import { useDeleteVideoLesson } from '../hooks/use-delete-video-lesson';
+import { useVideoLessonsPanelStore } from '../store/video-lessons-panel.store';
 
 interface VideoLessonCardProps {
   lesson: VideoLessonWithTranslations;
@@ -19,6 +19,7 @@ export const VideoLessonCard: FC<VideoLessonCardProps> = ({ lesson }) => {
   const tVl = useTranslations('videoLesson');
   const translation = usePickTranslation(lesson.translations);
   const { mutate: deleteLesson, isPending: isDeleting } = useDeleteVideoLesson(lesson.sectionId);
+  const openEditLesson = useVideoLessonsPanelStore((s) => s.openEditLesson);
 
   return (
     <div className="flex items-center justify-between rounded-md border border-border bg-background px-3 py-2">
@@ -33,7 +34,15 @@ export const VideoLessonCard: FC<VideoLessonCardProps> = ({ lesson }) => {
       </div>
 
       <div className="flex items-center gap-1 shrink-0 ml-2">
-        <EditVideoLessonModal lesson={lesson} />
+        <Button
+          variant="ghost"
+          size="icon"
+          className="size-8"
+          onClick={() => openEditLesson(lesson)}
+          aria-label={tVl('editLesson')}
+        >
+          <Pencil size={14} />
+        </Button>
         <Button
           variant="ghost"
           size="icon"
