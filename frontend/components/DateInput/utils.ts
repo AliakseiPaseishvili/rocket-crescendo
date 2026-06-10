@@ -1,4 +1,17 @@
+import { enUS, fr, ru, type Locale } from 'react-day-picker/locale';
+
+import { SUPPORTED_LANGUAGE } from '@/frontend/features/translation';
+
 const DISPLAY_DATE_PATTERN = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+
+const calendarLocales: Record<SUPPORTED_LANGUAGE, Locale> = {
+  [SUPPORTED_LANGUAGE.EN]: enUS,
+  [SUPPORTED_LANGUAGE.FR]: fr,
+  [SUPPORTED_LANGUAGE.RU]: ru,
+};
+
+export const getCalendarLocale = (locale: string): Locale =>
+  calendarLocales[locale as SUPPORTED_LANGUAGE] ?? enUS;
 
 export const maskDateValue = (raw: string): string => {
   const digits = raw.replace(/\D/g, '').slice(0, 8);

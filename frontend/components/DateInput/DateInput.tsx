@@ -1,5 +1,6 @@
 'use client';
 
+import { useLocale } from 'next-intl';
 import { ChangeEvent, ComponentProps, FC, useCallback, useRef, useState } from 'react';
 
 import { Calendar } from '@/frontend/components/ui/calendar';
@@ -10,7 +11,7 @@ import {
   PopoverContent,
 } from '@/frontend/components/ui/popover';
 
-import { formatDisplayDate, maskDateValue, parseDisplayDate } from './utils';
+import { formatDisplayDate, getCalendarLocale, maskDateValue, parseDisplayDate } from './utils';
 
 type PointerDownOutsideHandler = NonNullable<
   ComponentProps<typeof PopoverContent>['onPointerDownOutside']
@@ -24,6 +25,7 @@ interface DateInputProps {
 }
 
 export const DateInput: FC<DateInputProps> = ({ id, value, onChange, placeholder }) => {
+  const locale = useLocale();
   const [open, setOpen] = useState(false);
   const [month, setMonth] = useState<Date>(() => parseDisplayDate(value) ?? new Date());
   const inputRef = useRef<HTMLInputElement>(null);
@@ -90,6 +92,7 @@ export const DateInput: FC<DateInputProps> = ({ id, value, onChange, placeholder
       >
         <Calendar
           mode="single"
+          locale={getCalendarLocale(locale)}
           selected={selected}
           month={month}
           onMonthChange={setMonth}
