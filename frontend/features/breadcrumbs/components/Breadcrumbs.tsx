@@ -5,14 +5,11 @@ import { FC } from "react";
 
 import {
   Breadcrumb,
-  BreadcrumbItem as BreadcrumbItemUI,
-  BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
 } from "@/frontend/components/ui/breadcrumb";
 import type { BreadcrumbItem } from "@/frontend/features/breadcrumbs/types";
-import { Link } from "@/frontend/features/translation/i18n/navigation";
+
+import { BreadcrumbEntry } from "./BreadcrumbEntry";
 
 interface BreadcrumbsProps {
   items: BreadcrumbItem[];
@@ -25,24 +22,14 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ items, className }) => {
   return (
     <Breadcrumb className={className}>
       <BreadcrumbList>
-        {items.map((item, index) => {
-          const isLast = index === items.length - 1;
-
-          return (
-            <BreadcrumbItemUI key={index}>
-              {!isLast && item.href ? (
-                <>
-                  <BreadcrumbLink asChild>
-                    <Link href={item.href}>{t(item.labelKey)}</Link>
-                  </BreadcrumbLink>
-                  <BreadcrumbSeparator />
-                </>
-              ) : (
-                <BreadcrumbPage>{t(item.labelKey)}</BreadcrumbPage>
-              )}
-            </BreadcrumbItemUI>
-          );
-        })}
+        {items.map((item, index) => (
+          <BreadcrumbEntry
+            key={index}
+            item={item}
+            label={item.label ?? t(item.labelKey!)}
+            isLast={index === items.length - 1}
+          />
+        ))}
       </BreadcrumbList>
     </Breadcrumb>
   );

@@ -11,3 +11,4 @@ export { CreateLessonPanelContent } from './CreateLessonPanelContent';
 export { EditLessonPanelContent } from './EditLessonPanelContent';
 
 export { VideoLessonsPanel } from './VideoLessonsPanel';
+export { VideoLessonsBreadcrumbs } from './VideoLessonsBreadcrumbs';
