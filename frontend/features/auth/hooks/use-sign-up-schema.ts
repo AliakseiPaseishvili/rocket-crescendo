@@ -2,6 +2,8 @@ import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 import * as yup from 'yup';
 
+import { isValidDisplayDate } from '@/frontend/components/DateInput';
+
 import { useSignInSchema } from './use-sign-in-schema';
 
 export const useSignUpSchema = () => {
@@ -19,7 +21,15 @@ export const useSignUpSchema = () => {
           .oneOf(['', 'male', 'female'], t('validation.genderInvalid'))
           .optional()
           .default(''),
-        birthdate: yup.string().optional().default(''),
+        birthdate: yup
+          .string()
+          .optional()
+          .default('')
+          .test(
+            'birthdate-format',
+            t('validation.birthdateInvalid'),
+            (value) => !value || isValidDisplayDate(value),
+          ),
         password: yup
           .string()
           .min(8, t('validation.passwordMinLength'))

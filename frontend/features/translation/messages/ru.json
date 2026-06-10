@@ -152,6 +152,7 @@
       "genderMale": "Мужской",
       "genderFemale": "Женский",
       "birthdate": "Дата рождения",
+      "birthdatePlaceholder": "ДД/ММ/ГГГГ",
       "email": "E-mail",
       "emailPlaceholder": "вы@пример.com",
       "password": "Пароль",
@@ -168,6 +169,7 @@
     },
     "validation": {
       "genderInvalid": "Пожалуйста, выберите корректный пол",
+      "birthdateInvalid": "Пожалуйста, введите корректную дату в формате ДД/ММ/ГГГГ",
       "identifierRequired": "E-mail или имя пользователя обязательно",
       "emailRequired": "E-mail обязателен",
       "emailInvalid": "Неверный e-mail",

@@ -19,14 +19,14 @@ auth/
     SignInButton.tsx              # Outline button in the site header; navigates to ROUTES.SIGN_IN via locale-aware Link
     SignInForm.tsx                # Card form: identifier + password + "Forgot password?" + GoogleSignInButton
     SignOutButton.tsx             # Outline button; calls signOut() then router.refresh() (next/navigation, not locale-aware)
-    SignUpForm.tsx                # Card form: firstName, lastName, username, gender (Select), birthdate + PasswordWithConfirmFields + PasswordPolicyChecklist + GoogleSignInButton; wrapped in FormProvider
+    SignUpForm.tsx                # Card form: firstName, lastName, username, gender (Select), birthdate (DateInput, masked DD/MM/YYYY + calendar popover) + PasswordWithConfirmFields + PasswordPolicyChecklist + GoogleSignInButton; wrapped in FormProvider
     VerifyEmailView.tsx           # Info card shown after sign-up; resend button with 300 s countdown driven by setInterval
     index.ts                      # Barrel export for all components (including internal ones)
   hooks/
     use-forgot-password-schema.ts # Yup: email (required, valid format)
     use-reset-password-schema.ts  # Yup: password (5 policy rules) + confirmPassword (must match)
     use-sign-in-schema.ts         # Yup: email + password (min 8) — used as base by useSignUpSchema
-    use-sign-up-schema.ts         # Yup: extends useSignInSchema via .shape(); adds firstName, lastName, username (required), gender, birthdate, full 5-rule password, confirmPassword
+    use-sign-up-schema.ts         # Yup: extends useSignInSchema via .shape(); adds firstName, lastName, username (required), gender, birthdate (optional, must be a valid DD/MM/YYYY date), full 5-rule password, confirmPassword
     index.ts                      # Barrel export for hooks (hooks are not re-exported from the feature barrel)
   auth-client.ts                  # Better Auth React client: authClient, signIn, signUp, signOut, useSession
   types.ts                        # SignUpFormValues, SignInFormValues
@@ -38,7 +38,7 @@ auth/
 
 | Type | Shape |
 |---|---|
-| `SignUpFormValues` | `{ firstName: string; lastName: string; username: string; email: string; password: string; confirmPassword: string; gender: "" \| "male" \| "female"; birthdate: string }` |
+| `SignUpFormValues` | `{ firstName: string; lastName: string; username: string; email: string; password: string; confirmPassword: string; gender: "" \| "male" \| "female"; birthdate: string }` — `birthdate` holds the masked display string `DD/MM/YYYY` (converted to ISO on submit) |
 | `SignInFormValues` | `{ identifier: string; password: string }` |
 
 `ForgotPasswordForm` and `ResetPasswordForm` define their own form-value types inline (not exported).
@@ -57,6 +57,7 @@ Public exports from `index.ts`:
 - **`SignInForm` identifier detection** — the form has a single `identifier` field (not `email`). On submit it checks `values.identifier.includes('@')`; if true calls `signIn.email()`, otherwise `signIn.username()`. The inline Yup schema uses `identifier` (required string), not `email`, so `use-sign-in-schema.ts` is not used here.
 - **`useSignUpSchema`** — extends `useSignInSchema()` via `.shape()` to override `password` with 5 policy rules and add the extra sign-up fields. `SignUpForm` calls this hook and passes the result to `yupResolver`.
 - **`SignUpForm` uses `<FormProvider>`** — wraps the form in `<FormProvider {...methods}>` so `PasswordWithConfirmFields` and `PasswordPolicyChecklist` can call `useFormContext` / `useWatch` without prop drilling.
+- **`SignUpForm` birthdate via `DateInput`** — wired with a `Controller` to the shared `DateInput` (`@/frontend/components/DateInput`): a digits-only input masked as `DD/MM/YYYY` whose focus/click opens a shadcn `Calendar` popover. Form state holds the masked display string; `onSubmit` converts it with `displayDateToIso()` so Better Auth / Prisma keep receiving ISO `YYYY-MM-DD` (`undefined` when empty). `useSignUpSchema` validates the format with `isValidDisplayDate` (`validation.birthdateInvalid`), accepting empty as valid.
 - **`PasswordWithConfirmFields`** — uses `useWatch` from `FormContext` to watch both `password` and `confirmPassword`; passes `isMatch` to the confirm `PasswordInput` to show a green check icon when they match. Must be inside a `<FormProvider>`.
 - **`PasswordPolicyChecklist`** — uses `useFormContext<SignUpFormValues>()` and `useWatch` on `password` to drive 5 `PolicyItem` rows. Coupled to a form that has a `password` field; do not reuse in forms without it.
 - **`AuthStatus` avatar fallback** — `getAvatarFallback` priority: (1) `name[0] + lastName[0]` uppercased, (2) `name[0]`, (3) `username[0]`, (4) `"?"`. The `useMemo` is placed before the early-return guard so the hook call order is stable.

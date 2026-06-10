@@ -151,7 +151,8 @@
       "genderPlaceholder": "Select gender",
       "genderMale": "Male",
       "genderFemale": "Female",
-      "birthdate": "Birthdate",
+      "birthdate": "Date of Birth",
+      "birthdatePlaceholder": "DD/MM/YYYY",
       "email": "Email",
       "emailPlaceholder": "you@example.com",
       "password": "Password",
@@ -168,6 +169,7 @@
     },
     "validation": {
       "genderInvalid": "Please select a valid gender",
+      "birthdateInvalid": "Please enter a valid date in DD/MM/YYYY format",
       "identifierRequired": "Email or username is required",
       "emailRequired": "Email is required",
       "emailInvalid": "Invalid email",

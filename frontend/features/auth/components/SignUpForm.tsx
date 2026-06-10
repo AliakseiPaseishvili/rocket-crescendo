@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 
+import { DateInput, displayDateToIso } from "@/frontend/components/DateInput";
 import { Button } from "@/frontend/components/ui/button";
 import {
   Card,
@@ -59,7 +60,7 @@ export const SignUpForm = () => {
       lastName: values.lastName || undefined,
       username: values.username || undefined,
       gender: values.gender || undefined,
-      birthdate: values.birthdate || undefined,
+      birthdate: displayDateToIso(values.birthdate),
     });
     if (error) {
       setServerError(error.message ?? t("errors.signUpFailed"));
@@ -163,7 +164,18 @@ export const SignUpForm = () => {
 
               <div className="flex flex-col gap-1.5 flex-1">
                 <Label htmlFor="birthdate">{t("fields.birthdate")}</Label>
-                <Input id="birthdate" type="date" {...register("birthdate")} />
+                <Controller
+                  name="birthdate"
+                  control={control}
+                  render={({ field }) => (
+                    <DateInput
+                      id="birthdate"
+                      value={field.value ?? ""}
+                      onChange={field.onChange}
+                      placeholder={t("fields.birthdatePlaceholder")}
+                    />
+                  )}
+                />
                 {errors.birthdate && (
                   <p className="text-destructive text-sm">
                     {errors.birthdate.message}

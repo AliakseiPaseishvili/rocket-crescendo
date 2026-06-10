@@ -152,6 +152,7 @@
       "genderMale": "Homme",
       "genderFemale": "Femme",
       "birthdate": "Date de naissance",
+      "birthdatePlaceholder": "JJ/MM/AAAA",
       "email": "E-mail",
       "emailPlaceholder": "vous@exemple.com",
       "password": "Mot de passe",
@@ -168,6 +169,7 @@
     },
     "validation": {
       "genderInvalid": "Veuillez sélectionner un genre valide",
+      "birthdateInvalid": "Veuillez saisir une date valide au format JJ/MM/AAAA",
       "identifierRequired": "L'e-mail ou le pseudo est requis",
       "emailRequired": "L'e-mail est requis",
       "emailInvalid": "E-mail invalide",
