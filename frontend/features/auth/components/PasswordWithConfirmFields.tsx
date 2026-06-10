@@ -1,49 +1,40 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useFormContext, useWatch } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
+import { Input } from "@/frontend/components/ui/input";
 import { Label } from "@/frontend/components/ui/label";
 
-import { EmailPasswordFields } from "./EmailPasswordFields";
-import { PasswordInput } from "./PasswordInput";
+import { PasswordConfirmFields } from "./PasswordConfirmFields";
 import { SignUpFormValues } from "../types";
 
 export const PasswordWithConfirmFields = () => {
   const t = useTranslations("auth");
   const {
     register,
-    control,
     formState: { errors },
   } = useFormContext<SignUpFormValues>();
 
-  const [password, confirmPassword] = useWatch({
-    control,
-    name: ["password", "confirmPassword"],
-  });
-  const passwordsMatch = !!password && password === confirmPassword;
-
   return (
     <>
-      <EmailPasswordFields register={register} errors={errors} showRequired />
-
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="confirmPassword">
-          {t("fields.confirmPassword")}{" "}
-          <span className="text-destructive">*</span>
+        <Label htmlFor="email">
+          {t("fields.email")}
+          <span className="text-destructive"> *</span>
         </Label>
-        <PasswordInput
-          id="confirmPassword"
-          placeholder={t("fields.confirmPasswordPlaceholder")}
-          isMatch={passwordsMatch}
-          {...register("confirmPassword")}
+        <Input
+          id="email"
+          type="email"
+          placeholder={t("fields.emailPlaceholder")}
+          {...register("email")}
         />
-        {errors.confirmPassword && (
-          <p className="text-destructive text-sm">
-            {errors.confirmPassword.message}
-          </p>
+        {errors.email && (
+          <p className="text-destructive text-sm">{errors.email.message}</p>
         )}
       </div>
+
+      <PasswordConfirmFields showRequired />
     </>
   );
 };

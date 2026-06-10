@@ -1,7 +1,7 @@
 export { AuthStatus } from './AuthStatus';
 export { GoogleSignInButton } from './GoogleSignInButton';
-export { EmailPasswordFields } from './EmailPasswordFields';
 export { ForgotPasswordForm } from './ForgotPasswordForm';
+export { PasswordConfirmFields } from './PasswordConfirmFields';
 export { PasswordInput } from './PasswordInput';
 export { PasswordWithConfirmFields } from './PasswordWithConfirmFields';
 export { ResetPasswordForm } from './ResetPasswordForm';

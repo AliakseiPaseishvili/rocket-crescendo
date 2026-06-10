@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 
 import { Button } from "@/frontend/components/ui/button";
 import {
@@ -14,12 +14,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/frontend/components/ui/card";
-import { Label } from "@/frontend/components/ui/label";
 import { ROUTES } from "@/frontend/constants";
 import { Link, useRouter } from "@/frontend/features/translation/i18n/navigation";
 
 import { useResetPasswordSchema } from "../hooks";
-import { PasswordInput } from "./PasswordInput";
+import { PasswordConfirmFields } from "./PasswordConfirmFields";
 import { authClient } from "../auth-client";
 
 type ResetPasswordFormValues = {
@@ -34,15 +33,13 @@ export const ResetPasswordForm = () => {
   const token = searchParams.get("token");
   const schema = useResetPasswordSchema();
 
+  const methods = useForm<ResetPasswordFormValues>({
+    resolver: yupResolver(schema),
+  });
   const {
-    register,
     handleSubmit,
-    watch,
-    formState: { errors, isSubmitting },
-  } = useForm<ResetPasswordFormValues>({ resolver: yupResolver(schema) });
-
-  const [password, confirmPassword] = watch(["password", "confirmPassword"]);
-  const passwordsMatch = !!password && password === confirmPassword;
+    formState: { isSubmitting },
+  } = methods;
 
   const { mutateAsync: resetPassword, isError } = useMutation({
     mutationFn: async (newPassword: string) => {
@@ -91,61 +88,35 @@ export const ResetPasswordForm = () => {
         <CardDescription>{t("resetPassword.description")}</CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="password">{t("fields.password")}</Label>
-            <PasswordInput
-              id="password"
-              placeholder={t("fields.passwordPlaceholder")}
-              autoComplete="new-password"
-              {...register("password")}
-            />
-            {errors.password && (
+        <FormProvider {...methods}>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
+            <PasswordConfirmFields autoComplete="new-password" />
+
+            {isError && (
               <p className="text-destructive text-sm">
-                {errors.password.message}
+                {t("errors.resetPasswordFailed")}
               </p>
             )}
-          </div>
 
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="confirmPassword">
-              {t("fields.confirmPassword")}
-            </Label>
-            <PasswordInput
-              id="confirmPassword"
-              placeholder={t("fields.confirmPasswordPlaceholder")}
-              autoComplete="new-password"
-              isMatch={passwordsMatch}
-              {...register("confirmPassword")}
-            />
-            {errors.confirmPassword && (
-              <p className="text-destructive text-sm">
-                {errors.confirmPassword.message}
-              </p>
-            )}
-          </div>
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {isSubmitting
+                ? t("resetPassword.submitting")
+                : t("resetPassword.submit")}
+            </Button>
 
-          {isError && (
-            <p className="text-destructive text-sm">
-              {t("errors.resetPasswordFailed")}
+            <p className="text-center text-sm text-muted-foreground">
+              <Link
+                href={ROUTES.SIGN_IN}
+                className="underline underline-offset-4 hover:text-foreground"
+              >
+                {t("resetPassword.backToSignIn")}
+              </Link>
             </p>
-          )}
-
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting
-              ? t("resetPassword.submitting")
-              : t("resetPassword.submit")}
-          </Button>
-
-          <p className="text-center text-sm text-muted-foreground">
-            <Link
-              href={ROUTES.SIGN_IN}
-              className="underline underline-offset-4 hover:text-foreground"
-            >
-              {t("resetPassword.backToSignIn")}
-            </Link>
-          </p>
-        </form>
+          </form>
+        </FormProvider>
       </CardContent>
     </Card>
   );

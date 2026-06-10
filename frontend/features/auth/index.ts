@@ -1,6 +1,5 @@
 export {
   AuthStatus,
-  EmailPasswordFields,
   ForgotPasswordForm,
   ResetPasswordForm,
   SignInButton,

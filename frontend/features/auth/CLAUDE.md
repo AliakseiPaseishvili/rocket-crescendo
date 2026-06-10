@@ -8,14 +8,14 @@ Authentication UI for the storefront: sign-up, sign-in (email/password and Googl
 auth/
   components/
     AuthStatus.tsx                # Header widget: SignInButton when logged out; Avatar + DropdownMenu when logged in
-    EmailPasswordFields.tsx       # Generic email + password field pair (generic over FieldValues); used by PasswordWithConfirmFields
     ForgotPasswordForm.tsx        # Card form: email → authClient.requestPasswordReset(); replaces itself with success card on submit
     GoogleSignInButton.tsx        # Outline button; calls signIn.social({ provider: "google" }) via useMutation; shows inline error
+    PasswordConfirmFields.tsx     # Shared password + confirm pair via useFormContext; useWatch drives isMatch; props: showRequired, autoComplete
     PasswordInput.tsx             # Input with show/hide Eye toggle; optional isMatch prop overlays green Check icon
     PasswordPolicyChecklist.tsx   # Reads "password" from FormContext; renders 5 PolicyItem rows
-    PasswordWithConfirmFields.tsx # EmailPasswordFields + confirm PasswordInput; watches both fields to drive isMatch icon
+    PasswordWithConfirmFields.tsx # Inline email field + PasswordConfirmFields (showRequired); sign-up's email/password/confirm block
     PolicyItem.tsx                # Single policy row: green Check or muted X + label; driven by a boolean met prop
-    ResetPasswordForm.tsx         # Reads ?token= from URL; password + confirm + policy; calls authClient.resetPassword()
+    ResetPasswordForm.tsx         # Reads ?token= from URL; FormProvider + PasswordConfirmFields; calls authClient.resetPassword()
     SignInButton.tsx              # Outline button in the site header; navigates to ROUTES.SIGN_IN via locale-aware Link
     SignInForm.tsx                # Card form: identifier + password + "Forgot password?" + GoogleSignInButton
     SignOutButton.tsx             # Outline button; calls signOut() then router.refresh() (next/navigation, not locale-aware)
@@ -47,9 +47,9 @@ auth/
 
 Public exports from `index.ts`:
 
-- **Components**: `AuthStatus`, `EmailPasswordFields`, `ForgotPasswordForm`, `ResetPasswordForm`, `SignInButton`, `SignInForm`, `SignOutButton`, `SignUpForm`, `VerifyEmailView`
+- **Components**: `AuthStatus`, `ForgotPasswordForm`, `ResetPasswordForm`, `SignInButton`, `SignInForm`, `SignOutButton`, `SignUpForm`, `VerifyEmailView`
 - **Auth client**: `authClient`, `signIn`, `signUp`, `signOut`, `useSession`
-- **Not exported**: `GoogleSignInButton`, `PasswordInput`, `PasswordWithConfirmFields`, `PolicyItem` (internal to other auth components), and all schema hooks (import via `hooks/` subpath if needed)
+- **Not exported**: `GoogleSignInButton`, `PasswordConfirmFields`, `PasswordInput`, `PasswordWithConfirmFields`, `PolicyItem` (internal to other auth components), and all schema hooks (import via `hooks/` subpath if needed)
 
 ## Key patterns
 
@@ -58,7 +58,8 @@ Public exports from `index.ts`:
 - **`useSignUpSchema`** — extends `useSignInSchema()` via `.shape()` to override `password` with 5 policy rules and add the extra sign-up fields. `SignUpForm` calls this hook and passes the result to `yupResolver`.
 - **`SignUpForm` uses `<FormProvider>`** — wraps the form in `<FormProvider {...methods}>` so `PasswordWithConfirmFields` and `PasswordPolicyChecklist` can call `useFormContext` / `useWatch` without prop drilling.
 - **`SignUpForm` birthdate via `DateInput`** — wired with a `Controller` to the shared `DateInput` (`@/frontend/components/DateInput`): a digits-only input masked as `DD/MM/YYYY` whose focus/click opens a shadcn `Calendar` popover. Form state holds the masked display string; `onSubmit` converts it with `displayDateToIso()` so Better Auth / Prisma keep receiving ISO `YYYY-MM-DD` (`undefined` when empty). `useSignUpSchema` validates the format with `isValidDisplayDate` (`validation.birthdateInvalid`), accepting empty as valid.
-- **`PasswordWithConfirmFields`** — uses `useWatch` from `FormContext` to watch both `password` and `confirmPassword`; passes `isMatch` to the confirm `PasswordInput` to show a green check icon when they match. Must be inside a `<FormProvider>`.
+- **`PasswordConfirmFields`** — the shared password + confirm pair, used by both `PasswordWithConfirmFields` (sign-up) and `ResetPasswordForm`. Calls `useFormContext` typed to `{ password; confirmPassword }`, so it works inside any `<FormProvider>` whose form values include those two fields. `useWatch` on both fields drives the `isMatch` green-check on the confirm `PasswordInput`. Props: `showRequired` adds `*` to both labels (sign-up), `autoComplete` is forwarded to both inputs (`"new-password"` in reset).
+- **`PasswordWithConfirmFields`** — sign-up's email/password/confirm block: an inline email field (typed to `SignUpFormValues`) followed by `<PasswordConfirmFields showRequired />`. Must be inside a `<FormProvider>`.
 - **`PasswordPolicyChecklist`** — uses `useFormContext<SignUpFormValues>()` and `useWatch` on `password` to drive 5 `PolicyItem` rows. Coupled to a form that has a `password` field; do not reuse in forms without it.
 - **`AuthStatus` avatar fallback** — `getAvatarFallback` priority: (1) `name[0] + lastName[0]` uppercased, (2) `name[0]`, (3) `username[0]`, (4) `"?"`. The `useMemo` is placed before the early-return guard so the hook call order is stable.
 - **`AuthStatus` dropdown** — `<DropdownMenuItem asChild>` wraps `<SignOutButton>` so Radix's close handler and the button's own `onClick` both fire without nesting `<button>` inside `<button>`.
@@ -66,7 +67,7 @@ Public exports from `index.ts`:
 - **`GoogleSignInButton`** — uses `useMutation` (not a parent form's `isSubmitting`) because the social flow is a redirect, not a form submission.
 - **`VerifyEmailView` countdown** — `SignUpForm` appends `?email=<encoded>` when redirecting. `VerifyEmailView` reads this via `useSearchParams` (requires `<Suspense>` in the page). A 300 s countdown runs via `useState` + `setInterval` in a `useEffect`, started in the mutation's `onSuccess`.
 - **`ForgotPasswordForm` no-disclosure** — on success it renders a success card in place of the form, never navigates away. Intentionally avoids disclosing whether the email exists.
-- **`ResetPasswordForm` token guard** — reads `?token=` via `useSearchParams`. If absent, renders an error card with a link to `ROUTES.FORGOT_PASSWORD` immediately. On success calls `router.push(ROUTES.SIGN_IN)` in `onSuccess`.
+- **`ResetPasswordForm` token guard** — reads `?token=` via `useSearchParams`. If absent, renders an error card with a link to `ROUTES.FORGOT_PASSWORD` immediately. On success calls `router.push(ROUTES.SIGN_IN)` in `onSuccess`. The form is wrapped in `<FormProvider {...methods}>` solely so `PasswordConfirmFields` can read the form context.
 - **Server-side session** — use `auth.api.getSession({ headers: req.headers })` from the backend auth config. Never import `useSession` in server components.
 - **Auth pages layout** — auth pages live under `app/[lng]/(auth)/` with a bare centred layout; they do not inherit `<Header>` / `<Footer>`. Pages that use `useSearchParams` (`VerifyEmailView`, `ResetPasswordForm`) must be wrapped in `<Suspense>` in their page file.
 
