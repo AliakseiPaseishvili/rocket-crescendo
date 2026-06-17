@@ -195,3 +195,20 @@ model Verification {
   @@index([identifier])
   @@map("verification")
 }
+
+enum SubscriptionStatus {
+  PENDING
+  CONFIRMED
+}
+
+model NewsletterSubscription {
+  id             String             @id @default(uuid())
+  email          String             @unique
+  status         SubscriptionStatus @default(PENDING)
+  token          String?            @unique
+  tokenExpiresAt DateTime?
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  @@map("newsletter_subscription")
+}

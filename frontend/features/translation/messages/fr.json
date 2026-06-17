@@ -268,5 +268,17 @@
     "title": "Page introuvable",
     "description": "La page que vous recherchez n'existe pas ou vous n'avez pas les droits pour y accéder.",
     "goHome": "Accueil"
+  },
+  "subscription": {
+    "confirm": {
+      "loadingTitle": "Confirmation de votre abonnement",
+      "loadingDescription": "Veuillez patienter pendant que nous confirmons votre abonnement.",
+      "loadingHint": "Cela ne prendra qu’un instant.",
+      "successTitle": "Vous êtes abonné aux actualités",
+      "successDescription": "Merci d’avoir confirmé. Vous recevrez désormais nos dernières actualités et mises à jour.",
+      "errorTitle": "Échec de la confirmation",
+      "errorDescription": "Ce lien de confirmation est invalide ou a expiré. Veuillez demander un nouvel abonnement.",
+      "backToHome": "Retour à l’accueil"
+    }
   }
 }

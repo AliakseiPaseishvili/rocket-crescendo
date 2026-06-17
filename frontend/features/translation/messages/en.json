@@ -268,5 +268,17 @@
     "title": "Page Not Found",
     "description": "The page you're looking for doesn't exist or you don't have permission to access it.",
     "goHome": "Go Home"
+  },
+  "subscription": {
+    "confirm": {
+      "loadingTitle": "Confirming your subscription",
+      "loadingDescription": "Please wait while we confirm your subscription.",
+      "loadingHint": "This will only take a moment.",
+      "successTitle": "You are subscribed to the news",
+      "successDescription": "Thanks for confirming. You will now receive our latest news and updates.",
+      "errorTitle": "Confirmation failed",
+      "errorDescription": "This confirmation link is invalid or has expired. Please request a new subscription.",
+      "backToHome": "Back to home"
+    }
   }
 }

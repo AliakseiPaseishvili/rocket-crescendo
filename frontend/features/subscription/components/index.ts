@@ -1,0 +1,1 @@
+export { SubscribeConfirmView } from "./SubscribeConfirmView";
