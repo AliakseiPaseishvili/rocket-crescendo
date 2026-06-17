@@ -8,10 +8,11 @@ Typed HTTP client for all backend REST endpoints. Every resource file defines ro
 api/
   types.ts       # HttpMethod, RequestMap, RequestProps, RequestApiType
   utils.ts       # executeRequest() — low-level fetch wrapper (JSON + FormData)
-  products.ts    # ProductApiTypes, PRODUCT_REQUEST_MAP
-  categories.ts  # CategoryApiTypes, CATEGORY_REQUEST_MAP
-  files.ts       # FileApiTypes, FILE_REQUEST_MAP
-  index.ts       # Merges all maps; exports unified `api` object
+  products.ts     # ProductApiTypes, PRODUCT_REQUEST_MAP
+  categories.ts   # CategoryApiTypes, CATEGORY_REQUEST_MAP
+  files.ts        # FileApiTypes, FILE_REQUEST_MAP
+  subscription.ts # SubscriptionApiTypes, SUBSCRIPTION_REQUEST_MAP
+  index.ts        # Merges all maps; exports unified `api` object
 ```
 
 ## How it works
@@ -62,6 +63,15 @@ Each resource file defines:
 | `deleteFile` | DELETE | `/api/file/:id` | — | `void` |
 
 `getFiles` returns `PaginatedFiles` (`{ items: FileModel[]; total: number; offset: number; limit: number }`) — not a plain array. Consumers use `useOffsetPagination` from `@/frontend/features/react-query` to page through results.
+
+### Subscription (`subscription.ts`)
+
+| Method | HTTP | Route | Body | Response |
+|---|---|---|---|---|
+| `subscribe` | POST | `/api/subscription` | `SubscribeInput` (`{ email }`) | `SubscribeResult` (`{ status: 'pending' \| 'confirmed' }`) |
+| `confirmSubscription` | POST | `/api/subscription/confirm` | `{ token: string }` | `{ status: string }` |
+
+Both are public (no auth). `subscribe` returns `pending` when a double opt-in confirmation email was sent (unknown email) or `confirmed` when no confirmation was needed (registered/already-subscribed email). Types come from `@/backend/features/subscription`.
 
 ## Key patterns
 

@@ -1,1 +1,1 @@
-export { SubscribeConfirmView } from "./components";
+export { SubscribeConfirmView, SubscribeNewsletter } from "./components";

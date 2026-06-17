@@ -20,6 +20,7 @@
     "shop": "Shop",
     "game": "Game",
     "aboutUs": "About Us",
+    "subscribe": "Subscribe to News",
     "support": "Support",
     "admin": "Admin"
   },
@@ -279,6 +280,18 @@
       "errorTitle": "Confirmation failed",
       "errorDescription": "This confirmation link is invalid or has expired. Please request a new subscription.",
       "backToHome": "Back to home"
+    },
+    "form": {
+      "description": "Get our latest news and updates straight to your inbox.",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "you@example.com",
+      "subscribeButton": "Subscribe",
+      "subscribing": "Subscribing...",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email",
+      "successPending": "Almost there — check your inbox to confirm your subscription.",
+      "successConfirmed": "You're subscribed! Thanks for joining.",
+      "errorMessage": "Something went wrong. Please try again."
     }
   }
 }

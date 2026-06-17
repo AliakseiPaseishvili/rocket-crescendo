@@ -11,6 +11,7 @@ landing/
     LandingSection.tsx    # Reusable full-screen section with a translated title and optional children
     HeroSection.tsx       # Hero section: displays the first favorite product
     ShopSection.tsx       # Shop section: carousel of non-favorite products
+    SubscribeSection.tsx  # Newsletter sign-up section: wraps subscription feature's SubscribeNewsletter
     index.ts              # Barrel export for components
   index.ts                # Barrel export: Landing
 ```
@@ -18,7 +19,8 @@ landing/
 ## Key patterns
 
 - **`LandingSection`** is the shared layout primitive. It takes an `id` (used as the anchor for nav links), a `titleKey` (key from the `nav` translation namespace), and optional `children`. All sections use it.
-- **`Landing`** composes the page: `HeroSection` → `ShopSection` → static sections (`game`, `about`, `support`) rendered as bare `LandingSection` instances with no children.
+- **`Landing`** composes the page: `HeroSection` → `ShopSection` → `game` → `about` → `SubscribeSection` → `support`. The static sections (`game`, `about`, `support`) are bare `LandingSection` instances with no children.
+- **`SubscribeSection`** — thin wrapper that renders the subscription feature's `SubscribeNewsletter` (`@/frontend/features/subscription`) as children of `LandingSection id="subscribe" titleKey="subscribe"`. All subscribe logic (anon form vs. logged-in button) lives in the subscription feature, not here.
 - **Hero** — fetches products filtered to `{ favorite: true }` via `useProducts` and renders the first result in a `Product` card with actions hidden.
 - **Shop** — fetches products filtered to `{ favorite: false }` via `useProducts` and renders them in a shadcn `Carousel`. Shows a "coming soon" message if the list is empty.
 - **Category pre-fetching** — both `HeroSection` and `ShopSection` call `useCategoriesByIds` with the product `categoryId`s so category data is in the React Query cache before `Product` cards render.

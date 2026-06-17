@@ -20,6 +20,7 @@
     "shop": "Shop",
     "game": "Jeu",
     "aboutUs": "À propos",
+    "subscribe": "S'abonner aux actualités",
     "support": "Support",
     "admin": "Admin"
   },
@@ -279,6 +280,18 @@
       "errorTitle": "Échec de la confirmation",
       "errorDescription": "Ce lien de confirmation est invalide ou a expiré. Veuillez demander un nouvel abonnement.",
       "backToHome": "Retour à l’accueil"
+    },
+    "form": {
+      "description": "Recevez nos dernières actualités et mises à jour directement dans votre boîte mail.",
+      "emailLabel": "Adresse e-mail",
+      "emailPlaceholder": "vous@exemple.com",
+      "subscribeButton": "S'abonner",
+      "subscribing": "Abonnement...",
+      "emailRequired": "L'e-mail est requis",
+      "emailInvalid": "Veuillez saisir une adresse e-mail valide",
+      "successPending": "Presque terminé — vérifiez votre boîte mail pour confirmer votre abonnement.",
+      "successConfirmed": "Vous êtes abonné ! Merci de nous avoir rejoints.",
+      "errorMessage": "Une erreur s'est produite. Veuillez réessayer."
     }
   }
 }
