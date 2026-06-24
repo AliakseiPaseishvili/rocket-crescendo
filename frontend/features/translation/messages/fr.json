@@ -263,7 +263,11 @@
     "video": "Fichier vidéo",
     "manageVideoLessons": "Gérer les leçons vidéo",
     "noSections": "Aucune section pour l'instant",
-    "noLessons": "Aucune leçon pour l'instant"
+    "noLessons": "Aucune leçon pour l'instant",
+    "lessonLink": "Lien de la leçon",
+    "openLessonPage": "Ouvrir la page de la leçon",
+    "copyQrCode": "Copier le QR code",
+    "qrCopied": "Copié !"
   },
   "notFound": {
     "title": "Page introuvable",
@@ -293,5 +297,13 @@
       "successConfirmed": "Vous êtes abonné ! Merci de nous avoir rejoints.",
       "errorMessage": "Une erreur s'est produite. Veuillez réessayer."
     }
+  },
+  "lessons": {
+    "title": "Leçons vidéo",
+    "loading": "Chargement…",
+    "noLessons": "Aucune leçon disponible",
+    "backToLessons": "Retour aux leçons",
+    "lessonNotFound": "Leçon introuvable",
+    "videoUnavailable": "Vidéo indisponible"
   }
 }

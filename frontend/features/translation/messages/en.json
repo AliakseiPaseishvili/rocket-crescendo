@@ -263,7 +263,11 @@
     "video": "Video File",
     "manageVideoLessons": "Manage Video Lessons",
     "noSections": "No sections yet",
-    "noLessons": "No lessons yet"
+    "noLessons": "No lessons yet",
+    "lessonLink": "Lesson Link",
+    "openLessonPage": "Open lesson page",
+    "copyQrCode": "Copy QR code",
+    "qrCopied": "Copied!"
   },
   "notFound": {
     "title": "Page Not Found",
@@ -293,5 +297,13 @@
       "successConfirmed": "You're subscribed! Thanks for joining.",
       "errorMessage": "Something went wrong. Please try again."
     }
+  },
+  "lessons": {
+    "title": "Video Lessons",
+    "loading": "Loading…",
+    "noLessons": "No lessons available",
+    "backToLessons": "Back to lessons",
+    "lessonNotFound": "Lesson not found",
+    "videoUnavailable": "Video unavailable"
   }
 }

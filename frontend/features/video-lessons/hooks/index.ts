@@ -6,6 +6,7 @@ export { useCreateProductSectionForm } from './use-create-product-section-form';
 export { useEditProductSectionForm } from './use-edit-product-section-form';
 
 export { useVideoLessons } from './use-video-lessons';
+export { useVideoLesson } from './use-video-lesson';
 export { useCreateVideoLesson } from './use-create-video-lesson';
 export { useUpdateVideoLesson } from './use-update-video-lesson';
 export { useDeleteVideoLesson } from './use-delete-video-lesson';

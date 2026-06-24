@@ -9,6 +9,7 @@ export { VideoLessonCard } from './VideoLessonCard';
 export { VideoLessonFormFields } from './VideoLessonFormFields';
 export { CreateLessonPanelContent } from './CreateLessonPanelContent';
 export { EditLessonPanelContent } from './EditLessonPanelContent';
+export { LessonShareQrCode } from './LessonShareQrCode';
 
 export { VideoLessonsPanel } from './VideoLessonsPanel';
 export { VideoLessonsBreadcrumbs } from './VideoLessonsBreadcrumbs';

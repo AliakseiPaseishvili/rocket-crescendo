@@ -263,7 +263,11 @@
     "video": "Видеофайл",
     "manageVideoLessons": "Управление видеоуроками",
     "noSections": "Разделов пока нет",
-    "noLessons": "Уроков пока нет"
+    "noLessons": "Уроков пока нет",
+    "lessonLink": "Ссылка на урок",
+    "openLessonPage": "Открыть страницу урока",
+    "copyQrCode": "Копировать QR-код",
+    "qrCopied": "Скопировано!"
   },
   "notFound": {
     "title": "Страница не найдена",
@@ -293,5 +297,13 @@
       "successConfirmed": "Вы подписаны! Спасибо, что присоединились.",
       "errorMessage": "Что-то пошло не так. Пожалуйста, попробуйте ещё раз."
     }
+  },
+  "lessons": {
+    "title": "Видеоуроки",
+    "loading": "Загрузка…",
+    "noLessons": "Уроки недоступны",
+    "backToLessons": "Назад к урокам",
+    "lessonNotFound": "Урок не найден",
+    "videoUnavailable": "Видео недоступно"
   }
 }
