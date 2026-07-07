@@ -41,3 +41,8 @@ export const BREADCRUMBS_ADMIN_USERS: BreadcrumbItem[] = [
   ...BREADCRUMBS_ADMIN,
   { labelKey: 'users' },
 ];
+
+export const BREADCRUMBS_ADMIN_ORDERS: BreadcrumbItem[] = [
+  ...BREADCRUMBS_ADMIN,
+  { labelKey: 'orders' },
+];

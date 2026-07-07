@@ -9,5 +9,6 @@ export {
   BREADCRUMBS_ADMIN_CATEGORIES,
   BREADCRUMBS_ADMIN_CATEGORIES_CREATE,
   BREADCRUMBS_ADMIN_USERS,
+  BREADCRUMBS_ADMIN_ORDERS,
 } from "./constants";
 export { createBreadcrumbsAdminProductsVideoLessons } from "./utils";

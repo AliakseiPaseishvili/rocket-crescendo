@@ -26,6 +26,10 @@ export class ProductService {
     return product;
   }
 
+  async getByIds(ids: string[]): Promise<ProductWithTranslations[]> {
+    return this.repository.findByIds(ids);
+  }
+
   private validateFiles(files: ProductFileInput[] | undefined): void {
     if (!files?.length) return;
     const validRoles = new Set([

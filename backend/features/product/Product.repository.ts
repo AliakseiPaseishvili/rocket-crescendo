@@ -38,6 +38,14 @@ export class ProductRepository {
     });
   }
 
+  async findByIds(ids: string[]): Promise<ProductWithTranslations[]> {
+    if (!ids.length) return [];
+    return prisma.product.findMany({
+      where: { id: { in: ids } },
+      include: PRODUCT_INCLUDE,
+    });
+  }
+
   async create(data: ProductCreateInput): Promise<ProductWithTranslations> {
     return prisma.product.create({
       data: {

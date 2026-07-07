@@ -8,10 +8,12 @@ Typed HTTP client for all backend REST endpoints. Every resource file defines ro
 api/
   types.ts       # HttpMethod, RequestMap, RequestProps, RequestApiType
   utils.ts       # executeRequest() — low-level fetch wrapper (JSON + FormData)
-  products.ts     # ProductApiTypes, PRODUCT_REQUEST_MAP
+  products.ts     # ProductApiTypes, PRODUCT_REQUEST_MAP (incl. getProductsByIds)
   categories.ts   # CategoryApiTypes, CATEGORY_REQUEST_MAP
   files.ts        # FileApiTypes, FILE_REQUEST_MAP
+  orders.ts       # OrderApiTypes, ORDER_REQUEST_MAP (admin: list + update status)
   subscription.ts # SubscriptionApiTypes, SUBSCRIPTION_REQUEST_MAP
+  checkout.ts     # CheckoutApiTypes, CHECKOUT_REQUEST_MAP
   index.ts        # Merges all maps; exports unified `api` object
 ```
 
@@ -63,6 +65,15 @@ Each resource file defines:
 | `deleteFile` | DELETE | `/api/file/:id` | — | `void` |
 
 `getFiles` returns `PaginatedFiles` (`{ items: FileModel[]; total: number; offset: number; limit: number }`) — not a plain array. Consumers use `useOffsetPagination` from `@/frontend/features/react-query` to page through results.
+
+### Orders (`orders.ts`) — admin only
+
+| Method | HTTP | Route | Body / Query | Response |
+|---|---|---|---|---|
+| `getOrders` | GET | `/api/orders` | `OrderFilter?` (query: `offset`, `limit`, `status`) | `PaginatedAdminOrders` |
+| `updateOrderStatus` | PATCH | `/api/orders/:id/status` | `{ status: OrderStatus }` | `AdminOrder` |
+
+`getOrders` returns `PaginatedAdminOrders` (`PaginatedItems<AdminOrder>`); consumers page through it with `useOffsetPagination`. Both routes are gated by `withAdminAuth` server-side. Types come from `@/backend/features/order`. `updateOrderStatus` enforces `PAID→PREPARED→SENT` on the server (400 on an invalid transition).
 
 ### Subscription (`subscription.ts`)
 

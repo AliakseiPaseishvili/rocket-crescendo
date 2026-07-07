@@ -3,7 +3,10 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { admin, username } from "better-auth/plugins";
 
 import { sendPasswordResetEmail, sendVerificationEmail } from "@/backend/features/emails";
+import { OrderService } from "@/backend/features/order";
 import prisma from "@/backend/prisma/prisma";
+
+const orderService = new OrderService();
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -42,6 +45,16 @@ export const auth = betterAuth({
     },
   },
   plugins: [username(), admin()],
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user) => {
+          // Link any guest purchases made with this email to the new account.
+          await orderService.linkEmailToUser(user.email, user.id);
+        },
+      },
+    },
+  },
   user: {
     additionalFields: {
       lastName: { type: "string", required: false, fieldName: "lastName" },

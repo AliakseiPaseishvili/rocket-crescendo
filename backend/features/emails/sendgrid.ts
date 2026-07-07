@@ -1,5 +1,13 @@
 import sgMail from "@sendgrid/mail";
 
+import {
+  orderConfirmationTemplate,
+  type OrderConfirmationParams,
+} from "./templates/order-confirmation";
+import {
+  orderShippedTemplate,
+  type OrderShippedParams,
+} from "./templates/order-shipped";
 import { passwordResetTemplate } from "./templates/password-reset";
 import { subscriptionConfirmTemplate } from "./templates/subscription-confirm";
 import { subscriptionWelcomeTemplate } from "./templates/subscription-welcome";
@@ -23,4 +31,26 @@ export const sendSubscriptionConfirmEmail = async (to: string, url: string) => {
 
 export const sendSubscriptionWelcomeEmail = async (to: string) => {
   await sgMail.send({ to, from: FROM_EMAIL, ...subscriptionWelcomeTemplate() });
+};
+
+export const sendOrderConfirmationEmail = async (
+  to: string,
+  params: OrderConfirmationParams,
+) => {
+  await sgMail.send({
+    to,
+    from: FROM_EMAIL,
+    ...orderConfirmationTemplate(params),
+  });
+};
+
+export const sendOrderShippedEmail = async (
+  to: string,
+  params: OrderShippedParams,
+) => {
+  await sgMail.send({
+    to,
+    from: FROM_EMAIL,
+    ...orderShippedTemplate(params),
+  });
 };

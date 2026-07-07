@@ -1,6 +1,6 @@
 'use client';
 
-import { FileImage, LayoutList, Tag, Users } from 'lucide-react';
+import { FileImage, LayoutList, Package, Tag, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import {
@@ -36,6 +36,12 @@ const ADMIN_LINKS = [
     descriptionKey: 'admin.usersDescription' as const,
     href: ROUTES.ADMIN_USERS,
     icon: Users,
+  },
+  {
+    labelKey: 'order.orders' as const,
+    descriptionKey: 'admin.ordersDescription' as const,
+    href: ROUTES.ADMIN_ORDERS,
+    icon: Package,
   },
 ];
 

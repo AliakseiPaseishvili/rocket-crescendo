@@ -1,5 +1,5 @@
 import { AuthStatus } from "@/frontend/features/auth";
-import { CartButton } from "@/frontend/features/cart";
+import { CartButton, CartSyncProvider } from "@/frontend/features/cart";
 import { Footer } from "@/frontend/features/footer";
 import { Header } from "@/frontend/features/header";
 import { NavMenu } from "@/frontend/features/nav";
@@ -20,6 +20,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
       />
       {children}
       <Footer />
+      <CartSyncProvider />
     </>
   );
 };

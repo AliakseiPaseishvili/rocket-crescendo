@@ -3,4 +3,6 @@ export {
   sendVerificationEmail,
   sendSubscriptionConfirmEmail,
   sendSubscriptionWelcomeEmail,
+  sendOrderConfirmationEmail,
+  sendOrderShippedEmail,
 } from './sendgrid';

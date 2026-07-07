@@ -8,7 +8,8 @@ Product management feature used by admins to list, create, and edit products. Ea
 products/
   components/
     ProductList.tsx               # Admin list of all products with create link; prefetches category data via useCategoriesByIds
-    Product.tsx                   # Single product card: image preview, favorite toggle, edit link, delete action; always shows price at bottom; shows "Video lessons included" badge only when isHiddenActions is false (admin context)
+    Product.tsx                   # Single product card: image preview, favorite toggle, edit link, delete action; always shows price at bottom; shows "Video lessons included" badge only when isHiddenActions is false (admin context); renders AddToCartButton only when isHiddenActions is true (public context)
+    AddToCartButton.tsx           # Public "Add to cart" button; calls useCartStore().addItem(product.id); uses cart.add i18n key
     ProductFormFields.tsx         # Shared form layout: per-language tabs + category selector + favorite checkbox + price input (shadcn Input with $ prefix) + includeVideoLessons checkbox + submit; used by CreateProductForm and EditProductFormContent
     TranslationTabContent.tsx     # Tab panel for a single language's name and description fields
     CreateProductForm.tsx         # Two-column page layout: ProductMediaPanel (left) + ProductFormFields (right); wired to useCreateProductForm

@@ -11,8 +11,9 @@ react-query/
   hooks/
     use-cache-query.ts          # Read-only query that reads from cache without fetching
     use-offset-pagination.ts    # Generic infinite-query hook for offset-based paginated endpoints
+    use-infinite-scroll.ts      # IntersectionObserver sentinel hook: auto-fetch-on-scroll for paginated lists
     index.ts                    # Barrel export for hooks
-  index.ts                      # Barrel export: useCacheQuery, useOffsetPagination, ReactQueryProvider
+  index.ts                      # Barrel export: useCacheQuery, useOffsetPagination, useInfiniteScroll, ReactQueryProvider
 ```
 
 ## Key patterns
@@ -26,6 +27,8 @@ react-query/
   - `fetchNextPage` — a guarded `useCallback` that calls `fetchNextPage()` only when `!isFetching && hasNextPage`; safe to bind directly to a button `onClick`
   - `queryProps` — the raw `useInfiniteQuery` result for accessing `isPending`, `isError`, `hasNextPage`, `isFetchingNextPage`, etc.
   - `getNextPageParam` computes the next offset as `lastPage.offset + lastPage.items.length`; returns `undefined` when that value equals or exceeds `lastPage.total`.
+
+- **`useInfiniteScroll(onReachEnd)`** — returns a `ref` callback to attach to a sentinel element at the bottom of a scroll container. Attaches an `IntersectionObserver` that fires `onReachEnd` whenever the sentinel scrolls into view; the latest `onReachEnd` is tracked via a ref (updated in an effect) so the observer is created once. Pair it with `useOffsetPagination`'s guarded `fetchNextPage` for auto-loading lists (no "Load more" button). Used by `frontend/features/orders`.
 
 ## Usage
 

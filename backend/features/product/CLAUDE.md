@@ -6,8 +6,8 @@ Handles product CRUD with multilingual translations, category association, a pri
 
 ```
 backend/features/product/
-  Product.repository.ts   # DB access via Prisma; always includes translations + productFiles with file via PRODUCT_INCLUDE; supports filtering by favorite and includeVideoLessons
-  Product.service.ts      # Business logic: translation validation, price validation, file role limits, existence checks before update/delete
+  Product.repository.ts   # DB access via Prisma; always includes translations + productFiles with file via PRODUCT_INCLUDE; supports filtering by favorite and includeVideoLessons; findByIds for bulk lookup
+  Product.service.ts      # Business logic: translation validation, price validation, file role limits, existence checks before update/delete; getByIds bulk lookup (used by cart hydration)
   types.ts                # ProductWithTranslations, ProductFileItem, ProductFileInput, ProductCreateInput, ProductUpdateInput, ProductFilter
   index.ts                # Barrel export — ProductService (value); all types as export type
 ```

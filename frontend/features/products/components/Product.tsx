@@ -24,6 +24,7 @@ import { useCacheQuery } from "@/frontend/features/react-query";
 import { usePickTranslation } from "@/frontend/features/translation";
 
 import { useDeleteProduct, useUpdateProduct } from "../hooks";
+import { AddToCartButton } from "./AddToCartButton";
 import { EditProductLink } from "./EditProductLink";
 
 interface ProductProps {
@@ -136,6 +137,7 @@ export const Product: FC<ProductProps> = ({
                 {tProduct("videoLessonsIncluded")}
               </span>
             )}
+            {isHiddenActions && <AddToCartButton productId={product.id} />}
           </div>
         </CardContent>
       </Card>

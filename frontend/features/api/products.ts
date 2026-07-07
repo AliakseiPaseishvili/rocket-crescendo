@@ -10,6 +10,7 @@ import { HttpMethod, RequestApiType, RequestMap } from "./types";
 const PRODUCT_API_ROUTES = {
   PRODUCTS: "/api/products",
   PRODUCT: "/api/products/:id",
+  PRODUCTS_BY_IDS: "/api/products/by-ids",
 } as const;
 
 export type ProductApiTypes = {
@@ -20,6 +21,12 @@ export type ProductApiTypes = {
     ProductWithTranslations[]
   >;
   getProduct: RequestApiType<undefined, { id: string }, undefined, ProductWithTranslations>;
+  getProductsByIds: RequestApiType<
+    { ids: string[] },
+    undefined,
+    undefined,
+    ProductWithTranslations[]
+  >;
   createProduct: RequestApiType<
     ProductCreateInput,
     undefined,
@@ -38,6 +45,7 @@ export type ProductApiTypes = {
 export const PRODUCT_REQUEST_MAP: RequestMap<ProductApiTypes> = {
   getProducts: { url: PRODUCT_API_ROUTES.PRODUCTS, method: HttpMethod.GET },
   getProduct: { url: PRODUCT_API_ROUTES.PRODUCT, method: HttpMethod.GET },
+  getProductsByIds: { url: PRODUCT_API_ROUTES.PRODUCTS_BY_IDS, method: HttpMethod.POST },
   createProduct: { url: PRODUCT_API_ROUTES.PRODUCTS, method: HttpMethod.POST },
   deleteProduct: { url: PRODUCT_API_ROUTES.PRODUCT, method: HttpMethod.DELETE },
   updateProduct: { url: PRODUCT_API_ROUTES.PRODUCT, method: HttpMethod.PATCH },

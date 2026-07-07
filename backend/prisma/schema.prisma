@@ -22,6 +22,9 @@ model Product {
   translations        ProductTranslation[]
   productFiles        ProductFile[]
   sections            ProductSection[]
+  orderItems          OrderItem[]
+  accesses            ProductAccess[]
+  cartItems           CartItem[]
 }
 
 model ProductTranslation {
@@ -142,6 +145,7 @@ model User {
   updatedAt       DateTime  @updatedAt
   sessions        Session[]
   accounts        Account[]
+  cartItems       CartItem[]
 
   @@unique([email])
   @@map("user")
@@ -211,4 +215,84 @@ model NewsletterSubscription {
   updatedAt      DateTime           @updatedAt
 
   @@map("newsletter_subscription")
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FAILED
+  PREPARED
+  SENT
+}
+
+model Order {
+  id              String      @id @default(uuid())
+  orderNumber     Int         @unique @default(autoincrement())
+  userId          String?
+  email           String
+  language        String      @default("en")
+  status          OrderStatus @default(PENDING)
+  amountTotal     Int
+  currency        String      @default("usd")
+  stripeSessionId String      @unique
+  stripePaymentId String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  items           OrderItem[]
+  address         OrderAddress?
+
+  @@index([userId])
+  @@index([email])
+}
+
+model OrderAddress {
+  id             String  @id @default(uuid())
+  orderId        String  @unique
+  country        String
+  region         String?
+  addressLine1   String
+  addressLine2   String?
+  flatNumber     String?
+  city           String
+  postcode       String
+  additionalInfo String?
+  order          Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model OrderItem {
+  id         String  @id @default(uuid())
+  orderId    String
+  productId  String
+  quantity   Int
+  unitAmount Int
+  order      Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product    Product @relation(fields: [productId], references: [id])
+}
+
+model ProductAccess {
+  id        String   @id @default(uuid())
+  email     String
+  userId    String?
+  productId String
+  orderId   String
+  createdAt DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id])
+
+  @@unique([email, productId])
+  @@index([email])
+  @@index([userId])
+}
+
+model CartItem {
+  id        String   @id @default(uuid())
+  userId    String
+  productId String
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@index([userId])
 }

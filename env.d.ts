@@ -13,5 +13,8 @@ declare namespace NodeJS {
     SENDGRID_FROM_EMAIL: string;
     GOOGLE_CLIENT_ID: string;
     GOOGLE_CLIENT_SECRET: string;
+    NEXT_PUBLIC_APP_URL: string;
+    STRIPE_SECRET_KEY: string;
+    STRIPE_WEBHOOK_SECRET: string;
   }
 }

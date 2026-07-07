@@ -1,3 +1,3 @@
-export { useCacheQuery, useOffsetPagination } from './hooks';
+export { useCacheQuery, useOffsetPagination, useInfiniteScroll } from './hooks';
 
 export { ReactQueryProvider } from './components/ReactQueryProvider';

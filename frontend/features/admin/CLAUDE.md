@@ -14,8 +14,8 @@ admin/
 
 ## Key patterns
 
-- **`ADMIN_LINKS`** — defined as a local constant inside `AdminNav.tsx` (not exported). Each entry has `{ labelKey, descriptionKey, href, icon }`. Labels come from multiple i18n namespaces (`product.products`, `category.categories`, `file.files`, `user.users`); descriptions come from the `admin` namespace (`admin.productsDescription`, etc.). `useTranslations()` is called with no namespace argument so both can be resolved in one call.
-- **Icons** — each card uses a Lucide icon (`LayoutList` for products, `Tag` for categories, `FileImage` for files, `Users` for users). The icon is rendered at `size={20}` inside `CardTitle` alongside the label.
+- **`ADMIN_LINKS`** — defined as a local constant inside `AdminNav.tsx` (not exported). Each entry has `{ labelKey, descriptionKey, href, icon }`. Labels come from multiple i18n namespaces (`product.products`, `category.categories`, `file.files`, `user.users`, `order.orders`); descriptions come from the `admin` namespace (`admin.productsDescription`, etc.). `useTranslations()` is called with no namespace argument so both can be resolved in one call.
+- **Icons** — each card uses a Lucide icon (`LayoutList` for products, `Tag` for categories, `FileImage` for files, `Users` for users, `Package` for orders). The icon is rendered at `size={20}` inside `CardTitle` alongside the label.
 - **Locale-aware links** — cards are wrapped in `<Link>` from `@/frontend/features/translation/i18n/navigation` so routes include the current language prefix.
 
 ## Current admin sections
@@ -26,6 +26,7 @@ admin/
 | Categories | `ROUTES.ADMIN_CATEGORIES` | `Tag` |
 | Files | `ROUTES.ADMIN_FILES` | `FileImage` |
 | Users | `ROUTES.ADMIN_USERS` | `Users` |
+| Orders | `ROUTES.ADMIN_ORDERS` | `Package` |
 
 ## How to extend
 

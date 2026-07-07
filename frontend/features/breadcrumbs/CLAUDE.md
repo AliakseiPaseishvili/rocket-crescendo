@@ -20,7 +20,7 @@ breadcrumbs/
 
 | Type | Shape |
 |---|---|
-| `BreadcrumbItem` | `{ labelKey?: "admin" \| "products" \| "categories" \| "files" \| "users" \| "create" \| "edit" \| "videoLessons"; label?: string; href?: string; isLoading?: boolean }` |
+| `BreadcrumbItem` | `{ labelKey?: "admin" \| "products" \| "categories" \| "files" \| "users" \| "orders" \| "create" \| "edit" \| "videoLessons"; label?: string; href?: string; isLoading?: boolean }` |
 
 - `labelKey` — resolved via `useTranslations("breadcrumb")` inside `Breadcrumbs`; omit when providing a dynamic `label`.
 - `label` — raw string that bypasses translation; used for runtime values like a product name.
@@ -46,6 +46,7 @@ breadcrumbs/
 | `BREADCRUMBS_ADMIN_CATEGORIES` | Admin › Categories |
 | `BREADCRUMBS_ADMIN_CATEGORIES_CREATE` | Admin › Categories › Create |
 | `BREADCRUMBS_ADMIN_USERS` | Admin › Users |
+| `BREADCRUMBS_ADMIN_ORDERS` | Admin › Orders |
 
 ## Factory utils
 

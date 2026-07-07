@@ -1,3 +1,4 @@
+export { AddToCartButton } from './AddToCartButton';
 export { CreateProductForm } from './CreateProductForm';
 export { EditProductForm } from './EditProductForm';
 export { EditProductFormContent } from './EditProductFormContent';
