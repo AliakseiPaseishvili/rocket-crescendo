@@ -1,1 +1,1 @@
-export { CheckoutView } from './components';
+export { CheckoutView, CheckoutOptions } from './components';

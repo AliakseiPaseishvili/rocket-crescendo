@@ -9,6 +9,7 @@ export const ROUTES = {
   ADMIN_ORDERS: '/admin/orders',
   BASE: '/',
   CHECKOUT: '/checkout',
+  CHECKOUT_OPTIONS: '/checkout/options',
   SIGN_IN: '/sign-in',
   SIGN_UP: '/sign-up',
   VERIFY_EMAIL: '/verify-email',

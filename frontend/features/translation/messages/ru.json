@@ -52,6 +52,7 @@
   },
   "checkout": {
     "title": "Оформление заказа",
+    "optionsTitle": "Оформление заказа",
     "flowPrompt": "Как вы хотите оформить заказ?",
     "flowGuestContinue": "Продолжить как гость",
     "flowSignIn": "Войти",

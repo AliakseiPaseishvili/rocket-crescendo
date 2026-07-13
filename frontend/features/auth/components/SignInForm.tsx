@@ -1,6 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -21,7 +22,16 @@ import { SignInFormValues } from '../types';
 export const SignInForm = () => {
   const t = useTranslations('auth');
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [serverError, setServerError] = useState<string | null>(null);
+
+  // Return the user to an internal page after login (e.g. checkout); reject
+  // absolute/protocol-relative URLs so it can't be used as an open redirect.
+  const redirect = searchParams.get('redirect');
+  const target =
+    redirect && redirect.startsWith('/') && !redirect.startsWith('//')
+      ? redirect
+      : ROUTES.BASE;
 
   const schema = useMemo(
     () =>
@@ -51,7 +61,7 @@ export const SignInForm = () => {
       setServerError(error.message ?? t('errors.signInFailed'));
       return;
     }
-    router.push(ROUTES.BASE);
+    router.push(target);
     router.refresh();
   };
 

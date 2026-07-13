@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/frontend/components/ui/button';
 import { DrawerClose } from '@/frontend/components/ui/drawer';
 import { ROUTES } from '@/frontend/constants';
+import { useSession } from '@/frontend/features/auth';
 import { Link } from '@/frontend/features/translation/i18n/navigation';
 
 import { CartItemRow } from './CartItemRow';
@@ -13,7 +14,13 @@ import { useCartProducts } from '../hooks/use-cart-products';
 
 export const CartContent = () => {
   const t = useTranslations('cart');
+  const { data: session } = useSession();
   const { items, products, isLoading } = useCartProducts();
+
+  // Registered users go straight to the form; guests first pick guest vs. sign-in.
+  const checkoutHref = session?.user.email
+    ? ROUTES.CHECKOUT
+    : ROUTES.CHECKOUT_OPTIONS;
 
   if (items.length === 0) {
     return (
@@ -52,7 +59,7 @@ export const CartContent = () => {
         </div>
         <DrawerClose asChild>
           <Button asChild className="w-full" disabled={isLoading}>
-            <Link href={ROUTES.CHECKOUT}>{t('checkout')}</Link>
+            <Link href={checkoutHref}>{t('checkout')}</Link>
           </Button>
         </DrawerClose>
       </div>

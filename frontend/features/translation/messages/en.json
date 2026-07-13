@@ -52,6 +52,7 @@
   },
   "checkout": {
     "title": "Checkout",
+    "optionsTitle": "Checkout",
     "flowPrompt": "How would you like to check out?",
     "flowGuestContinue": "Continue as guest",
     "flowSignIn": "Sign in",

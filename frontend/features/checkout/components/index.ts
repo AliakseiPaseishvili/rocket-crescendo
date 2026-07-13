@@ -1,4 +1,5 @@
 export { CheckoutView } from './CheckoutView';
+export { CheckoutOptions } from './CheckoutOptions';
 export { CheckoutForm } from './CheckoutForm';
 export { CheckoutSummary } from './CheckoutSummary';
 export { CheckoutSummaryRow } from './CheckoutSummaryRow';

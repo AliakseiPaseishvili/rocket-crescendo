@@ -52,6 +52,7 @@
   },
   "checkout": {
     "title": "Paiement",
+    "optionsTitle": "Paiement",
     "flowPrompt": "Comment souhaitez-vous payer ?",
     "flowGuestContinue": "Continuer en tant qu'invité",
     "flowSignIn": "Se connecter",

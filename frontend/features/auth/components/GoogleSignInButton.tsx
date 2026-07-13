@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 import { Button } from "@/frontend/components/ui/button";
@@ -10,6 +11,15 @@ import { signIn } from "../auth-client";
 
 export const GoogleSignInButton = () => {
   const t = useTranslations("auth");
+  const searchParams = useSearchParams();
+
+  // Return to an internal page after OAuth (e.g. checkout); reject
+  // absolute/protocol-relative URLs so it can't be used as an open redirect.
+  const redirect = searchParams.get("redirect");
+  const target =
+    redirect && redirect.startsWith("/") && !redirect.startsWith("//")
+      ? redirect
+      : ROUTES.BASE;
 
   const {
     mutate: signInWithGoogle,
@@ -17,7 +27,7 @@ export const GoogleSignInButton = () => {
     error,
   } = useMutation({
     mutationFn: () =>
-      signIn.social({ provider: "google", callbackURL: ROUTES.BASE }),
+      signIn.social({ provider: "google", callbackURL: target }),
   });
 
   return (
