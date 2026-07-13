@@ -22,6 +22,7 @@
     "aboutUs": "About Us",
     "subscribe": "Subscribe to News",
     "support": "Support",
+    "orders": "Orders",
     "admin": "Admin"
   },
   "footer": {
@@ -110,6 +111,16 @@
     "loadingOrders": "Loading orders…",
     "errorLoadingOrders": "Failed to load orders.",
     "noOrders": "No orders found."
+  },
+  "myOrders": {
+    "title": "My Orders",
+    "orderNumber": "Order #{number}",
+    "itemCount": "{count} items",
+    "total": "Total",
+    "empty": "You have no orders yet.",
+    "loading": "Loading your orders…",
+    "error": "Failed to load your orders.",
+    "loadMore": "Load more"
   },
   "user": {
     "users": "Users",

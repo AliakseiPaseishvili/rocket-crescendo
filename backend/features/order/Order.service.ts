@@ -10,9 +10,13 @@ import type {
   OrderWithItems,
   OrderWithItemsAndAddress,
   PaginatedAdminOrders,
+  PaginatedUserOrders,
   PricedItem,
+  UserOrder,
+  UserOrderItem,
 } from "./types";
-import { OrderStatus } from "../../app/generated/prisma/enums";
+import { OrderStatus, ProductFileRole } from "../../app/generated/prisma/enums";
+import type { PaginationFilter } from "../../types";
 import { sendOrderConfirmationEmail, sendOrderShippedEmail } from "../emails";
 import { ProductRepository } from "../product/Product.repository";
 import type { ProductWithTranslations } from "../product/types";
@@ -35,6 +39,21 @@ export class OrderService {
       product.translations.find((t) => t.language === "en") ??
       product.translations[0];
     return match?.name ?? "Product";
+  }
+
+  /**
+   * Thumbnail for an order item: the product's main image, falling back to any
+   * additional image, else null. Same precedence as the product card
+   * (frontend/features/products/components/Product.tsx).
+   */
+  private pickImageUrl(product: ProductWithTranslations): string | null {
+    const file =
+      product.productFiles.find((f) => f.role === ProductFileRole.MAIN_IMAGE)
+        ?.file ??
+      product.productFiles.find(
+        (f) => f.role === ProductFileRole.ADDITIONAL_IMAGE,
+      )?.file;
+    return file?.fileUrl ?? null;
   }
 
   /**
@@ -251,6 +270,47 @@ export class OrderService {
       offset,
       limit,
     };
+  }
+
+  /**
+   * Customer-facing "My Orders" listing — paginated, the current user's own paid
+   * orders. Batches the product lookup across all orders (like withResolvedNames)
+   * and attaches, per item, a localized name and a thumbnail URL. Deliberately
+   * drops status/email/address/Stripe ids: the returned UserOrder is safe to send
+   * to the customer.
+   */
+  async getOrdersForUser(
+    params: PaginationFilter & { userId: string; email: string },
+  ): Promise<PaginatedUserOrders> {
+    const { items, total, offset, limit } =
+      await this.repository.findAllForUser(params);
+
+    const ids = [
+      ...new Set(items.flatMap((order) => order.items.map((i) => i.productId))),
+    ];
+    const products = await this.products.findByIds(ids);
+    const productById = new Map(products.map((p) => [p.id, p]));
+
+    const orders: UserOrder[] = items.map((order) => ({
+      id: order.id,
+      orderNumber: order.orderNumber,
+      amountTotal: order.amountTotal,
+      currency: order.currency,
+      createdAt: order.createdAt,
+      itemCount: order.items.reduce((sum, item) => sum + item.quantity, 0),
+      items: order.items.map<UserOrderItem>((item) => {
+        const product = productById.get(item.productId);
+        return {
+          productId: item.productId,
+          name: product ? this.pickName(product, order.language) : "Product",
+          quantity: item.quantity,
+          unitAmount: item.unitAmount,
+          imageUrl: product ? this.pickImageUrl(product) : null,
+        };
+      }),
+    }));
+
+    return { items: orders, total, offset, limit };
   }
 
   /**

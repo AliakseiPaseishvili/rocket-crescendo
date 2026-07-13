@@ -22,6 +22,7 @@
     "aboutUs": "À propos",
     "subscribe": "S'abonner aux actualités",
     "support": "Support",
+    "orders": "Commandes",
     "admin": "Admin"
   },
   "footer": {
@@ -110,6 +111,16 @@
     "loadingOrders": "Chargement des commandes…",
     "errorLoadingOrders": "Échec du chargement des commandes.",
     "noOrders": "Aucune commande trouvée."
+  },
+  "myOrders": {
+    "title": "Mes commandes",
+    "orderNumber": "Commande n°{number}",
+    "itemCount": "{count} articles",
+    "total": "Total",
+    "empty": "Vous n'avez pas encore de commande.",
+    "loading": "Chargement de vos commandes…",
+    "error": "Échec du chargement de vos commandes.",
+    "loadMore": "Charger plus"
   },
   "user": {
     "users": "Utilisateurs",

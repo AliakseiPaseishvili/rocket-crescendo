@@ -20,6 +20,7 @@ nav/
 - **Admin gating** — both `NavMenu` and `NavMobileMenu` call `useSession()` from the auth feature and filter out the `admin` item unless `session?.user?.role === 'admin'`. The item is also hidden while the session is still loading (`isPending`) to prevent a flash.
 - **Route vs anchor detection** (`NavMenu` only) — items whose `href` starts with `'/'` use the locale-aware `<Link>` component from next-intl wrapped in `<NavigationMenuLink asChild>`. Items whose `href` starts with `'#'` use a plain `<NavigationMenuLink href={...}>` (external anchor, no client-side routing needed).
 - **`NavMobileMenu` `onSelect`** — accepts an optional `() => void` callback, typically used by a parent sheet/drawer to close itself after the user taps a link. Mobile items use plain `<a>` tags so the browser performs a full scroll-to-anchor or navigation.
+- **Mobile-only Orders link** — `NavMobileMenu` renders an extra "Orders" link (`nav.orders` → `ROUTES.ORDERS` = `/orders`) *after* the `NAV_ITEMS` list, shown only when signed in (`!isPending && session?.user`). It is deliberately **not** in `NAV_ITEMS`, so it never appears in the desktop `NavMenu` — the customer "My Orders" page is reachable only from the burger menu (`BurgerMenu` renders `NavMobileMenu`). The link target is `frontend/features/my-orders`.
 
 ## How to extend
 

@@ -1,5 +1,7 @@
 "use client";
 
+import { Package } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
 import { Avatar, AvatarFallback } from "@/frontend/components/ui/avatar";
@@ -11,6 +13,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/frontend/components/ui/dropdown-menu";
+import { ROUTES } from "@/frontend/constants";
+import { Link } from "@/frontend/features/translation/i18n/navigation";
 
 import { useSession } from "../auth-client";
 import { getAvatarFallback } from "../utils";
@@ -19,6 +23,7 @@ import { SignOutButton } from "./SignOutButton";
 
 export const AuthStatus = () => {
   const { data: session } = useSession();
+  const t = useTranslations("myOrders");
 
   const fallback = useMemo(
     () => getAvatarFallback(session?.user ?? {}),
@@ -51,6 +56,13 @@ export const AuthStatus = () => {
             </span>
           )}
         </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href={ROUTES.ORDERS} className="cursor-pointer">
+            <Package className="size-4" />
+            {t("title")}
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <SignOutButton className="w-full" />

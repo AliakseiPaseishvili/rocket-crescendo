@@ -34,6 +34,14 @@ backend/features/order/
 - **Admin dashboard reads** — `getOrdersForAdmin(filter?)` returns `PaginatedAdminOrders` (`PaginatedItems<AdminOrder>`), mirroring the `file` feature's offset pagination (`findAllForAdmin` runs `findMany` + `count` in one `$transaction`, `orderBy orderNumber desc`, `skip/take`). Results are filtered to `ADMIN_ORDER_STATUSES` (`PAID`/`PREPARED`/`SENT`) or a single `status` when the filter provides one. The admin include (`{ items: true, address: true }`) is richer than the checkout `ORDER_INCLUDE` (`{ items: true }`). `withResolvedNames` batch-fetches products once and attaches localized item names via the same `pickName(product, order.language)` helper used by the confirmation email — so `AdminOrder.items` carry display names, not just `productId`.
 - **Admin status updates** — `updateOrderStatus(id, target)` enforces a strict forward-only transition: `PAID → PREPARED` and `PREPARED → SENT` only; anything else throws `"Invalid status transition"` (surfaced as HTTP 400). A missing order throws `"Order not found"` (404).
 - **Shipping notification** — when an order is marked `SENT`, `updateOrderStatus` sends `sendOrderShippedEmail` (`backend/features/emails`) with the resolved items **and the delivery address** (duplicated in the email body). The send is wrapped in a swallowed `try/catch` — the status change is already committed, so email failure must not fail the admin action (same convention as `completeOrder`).
+- **Customer-facing reads** — `getOrdersForUser({ userId, email, offset, limit })` returns
+  `PaginatedUserOrders` (`PaginatedItems<UserOrder>`) for the signed-in user's own **paid** orders.
+  `findAllForUser` matches `OR: [{ userId }, { email }]` (so guest orders placed before the customer
+  registered are included) filtered to `ADMIN_ORDER_STATUSES` (`PAID`/`PREPARED`/`SENT`), newest
+  first, paginated via the same items+count `$transaction` as `findAllForAdmin` (include
+  `{ items: true }`). The service resolves each item's localized `name` (same `pickName` helper) and
+  a thumbnail `imageUrl` via `pickImageUrl` (main image, else additional image, else `null`). The
+  returned `UserOrder` **omits status/email/address/Stripe ids** — it is safe to send to the customer.
 - **Admin API routes** — `app/api/orders/route.ts` (`GET`, admin-gated via `withAdminAuth`) parses `status`/`offset`/`limit` query params (offset/limit clamped exactly like `app/api/file/route.ts`, `status` validated against `ADMIN_ORDER_STATUSES`). `app/api/orders/[id]/status/route.ts` (`PATCH`, admin-gated) validates the body `status` against the `OrderStatus` enum and calls `updateOrderStatus`. The admin dashboard UI lives in `frontend/features/orders`.
 
 ## Environment variables
@@ -50,6 +58,9 @@ backend/features/order/
 - `frontend/features/checkout` — the address form + cart summary page that posts the checkout payload.
 - `app/api/webhooks/stripe/route.ts` — verifies signature, calls `fulfillCheckout` on `checkout.session.completed`.
 - `backend/features/auth/auth.ts` — `databaseHooks.user.create.after` → `linkEmailToUser`.
+- `app/api/orders/mine/route.ts` — customer GET (plain session, **not** `withAdminAuth`); 401 when
+  signed out, otherwise the current user's paid orders (`getOrdersForUser`). Consumed by
+  `frontend/features/my-orders`.
 - `app/api/orders/route.ts` — admin GET; paginated, status-filtered order list.
 - `app/api/orders/[id]/status/route.ts` — admin PATCH; advances order status (and emails the customer on `SENT`).
 - `frontend/features/orders` — the admin dashboard table that consumes both admin routes.

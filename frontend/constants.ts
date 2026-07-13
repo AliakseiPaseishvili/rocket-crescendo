@@ -8,6 +8,7 @@ export const ROUTES = {
   ADMIN_USERS: '/admin/users',
   ADMIN_ORDERS: '/admin/orders',
   BASE: '/',
+  ORDERS: '/orders',
   CHECKOUT: '/checkout',
   CHECKOUT_OPTIONS: '/checkout/options',
   SIGN_IN: '/sign-in',

@@ -32,6 +32,30 @@ export type AdminOrder = Omit<OrderWithItemsAndAddress, "items"> & {
 
 export type PaginatedAdminOrders = PaginatedItems<AdminOrder>;
 
+export type UserOrderItem = {
+  productId: string;
+  name: string;
+  quantity: number;
+  unitAmount: number;
+  imageUrl: string | null;
+};
+
+/**
+ * Customer-facing order shape. Deliberately omits status, email, address, and
+ * Stripe identifiers — the "My Orders" page must not leak fulfilment internals.
+ */
+export type UserOrder = {
+  id: string;
+  orderNumber: number;
+  amountTotal: number;
+  currency: string;
+  createdAt: Date;
+  itemCount: number;
+  items: UserOrderItem[];
+};
+
+export type PaginatedUserOrders = PaginatedItems<UserOrder>;
+
 export type CheckoutItemInput = {
   productId: string;
   quantity: number;

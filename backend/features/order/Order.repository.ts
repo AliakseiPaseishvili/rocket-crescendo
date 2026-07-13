@@ -12,7 +12,7 @@ import type {
 } from "./types";
 import { OrderStatus } from "../../app/generated/prisma/enums";
 import prisma from "../../prisma/prisma";
-import type { PaginatedItems } from "../../types";
+import type { PaginatedItems, PaginationFilter } from "../../types";
 
 const ORDER_INCLUDE = { items: true } as const;
 const ADMIN_ORDER_INCLUDE = { items: true, address: true } as const;
@@ -102,6 +102,36 @@ export class OrderRepository {
         take: limit,
         orderBy: { orderNumber: "desc" },
         include: ADMIN_ORDER_INCLUDE,
+      }),
+      prisma.order.count({ where }),
+    ]);
+
+    return { items, total, offset, limit };
+  }
+
+  /**
+   * Customer-facing listing: the current user's own paid orders (matched by
+   * userId OR email so guest orders placed before registration are included),
+   * newest first, filtered to the post-payment statuses (PAID/PREPARED/SENT).
+   * Mirrors findAllForAdmin's items+count $transaction shape.
+   */
+  async findAllForUser(
+    params: PaginationFilter & { userId: string; email: string },
+  ): Promise<PaginatedItems<OrderWithItems>> {
+    const offset = params.offset ?? DEFAULT_PAGINATION_OFFSET;
+    const limit = params.limit ?? DEFAULT_PAGINATION_LIMIT;
+    const where = {
+      OR: [{ userId: params.userId }, { email: params.email }],
+      status: { in: [...ADMIN_ORDER_STATUSES] },
+    };
+
+    const [items, total] = await prisma.$transaction([
+      prisma.order.findMany({
+        where,
+        skip: offset,
+        take: limit,
+        orderBy: { orderNumber: "desc" },
+        include: ORDER_INCLUDE,
       }),
       prisma.order.count({ where }),
     ]);
