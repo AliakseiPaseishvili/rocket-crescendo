@@ -20,11 +20,11 @@ cart/
     CartContent.tsx       # Empty state OR line items + total + Checkout button (wrapped in DrawerClose → closes drawer, navigates to /checkout)
     CartItemRow.tsx       # Single line: image, name, qty stepper, line total, remove
     CartSyncProvider.tsx  # Headless: calls useCartSync(); mounted once in (main)/layout.tsx
-    CheckoutSuccess.tsx   # Clears cart on mount; confirmation screen (success_url target)
-    CheckoutCancel.tsx    # "Payment cancelled" screen (cancel_url target)
     index.ts
-  index.ts                # Barrel: CartButton, CheckoutSuccess, CheckoutCancel, CartSyncProvider, useCheckout, useCartProducts, useCartStore, selectCartCount, CartItem
+  index.ts                # Barrel: CartButton, CartSyncProvider, useCheckout, useCartProducts, useCartStore, selectCartCount, CartItem
 ```
+
+> The post-Stripe result screens (`CheckoutSuccess` / `CheckoutCancel`) now live in the `checkout` feature (`frontend/features/checkout`). `CheckoutSuccess` still imports `useCartStore` from this feature's barrel to clear the cart, and both still use the `cart` i18n namespace.
 
 ## Hybrid sync (logged-in users)
 
@@ -49,7 +49,7 @@ Backend lives in `backend/features/cart`; API client methods (`getCart`, `replac
 - **`selectCartCount`** — exported selector summing quantities; used by `CartButton` for the badge and safe for `useCartStore(selectCartCount)`.
 - **Hydration** — `useCartProducts` calls `api.getProductsByIds` (POST `/api/products/by-ids`), `enabled` only when the cart is non-empty. `CartContent` maps products by id and computes the display total.
 - **Checkout is a two-step flow** — the `CartContent` "Checkout" button now navigates to `/[lng]/checkout` (`ROUTES.CHECKOUT`, locale-aware `Link`) rather than calling the mutation directly. It is wrapped in `DrawerClose` (`asChild`) so clicking it closes the cart drawer as it navigates; nested `asChild` (DrawerClose → Button → Link) composes through Radix `Slot`. The address form there (`checkout` feature) collects `{ email, address }` and calls `useCheckout().mutate({ email, address })`. `useCheckout` reads the active locale via `useLocale()`, posts `{ items, lng, email, address }`, and on success sets `window.location.href` to the Stripe-hosted Checkout URL. `useCheckout` and `useCartProducts` are exported from the barrel for the checkout feature to consume. Guest checkout is supported (no auth gate).
-- **Success clears the cart** — `CheckoutSuccess` calls `clear()` in a `useEffect`; it is the `success_url` page at `/[lng]/checkout/success`.
+- **Success clears the cart** — `CheckoutSuccess` (now in the `checkout` feature) calls this store's `clear()` in a `useEffect`; it is the `success_url` page at `/[lng]/checkout/success`.
 - **i18n** — all strings under the `cart` namespace in `messages/{en,fr,ru}.json` (`add`, `total`, `checkout`, `redirecting`, `successTitle/Message`, `cancelTitle/Message`, `backHome`).
 
 ## Add-to-cart entry point

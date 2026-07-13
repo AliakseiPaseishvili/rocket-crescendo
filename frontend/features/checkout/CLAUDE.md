@@ -1,6 +1,6 @@
 # checkout feature
 
-Customer-facing checkout page at `/[lng]/checkout`. Collects a billing/shipping address (guest or registered flow) alongside a read-only cart summary, then creates the order + Stripe Checkout session and redirects to Stripe. Reached from the cart drawer's "Checkout" button (`cart` feature), not directly from Stripe.
+Customer-facing checkout page at `/[lng]/checkout`. Collects a billing/shipping address (guest or registered flow) alongside a read-only cart summary, then creates the order + Stripe Checkout session and redirects to Stripe. Reached from the cart drawer's "Checkout" button (`cart` feature), not directly from Stripe. Also owns the post-Stripe result screens (`CheckoutSuccess` / `CheckoutCancel`) that Stripe redirects back to.
 
 ## Structure
 
@@ -13,6 +13,8 @@ checkout/
     CountrySelect.tsx       # shadcn Select of COUNTRIES; wired via a Controller in CheckoutForm
     CheckoutSummary.tsx     # right column: cart line items + total (via useCartProducts) + type="submit" "Complete purchase" button
     CheckoutSummaryRow.tsx  # single summary line: localized product name × qty + line total (usePickTranslation)
+    CheckoutSuccess.tsx     # Stripe success_url screen at /[lng]/checkout/success; clears the cart on mount
+    CheckoutCancel.tsx      # Stripe cancel_url screen at /[lng]/checkout/cancel; "payment cancelled" message
     index.ts                # Barrel export for components
   hooks/
     use-checkout-form-schema.ts  # useMemo Yup schema; i18n error messages
@@ -20,7 +22,7 @@ checkout/
     index.ts                     # Barrel: useCheckoutForm, useCheckoutFormSchema
   constants.ts              # COUNTRIES: { code; name }[] and the Country type
   types.ts                  # CheckoutFormValues
-  index.ts                  # Barrel export: CheckoutView
+  index.ts                  # Barrel export: CheckoutView, CheckoutOptions, CheckoutSuccess, CheckoutCancel
 ```
 
 ## Types
@@ -44,7 +46,8 @@ checkout/
 - **onSubmit shape mapping** — `useCheckoutForm` destructures the form values into `{ email, address }`, converting empty optional strings to `undefined` (`region || undefined`, etc.) so the backend stores `null` rather than `''`, then calls `checkout.mutate({ email, address })`.
 - **Read-only summary** — `CheckoutSummary` reuses `useCartProducts()` and computes the total the same way as the cart drawer, but renders `CheckoutSummaryRow` (no quantity steppers/remove) — the checkout page does not mutate the cart. `usePickTranslation` is called per row inside `CheckoutSummaryRow` (a hook cannot run in a `.map`).
 - **Empty-cart guard** — if the store has no items, `CheckoutView` renders an empty state with a `Continue shopping` link instead of the form.
-- **i18n** — all strings under the `checkout` namespace in `messages/{en,fr,ru}.json`.
+- **Post-Stripe result screens** — `CheckoutSuccess` (rendered by `app/[lng]/(main)/checkout/success/page.tsx`) calls `useCartStore((s) => s.clear)` in a `useEffect` to empty the cart on landing; `CheckoutCancel` (`.../checkout/cancel/page.tsx`) is a static "payment cancelled" screen. Both import `useCartStore` (only success uses it) and the locale-aware `Link` "Back home" from the `cart` feature barrel, and read their strings from the **`cart`** namespace (`successTitle/Message`, `cancelTitle/Message`, `backHome`), not `checkout`.
+- **i18n** — form strings live under the `checkout` namespace in `messages/{en,fr,ru}.json`; the success/cancel screens use the `cart` namespace (see above).
 
 ## How to extend
 

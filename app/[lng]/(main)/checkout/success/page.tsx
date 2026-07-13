@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
-import { CheckoutSuccess } from '@/frontend/features/cart';
+import { CheckoutSuccess } from '@/frontend/features/checkout';
 
 type Props = { params: Promise<{ lng: string }> };
 

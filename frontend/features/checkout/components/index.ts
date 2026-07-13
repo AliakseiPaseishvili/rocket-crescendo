@@ -5,3 +5,5 @@ export { CheckoutSummary } from './CheckoutSummary';
 export { CheckoutSummaryRow } from './CheckoutSummaryRow';
 export { CountrySelect } from './CountrySelect';
 export { FlowChoice } from './FlowChoice';
+export { CheckoutSuccess } from './CheckoutSuccess';
+export { CheckoutCancel } from './CheckoutCancel';

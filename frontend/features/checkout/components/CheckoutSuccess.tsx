@@ -5,9 +5,8 @@ import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
 
 import { Button } from '@/frontend/components/ui/button';
+import { useCartStore } from '@/frontend/features/cart';
 import { Link } from '@/frontend/features/translation/i18n/navigation';
-
-import { useCartStore } from '../store/useCartStore';
 
 export const CheckoutSuccess = () => {
   const t = useTranslations('cart');
